@@ -22,15 +22,11 @@ npm run dev
 npm run build
 ```
 
-The complete public website is exported to `dist/client/`. To build for a project subpath:
-
-```sh
-SITE_BASE_PATH=/ha-mai npm run build
-```
+The complete public website is exported to `dist/client/`. The build converts asset URLs to relative paths and removes unnecessary hydration scripts from the fully rendered article. Native section links, downloads, and expandable explanations work without JavaScript, including under `/future-signal-prediction/`.
 
 ## GitHub Pages
 
-Push this website directory as the root of the selected GitHub repository, with default branch `main`. In repository **Settings → Pages → Build and deployment**, select **GitHub Actions**. The included workflow builds the site using the repository's actual Pages base path and deploys the `dist/client/` artifact. For a different default branch, change the workflow push branch. GitHub Pages must be available for that repository/account.
+Push this website directory as the root of the selected GitHub repository, with default branch `main`. In repository **Settings → Pages → Build and deployment**, select **GitHub Actions**. The included workflow builds the portable static site and deploys the `dist/client/` artifact. For a different default branch, change the workflow push branch. GitHub Pages must be available for that repository/account.
 
 Only this website project belongs in the website repository. Do not upload the surrounding paper workspace or original audio datasets.
 
