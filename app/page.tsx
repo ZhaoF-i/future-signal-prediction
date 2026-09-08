@@ -58,7 +58,7 @@ export default function Home() {
           <Equation id={3} label="Cosine and sine periodic basis functions" html='<mtable rowspacing="0.65em"><mtr><mtd><msub><mi>b</mi><mrow><mi>m</mi><mo>,</mo><mi>c</mi></mrow></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>=</mo><mi mathvariant="normal">cos</mi><mo>(</mo><mfrac><mrow><mn>2</mn><mi>π</mi><mi>m</mi><mi>n</mi></mrow><mi>P</mi></mfrac><mo>)</mo></mtd></mtr><mtr><mtd><msub><mi>b</mi><mrow><mi>m</mi><mo>,</mo><mi>s</mi></mrow></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>=</mo><mi mathvariant="normal">sin</mi><mo>(</mo><mfrac><mrow><mn>2</mn><mi>π</mi><mi>m</mi><mi>n</mi></mrow><mi>P</mi></mfrac><mo>)</mo></mtd></mtr></mtable>' />
           <p>For even <i>P</i>, the Nyquist cosine cos(π<i>n</i>) is also included; the corresponding sine is identically zero at integer samples. The resulting <i>K</i> = <i>P</i> − 1 basis functions span the complete space of zero-mean <i>P</i>-periodic sequences.</p>
           <div className="table-block">
-            <p className="table-caption"><strong>Table S1.</strong> Complete non-DC basis for <i>P</i> = 4. The four phase values repeat periodically.</p>
+            <p className="paper-table-caption"><strong className="table-label">Table S1.</strong> Complete non-DC basis for <i>P</i> = 4. The four phase values repeat periodically.</p>
             <Table>
               <TableHeader><TableRow><TableHead scope="col">Basis function</TableHead><TableHead scope="col">Phase 0</TableHead><TableHead scope="col">Phase 1</TableHead><TableHead scope="col">Phase 2</TableHead><TableHead scope="col">Phase 3</TableHead></TableRow></TableHeader>
               <TableBody>
@@ -101,7 +101,7 @@ export default function Home() {
             <li><strong>Gaussian prediction:</strong> the entire prediction ŷ is independent Gaussian noise, scaled to the target RMS. Five fixed seeds yield 150 evaluations per period.</li>
           </ol>
           <div className="table-block">
-            <p className="table-caption"><strong>Table S2.</strong> Boundary results, pooled by energy after independent fitting. Mirror share is 100<i>F</i> (%); HA-MAI is the error-normalized metric in Eq. <a href="#eq-s1">(S1)</a>. Values are rounded from the reference summary dated 8 September 2026.</p>
+            <p className="paper-table-caption"><strong className="table-label">Table S2.</strong> Boundary results, pooled by energy after independent fitting. Mirror share is 100<i>F</i> (%); HA-MAI is the error-normalized metric in Eq. <a href="#eq-s1">(S1)</a>. Values are rounded from the reference summary dated 8 September 2026.</p>
             <Table>
               <TableHeader>
                 <TableRow><TableHead scope="col" rowSpan={2}><i>P</i></TableHead><TableHead scope="col" rowSpan={2}><i>K</i></TableHead><TableHead scope="colgroup" colSpan={2}>Periodic mirror error</TableHead><TableHead scope="colgroup" colSpan={2}>Gaussian prediction</TableHead></TableRow>
