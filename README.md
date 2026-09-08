@@ -1,6 +1,6 @@
-# HA-MAI — Error-normalized metric guide
+# HA-MAI — Supplementary material
 
-An English technical website explaining the **Hop-Adaptive Mirror Artifact Index**, using exactly:
+An English paper supplement explaining the **Hop-Adaptive Mirror Artifact Index**, using exactly:
 
 $$\mathrm{HA\!\text{-}\!MAI}_{\mathrm{error}}=10\log_{10}\frac{E_m+\epsilon}{E_e+\epsilon}.$$
 
@@ -22,7 +22,7 @@ npm run dev
 npm run build
 ```
 
-The complete public website is exported to `dist/client/`. The build converts asset URLs to relative paths and removes unnecessary hydration scripts from the fully rendered article. Native section links, downloads, and expandable explanations work without JavaScript, including under `/future-signal-prediction/`.
+The complete public website is exported to `dist/client/`. The build converts asset URLs to relative paths and removes unnecessary hydration scripts from the fully rendered article. Native equation links and downloads work without JavaScript, including under `/future-signal-prediction/`.
 
 ## GitHub Pages
 

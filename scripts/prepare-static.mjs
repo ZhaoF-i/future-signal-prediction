@@ -4,7 +4,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 // <details> work without hydration; relative asset URLs support any Pages path.
 const path = new URL('../dist/client/index.html', import.meta.url);
 let html = await readFile(path, 'utf8');
-if (!html.includes('How much of the error')) {
+if (!html.includes('Supplementary Material')) {
   throw new Error('Expected the HA-MAI article in the exported index.html');
 }
 html = html
