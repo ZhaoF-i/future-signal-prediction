@@ -43,10 +43,6 @@ math { font-family: var(--font-math); }
 .inline-math { white-space: nowrap; }
 .inline-math math { font-size: 1em; }
 .equation-number { grid-column: 3; justify-self: end; font-size: 1rem; white-space: nowrap; }
-.calculation { grid-template-columns: minmax(0, 1fr) auto; }
-.calculation-text { margin: 0; padding: 1rem 1.1rem; border: 1px solid #dedede; background: #fafafa; font-size: .9375rem; line-height: 1.7; white-space: pre; min-width: 0; }
-.calculation-text code { font-size: 1em; }
-.calculation .equation-number { grid-column: 2; }
 .table-block { margin: 1.5rem 0; }
 .paper-table-caption { display: block; width: 100%; white-space: normal; font-size: .9375rem; line-height: 1.6; margin-bottom: .6rem; }
 .table-label { white-space: nowrap; }
@@ -73,9 +69,6 @@ pre { margin: 1rem 0; padding: .8rem 1rem; background: #f6f6f6; border: 1px soli
   .equation { grid-template-columns: minmax(0, 1fr); gap: .2rem; }
   .math { grid-column: 1; }
   .equation-number { grid-column: 1; font-size: .875rem; }
-  .calculation { grid-template-columns: minmax(0, 1fr); }
-  .calculation .equation-number { grid-column: 1; }
-  .calculation-text { padding: .8rem; font-size: .875rem; }
   .math math { font-size: 1em; }
   .table-block table { font-size: .875rem; }
 }

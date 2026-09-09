@@ -16,15 +16,6 @@ function Equation({ id, html, label }: { id: number; html: string; label: string
   );
 }
 
-function Calculation({ id, text, label }: { id: number; text: string; label: string }) {
-  return (
-    <div className="equation calculation" id={`eq-s${id}`}>
-      <pre className="calculation-text" aria-label={label}><code>{text}</code></pre>
-      <span className="equation-number">(S{id})</span>
-    </div>
-  );
-}
-
 function InlineMath({ html, label }: { html: string; label: string }) {
   return <span className="inline-math" dangerouslySetInnerHTML={{
     __html: `<math xmlns="http://www.w3.org/1998/Math/MathML" aria-label="${label}"><mrow>${html}</mrow></math>`,
@@ -53,39 +44,23 @@ export default function Home() {
         <section id="definition">
           <h2>S1. Definition and estimation</h2>
           <p>A fixed inference hop can make prediction errors repeat across positions within each output block. HA-MAI tests for the part of the error that resembles the target multiplied by a periodic gain pattern. Such modulation creates shifted copies of the target spectrum, which can appear as folded or mirrored structure in a one-sided spectrum.</p>
-          <p><strong>Error-normalized score.</strong> Let <i>x</i>[<i>n</i>] be the target and <InlineMath label="Predicted x" html='<mover><mi>x</mi><mo>^</mo></mover>' />[<i>n</i>] its time-aligned prediction. For a record of <i>N</i> samples, <i>n</i> runs from 0 to <i>N</i> − 1. First form the prediction error; the final score compares fitted mirror energy with total error energy:</p>
-          <Calculation id={1} label="Prediction error and error-normalized score" text={`e[n] = x[n] - x_hat[n]
-
-HA_MAI_error = 10 * log10(
-    (E_mirror + epsilon) / (E_error + epsilon)
-)`} />
-          <p>Here <code>E_mirror</code> (<i>E</i><sub>m</sub>) is the energy of the fitted mirror component, <code>E_error</code> (<i>E</i><sub>e</sub>) is total prediction-error energy, and <code>epsilon</code> (ε) stabilizes the ratio. Thus (S1) asks how large the fitted mirror component is relative to the total error. The factor 10 converts an energy ratio to decibels. Equations (S2)–(S5) specify how to estimate its numerator.</p>
+          <p><strong>Error-normalized score.</strong> Let <i>x</i>[<i>n</i>] be the target and <InlineMath label="Predicted x" html='<mover><mi>x</mi><mo>^</mo></mover>' />[<i>n</i>] its time-aligned prediction. For a record of <i>N</i> samples, <i>n</i> runs from 0 to <i>N</i> − 1. Define <i>e</i>[<i>n</i>] = <i>x</i>[<i>n</i>] − <InlineMath label="Predicted x" html='<mover><mi>x</mi><mo>^</mo></mover>' />[<i>n</i>]. The score compares fitted mirror energy with total error energy:</p>
+          <Equation id={1} label="Error-normalized HA-MAI energy ratio" html='<msub><mtext>HA-MAI</mtext><mtext>error</mtext></msub><mo>=</mo><mn>10</mn><msub><mi mathvariant="normal">log</mi><mn>10</mn></msub><mo>⁡</mo><mrow><mo>(</mo><mfrac><mrow><msub><mi>E</mi><mtext>mirror</mtext></msub><mo>+</mo><mi>ε</mi></mrow><mrow><msub><mi>E</mi><mtext>error</mtext></msub><mo>+</mo><mi>ε</mi></mrow></mfrac><mo>)</mo></mrow>' />
+          <p>Here <i>E</i><sub>mirror</sub> is the energy of the fitted mirror component, <i>E</i><sub>error</sub> is total prediction-error energy, and ε &gt; 0 stabilizes the ratio. These energies are abbreviated as <i>E</i><sub>m</sub> and <i>E</i><sub>e</sub> below. Thus (S1) asks how large the fitted mirror component is relative to the total error. The factor 10 converts an energy ratio to decibels. Equations (S2)–(S5) specify how to estimate its numerator.</p>
           <p><strong>Periodic modulation basis.</strong> Model the mirror component as <i>x</i>[<i>n</i>]<i>g</i>[<i>n</i>], where <i>g</i> has nominal period <i>H</i> samples and zero mean over one period. Expand <i>g</i> in real Fourier basis functions, with <i>m</i> indexing the harmonics:</p>
-          <Calculation id={2} label="Real periodic basis functions" text={`cos_basis_m[n] = cos(2*pi*m*n/H)
-sin_basis_m[n] = sin(2*pi*m*n/H)`} />
+          <Equation id={2} label="Cosine and sine basis functions" html='<mtable displaystyle="true" columnalign="right center left" columnspacing="0.2em 0.2em" rowspacing="0.65em"><mtr><mtd><msub><mi>b</mi><mrow><mi>m</mi><mo>,</mo><mtext>cos</mtext></mrow></msub><mo>[</mo><mi>n</mi><mo>]</mo></mtd><mtd><mo>=</mo></mtd><mtd><mi mathvariant="normal">cos</mi><mo>⁡</mo><mrow><mo>(</mo><mfrac><mrow><mn>2</mn><mi>π</mi><mi>m</mi><mi>n</mi></mrow><mrow><mi>H</mi></mrow></mfrac><mo>)</mo></mrow></mtd></mtr><mtr><mtd><msub><mi>b</mi><mrow><mi>m</mi><mo>,</mo><mtext>sin</mtext></mrow></msub><mo>[</mo><mi>n</mi><mo>]</mo></mtd><mtd><mo>=</mo></mtd><mtd><mi mathvariant="normal">sin</mi><mo>⁡</mo><mrow><mo>(</mo><mfrac><mrow><mn>2</mn><mi>π</mi><mi>m</mi><mi>n</mi></mrow><mrow><mi>H</mi></mrow></mfrac><mo>)</mo></mrow></mtd></mtr></mtable>' />
           <p>Use both sine and cosine for <i>m</i> = 1, …, ⌊(<i>H</i> − 1)/2⌋ so the fit can capture any modulation phase. For even <i>H</i>, also include cos(π<i>n</i>); its sine counterpart vanishes at integer samples. Exclude the constant (DC) basis: multiplying it by the target would model a uniform gain mismatch, rather than variation across hop positions.</p>
           <p>This gives <i>K</i> = <i>H</i> − 1 basis functions spanning all zero-mean <i>H</i>-periodic patterns. For <i>H</i> = 2, the sole basis is cos(π<i>n</i>); for <i>H</i> = 4, use cos(π<i>n</i>/2), sin(π<i>n</i>/2), and cos(π<i>n</i>). “Adaptive” means choosing the complete basis for the specified <i>H</i>; the detector does not estimate <i>H</i> automatically.</p>
           <p><strong>Target-synchronous templates.</strong> A sine or cosine alone describes a pure tone. To detect periodic copies of the current target’s spectral structure, multiply each basis function by that target:</p>
-          <Calculation id={3} label="Target-synchronous periodic templates" text={`T_m_cos[n] = x[n] * cos(2*pi*m*n/H)
-T_m_sin[n] = x[n] * sin(2*pi*m*n/H)
-
-T in R^(N x K)`} />
+          <Equation id={3} label="Target-modulated cosine and sine templates" html='<mtable displaystyle="true" columnalign="right center left" columnspacing="0.2em 0.2em" rowspacing="0.65em"><mtr><mtd><msub><mi>T</mi><mrow><mi>m</mi><mo>,</mo><mtext>cos</mtext></mrow></msub><mo>[</mo><mi>n</mi><mo>]</mo></mtd><mtd><mo>=</mo></mtd><mtd><mi>x</mi><mo>[</mo><mi>n</mi><mo>]</mo><mi mathvariant="normal">cos</mi><mo>⁡</mo><mrow><mo>(</mo><mfrac><mrow><mn>2</mn><mi>π</mi><mi>m</mi><mi>n</mi></mrow><mrow><mi>H</mi></mrow></mfrac><mo>)</mo></mrow></mtd></mtr><mtr><mtd><msub><mi>T</mi><mrow><mi>m</mi><mo>,</mo><mtext>sin</mtext></mrow></msub><mo>[</mo><mi>n</mi><mo>]</mo></mtd><mtd><mo>=</mo></mtd><mtd><mi>x</mi><mo>[</mo><mi>n</mi><mo>]</mo><mi mathvariant="normal">sin</mi><mo>⁡</mo><mrow><mo>(</mo><mfrac><mrow><mn>2</mn><mi>π</mi><mi>m</mi><mi>n</mi></mrow><mrow><mi>H</mi></mrow></mfrac><mo>)</mo></mrow></mtd></mtr><mtr><mtd><mi>T</mi></mtd><mtd><mo>∈</mo></mtd><mtd><msup><mi mathvariant="double-struck">R</mi><mrow><mi>N</mi><mo>×</mo><mi>K</mi></mrow></msup></mtd></mtr></mtable>' />
           <p>Each template is the target multiplied by one cosine or sine basis. Stack all <i>K</i> templates as columns of <i>T</i>, an <i>N</i> × <i>K</i> real matrix. The coefficient vector <i>c</i> gives one fitted weight per template.</p>
           <p><strong>Joint ridge fit.</strong> Choose the template weights to match the observed error by least squares, with a small ridge penalty on the coefficients. Multiplication by the target generally makes the templates nonorthogonal, so their weights must be fitted together. Compute the following quantities in order:</p>
-          <Calculation id={4} label="Ridge fitting calculation" text={`G     = T^T * T
-rhs   = T^T * e
-scale = trace(G) / K
-alpha = lambda * max(scale, epsilon)
-
-c = solve(G + alpha*I, rhs)`} />
-          <p><code>G</code> contains the template inner products; <code>rhs</code> contains the template–error inner products. <code>trace(G)</code> sums the diagonal entries, so <code>scale</code> is the average template energy. The superscript <code>^T</code> denotes transpose, and <code>I</code> is the <i>K</i> × <i>K</i> identity matrix. Use <code>lambda = 1e-6</code> and <code>epsilon = 1e-12</code>; <code>alpha</code> is the resulting energy-scaled ridge strength.</p>
+          <Equation id={4} label="Gram matrix, correlations, energy scale and ridge solution" html='<mtable displaystyle="true" columnalign="right center left" columnspacing="0.2em 0.2em" rowspacing="0.65em"><mtr><mtd><mi>G</mi></mtd><mtd><mo>=</mo></mtd><mtd><msup><mi>T</mi><mo>⊤</mo></msup><mi>T</mi></mtd></mtr><mtr><mtd><mtext>rhs</mtext></mtd><mtd><mo>=</mo></mtd><mtd><msup><mi>T</mi><mo>⊤</mo></msup><mi>e</mi></mtd></mtr><mtr><mtd><mtext>scale</mtext></mtd><mtd><mo>=</mo></mtd><mtd><mfrac><mrow><mi mathvariant="normal">trace</mi><mo>⁡</mo><mrow><mo>(</mo><mi>G</mi><mo>)</mo></mrow></mrow><mrow><mi>K</mi></mrow></mfrac></mtd></mtr><mtr><mtd><mi>α</mi></mtd><mtd><mo>=</mo></mtd><mtd><mi>λ</mi><mi mathvariant="normal">max</mi><mo>⁡</mo><mrow><mo>(</mo><mtext>scale</mtext><mo>,</mo><mi>ε</mi><mo>)</mo></mrow></mtd></mtr><mtr><mtd><mi>c</mi></mtd><mtd><mo>=</mo></mtd><mtd><mi mathvariant="normal">solve</mi><mo>⁡</mo><mrow><mo>(</mo><mi>G</mi><mo>+</mo><mi>α</mi><mi>I</mi><mo>,</mo><mtext>rhs</mtext><mo>)</mo></mrow></mtd></mtr></mtable>' />
+          <p><i>G</i> contains the template inner products; rhs contains the template–error inner products. The trace is the sum of the diagonal entries, so scale is the average template energy. The superscript ⊤ denotes transpose, and <i>I</i> is the <i>K</i> × <i>K</i> identity matrix. Use λ = 10<sup>−6</sup> and ε = 10<sup>−12</sup>; α is the resulting energy-scaled ridge strength.</p>
           <p>The notation solve(<i>A</i>, <i>b</i>) means finding <i>z</i> such that <i>Az</i> = <i>b</i>, without explicitly computing a matrix inverse. The added ridge term stabilizes the fit when templates are nearly dependent.</p>
           <p><strong>Reconstruction and energy.</strong> Reconstruct the mirror waveform by multiplying the template matrix by its fitted coefficient vector. Compute mirror and error energies using squared L2 norms:</p>
-          <Calculation id={5} label="Mirror reconstruction and squared L2 energies" text={`mirror_hat = T * c
-
-E_mirror = ||mirror_hat||_2^2
-E_error  = ||e||_2^2`} />
-          <p>Here <code>||.||_2</code> denotes the L2 (Euclidean) norm. Use the energy of the reconstructed waveform itself as <i>E</i><sub>m</sub>. The fitting objective and the reduction in residual error are different quantities when ridge is used. Substitute <i>E</i><sub>m</sub> and <i>E</i><sub>e</sub> into (S1) to obtain the record’s score. Fit each record independently; reversing the error sign reverses the fitted waveform but leaves the energies and score unchanged.</p>
+          <Equation id={5} label="Mirror waveform equals T c; mirror and error energies are squared L2 norms" html='<mtable displaystyle="true" columnalign="right center left" columnspacing="0.2em 0.2em" rowspacing="0.65em"><mtr><mtd><mover accent="true"><mtext>mirror</mtext><mo stretchy="true">^</mo></mover></mtd><mtd><mo>=</mo></mtd><mtd><mi>T</mi><mi>c</mi></mtd></mtr><mtr><mtd><msub><mi>E</mi><mtext>mirror</mtext></msub></mtd><mtd><mo>=</mo></mtd><mtd><msubsup><mrow><mo>‖</mo><mover accent="true"><mtext>mirror</mtext><mo stretchy="true">^</mo></mover><mo>‖</mo></mrow><mn>2</mn><mn>2</mn></msubsup></mtd></mtr><mtr><mtd><msub><mi>E</mi><mtext>error</mtext></msub></mtd><mtd><mo>=</mo></mtd><mtd><msubsup><mrow><mo>‖</mo><mi>e</mi><mo>‖</mo></mrow><mn>2</mn><mn>2</mn></msubsup></mtd></mtr></mtable>' />
+          <p>Here <InlineMath label="L2 norm" html='<msub><mrow><mo>‖</mo><mo>·</mo><mo>‖</mo></mrow><mn>2</mn></msub>' /> denotes the L2 (Euclidean) norm. Use the energy of the reconstructed waveform itself as <i>E</i><sub>m</sub>. The fitting objective and the reduction in residual error are different quantities when ridge is used. Substitute <i>E</i><sub>m</sub> and <i>E</i><sub>e</sub> into (S1) to obtain the record’s score. Fit each record independently; reversing the error sign reverses the fitted waveform but leaves the energies and score unchanged.</p>
         </section>
 
         <section id="interpretation">

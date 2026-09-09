@@ -5,7 +5,7 @@ An English paper supplement explaining the **Hop-Adaptive Mirror Artifact Index*
 $$\mathrm{HA\!\text{-}\!MAI}_{\mathrm{error}}=10\log_{10}\frac{E_m+\epsilon}{E_e+\epsilon}.$$
 
 The denominator is total prediction-error energy, **not target energy**.
-The page covers the complete non-DC basis, scaled ridge fitting, score interpretation, zero-error behavior, reference boundary experiments, and equal-weight per-unit dB reporting. Calculation steps (S1)–(S5) use the reference guide’s plain-text notation, including matrix multiplication and squared L2 norms in (S5). The remaining equations use native MathML. Neither format requires an external formula CDN.
+The page covers the complete non-DC basis, scaled ridge fitting, score interpretation, zero-error behavior, reference boundary experiments, and equal-weight per-unit dB reporting. All eight numbered equations are rendered in native MathML. Equations (S1)–(S5) follow the reference guide’s calculation steps with typeset fractions, subscripts, matrix products and squared L2 norms; (S5) does not expand the energies into summations. No external formula CDN is required.
 
 ## Local development
 
