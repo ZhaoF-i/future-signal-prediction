@@ -36,13 +36,13 @@ a { color: #183d70; text-decoration: underline; text-underline-offset: .15em; }
 a:hover { color: #000000; }
 a:focus-visible { outline: 2px solid #183d70; outline-offset: 3px; }
 sub, sup { font-size: .75em; }
-.equation { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: .8rem; margin: 1.15rem 0; padding: .3rem 0; }
-.math { overflow-x: auto; padding: .45rem 0; min-width: 0; }
+.equation { display: grid; grid-template-columns: 2.8rem minmax(0, 1fr) 2.8rem; align-items: center; gap: .6rem; margin: 1.4rem 0; padding: .35rem 0; }
+.math { grid-column: 2; overflow-x: auto; padding: .55rem 0; min-width: 0; }
 math { font-family: var(--font-math); }
-.math math { font-size: 1.08em; }
+.math math { width: max-content; margin-inline: auto; font-size: 1.1em; }
 .inline-math { white-space: nowrap; }
 .inline-math math { font-size: 1em; }
-.equation-number { font-size: 1rem; white-space: nowrap; }
+.equation-number { grid-column: 3; justify-self: end; font-size: 1rem; white-space: nowrap; }
 .table-block { margin: 1.5rem 0; }
 .paper-table-caption { display: block; width: 100%; white-space: normal; font-size: .9375rem; line-height: 1.6; margin-bottom: .6rem; }
 .table-label { white-space: nowrap; }
@@ -66,8 +66,9 @@ pre { margin: 1rem 0; padding: .8rem 1rem; background: #f6f6f6; border: 1px soli
   h1 { font-size: 1.55rem; }
   h2 { font-size: 1.2rem; }
   .paper-header { margin-bottom: 1.5rem; }
-  .equation { gap: .5rem; }
-  .equation-number { font-size: .875rem; }
+  .equation { grid-template-columns: minmax(0, 1fr); gap: .2rem; }
+  .math { grid-column: 1; }
+  .equation-number { grid-column: 1; font-size: .875rem; }
   .math math { font-size: 1em; }
   .table-block table { font-size: .875rem; }
 }
