@@ -24,10 +24,10 @@ function InlineMath({ html, label }: { html: string; label: string }) {
 }
 
 const experiment = [
-  [2, '≈ 0', '−54.30'],
-  [4, '≈ 0', '−47.46'],
-  [8, '≈ 0', '−38.28'],
-  [16, '≈ 0', '−33.64'],
+  [2, '≈ 0', '−56.81'],
+  [4, '≈ 0', '−46.60'],
+  [8, '≈ 0', '−37.92'],
+  [16, '≈ 0', '−32.74'],
 ];
 
 export default function Home() {
@@ -61,8 +61,9 @@ export default function Home() {
 
         <section id="interpretation">
           <h2>S2. Interpretation and limitations</h2>
-          <p>When stabilization is negligible, −10, −20, and −30 dB indicate mirror shares of approximately 10%, 1%, and 0.1%. Nonnegative ridge ensures 0 ≤ <i>E</i><sub>m</sub> ≤ <i>E</i><sub>e</sub>, giving the fixed-error-energy bounds</p>
+          <p>For an individual record, when stabilization is negligible, −10, −20, and −30 dB indicate mirror shares of approximately 10%, 1%, and 0.1%. Nonnegative ridge ensures 0 ≤ <i>E</i><sub>m</sub> ≤ <i>E</i><sub>e</sub>, giving the fixed-error-energy bounds</p>
           <Equation id={6} label="Exact bounds for fixed error energy" html={`<mn>10</mn><msub><mi mathvariant="normal">log</mi><mn>10</mn></msub><mfrac><mi>ε</mi><mrow>${ee}<mo>+</mo><mi>ε</mi></mrow></mfrac><mo>≤</mo>${metric}<mo>≤</mo><mn>0</mn>`} />
+          <p>A mean dB score corresponds to the geometric mean of the stabilized energy ratios. It must not be interpreted as an arithmetic mean of mirror percentages.</p>
           <p>Exact zero error yields 0 dB through ε/ε and must be labeled <em>no error</em>, rather than interpreted as a high mirror share. Near-zero error is dominated by stabilization; a silent target makes the detector uninformative.</p>
           <p>A lower index does not imply more accurate prediction: unrelated error can lower the ratio by increasing its denominator. Report HA-MAI with NMSE and SDR, or SI-SDR with its convention stated. Mirror-to-target energy provides complementary information about absolute artifact strength. Keep <i>H</i> fixed across compared methods, including randomized-interval counterparts; changing the fitted dimension changes the chance-correlation baseline.</p>
         </section>
@@ -71,23 +72,24 @@ export default function Home() {
           <h2>S3. Boundary validation</h2>
           <p>Thirty real clean targets were used: ten each from LibriSpeech, TIMIT, and AISHELL-1. The periodic construction <InlineMath label="Predicted x" html='<mover><mi>x</mi><mo>^</mo></mover>' /> = <i>x</i> + 0.2<i>xg</i> uses zero-mean <i>H</i>-periodic <i>g</i> with unit RMS over one period. The second construction replaces the entire prediction with independent, target-RMS-matched Gaussian noise; five fixed seeds give 150 evaluations per period.</p>
           <div className="table-block">
-            <p className="paper-table-caption"><strong className="table-label">Table S1.</strong> Energy-pooled HA-MAI<sub>error</sub> (dB). Pure periodic errors are slightly below zero due to ridge shrinkage. Unrounded values are available in the accompanying CSV.</p>
+            <p className="paper-table-caption"><strong className="table-label">Table S1.</strong> Mean per-unit HA-MAI error (dB). Pure periodic errors are slightly below zero due to ridge shrinkage. Unrounded values are available in the accompanying CSV.</p>
             <Table>
               <TableHeader><TableRow><TableHead scope="col">Period <i>H</i></TableHead><TableHead scope="col">Periodic mirror error</TableHead><TableHead scope="col">Gaussian prediction</TableHead></TableRow></TableHeader>
               <TableBody>{experiment.map(row => <TableRow key={row[0]}>{row.map((v, i) => <TableCell key={i}>{v}</TableCell>)}</TableRow>)}</TableBody>
             </Table>
           </div>
-          <p>For each condition and period, Table S1 pools energies across all 30 targets and, where applicable, all five seeds after independent fitting. The periodic error is almost completely recovered. Gaussian predictions score low despite poor waveform fidelity, confirming that the index measures a specific error structure. Their fitted energy reflects finite-sample target/template and noise correlations; these results do not establish a universal noise floor.</p>
+          <p>For each condition and period, Table S1 averages the independently computed per-unit dB scores with equal weights. Each target is one periodic-error record; each target × seed is one Gaussian record (30 and 150 records per period, respectively). All 720 records exceed the energy thresholds in Section S4. The periodic error is almost completely recovered. Gaussian predictions score low despite poor waveform fidelity, confirming that the index measures a specific error structure. Their fitted energy reflects finite-sample target/template and noise correlations; these results do not establish a universal noise floor.</p>
         </section>
 
         <section id="implementation">
           <h2>S4. Reproducibility</h2>
-          <p>Use aligned, finite, equal-length waveforms with identical sampling rates and evaluation intervals. Report <i>H</i>, λ, ε, segment length, treatment of silent and near-zero-error samples, and valid-sample counts. To report corpus-level scores, first pool independently fitted energies within each corpus <i>c</i>:</p>
-          <Equation id={7} label="Pool mirror and error energies within each corpus" html='<msub><mi>D</mi><mi>c</mi></msub><mo>=</mo><mn>10</mn><msub><mi mathvariant="normal">log</mi><mn>10</mn></msub><mfrac><mrow><munder><mo>∑</mo><mrow><mi>i</mi><mo>∈</mo><mi>c</mi></mrow></munder><msub><mi>E</mi><mrow><mi>m</mi><mo>,</mo><mi>i</mi></mrow></msub><mo>+</mo><mi>ε</mi></mrow><mrow><munder><mo>∑</mo><mrow><mi>i</mi><mo>∈</mo><mi>c</mi></mrow></munder><msub><mi>E</mi><mrow><mi>e</mi><mo>,</mo><mi>i</mi></mrow></msub><mo>+</mo><mi>ε</mi></mrow></mfrac>' />
+          <p>Use aligned, finite, equal-length waveforms with identical sampling rates and evaluation intervals. Report <i>H</i>, λ, ε, segment length, treatment of silent and near-zero-error samples, and valid-sample counts. For each valid record <i>i</i>, fit independently and compute <i>d</i><sub>i</sub> using (S1). The corpus score is the arithmetic mean over its <i>N</i><sub>c</sub> valid records:</p>
+          <Equation id={7} label="Corpus score equals the arithmetic mean of valid per-record dB scores" html='<msub><mi>D</mi><mi>c</mi></msub><mo>=</mo><mfrac><mn>1</mn><msub><mi>N</mi><mi>c</mi></msub></mfrac><munder><mo>∑</mo><mrow><mi>i</mi><mo>∈</mo><mi>c</mi></mrow></munder><msub><mi>d</mi><mi>i</mi></msub>' />
           <p>An equal-weight domain macro score over <i>C</i> corpora is then</p>
           <Equation id={8} label="Equal-weight mean of corpus scores" html='<msub><mi>D</mi><mtext>macro</mtext></msub><mo>=</mo><mfrac><mn>1</mn><mi>C</mi></mfrac><munderover><mo>∑</mo><mrow><mi>c</mi><mo>=</mo><mn>1</mn></mrow><mi>C</mi></munderover><msub><mi>D</mi><mi>c</mi></msub>' />
-          <p>This differs from averaging utterance-level dB values or pooling every corpus together. State the chosen aggregation explicitly; Table S1 uses the all-target pooling described in Section S3.</p>
-          <p>The <a href="./hamai.py" download>NumPy implementation</a> uses <code>period=H</code>. The <a href="./data/boundary-summary.csv" download>boundary summary CSV</a> retains the original unrounded measurements. Phase-wise sufficient statistics, fraction-to-dB conversion, input-status handling, and usage examples are documented in the <a href="https://github.com/ZhaoF-i/future-signal-prediction#implementation-details">repository README</a>.</p>
+          <p>Records are not weighted by audio length or error energy. Table S1 uses the per-unit mean over all records for each condition and period; its balanced corpus counts also make it equal to (S8). For unbalanced corpora, these two means can differ.</p>
+          <p>Count invalid records, silent targets (target energy ≤ ε), exact zero errors, and near-zero errors (0 &lt; <i>E</i><sub>e</sub> ≤ 100ε) separately and exclude them from the valid-record mean. Silent-target status takes precedence over error-energy status. If no valid records remain, report the score as unavailable; do not substitute 0 dB. A domain macro is unavailable if any included corpus has no valid records.</p>
+          <p>The <a href="./hamai.py" download>NumPy implementation</a> uses <code>period=H</code>. Download the <a href="./data/boundary-mean-summary.csv" download>mean summary CSV</a> and <a href="./data/boundary-per-unit.csv" download>anonymized per-unit CSV</a>. The reproducible summary script, phase-wise sufficient statistics, and usage examples are documented in the <a href="https://github.com/ZhaoF-i/future-signal-prediction#implementation-details">repository README</a>.</p>
         </section>
         <footer className="paper-footer">Supplementary material · HA-MAI<sub>error</sub></footer>
       </main>
