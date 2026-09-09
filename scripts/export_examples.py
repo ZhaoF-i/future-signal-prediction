@@ -102,26 +102,27 @@ def export_audio(streams, output_dir, prefix):
     return decoded, tracks, float(gain)
 
 
-def spectrograms(streams):
+def spectrograms(streams, reference=None):
     amplitudes = []
     for audio in streams:
         freq, times, z = stft(audio, fs=FS, window='hann', nperseg=512,
                               noverlap=384, nfft=1024, boundary=None, padded=False)
         amplitudes.append(np.abs(z))
-    reference = float(max(x.max() for x in amplitudes))
+    reference = float(max(x.max() for x in amplitudes)) if reference is None else float(reference)
     if reference <= 0:
         raise ValueError('Silent spectrogram')
     db = [20 * np.log10(np.maximum(x / reference, 1e-4)) for x in amplitudes]
     return freq, times, db, reference
 
 
-def plot_example(streams, path):
-    freq, times, panels, reference = spectrograms(streams)
+def plot_example(streams, path, labels=LABELS, reference=None):
+    freq, times, panels, reference = spectrograms(streams, reference)
     plt.rcParams.update({'font.family': 'STIXGeneral', 'mathtext.fontset': 'stix',
                          'font.size': 12, 'axes.titlesize': 13})
-    fig, axes = plt.subplots(3, 1, figsize=(9, 6.8), sharex=True, sharey=True)
+    height = 6.8 if len(streams) == 3 else 4.8
+    fig, axes = plt.subplots(len(streams), 1, figsize=(9, height), sharex=True, sharey=True)
     fig.subplots_adjust(left=0.095, right=0.875, top=0.95, bottom=0.095, hspace=0.3)
-    for ax, label, panel in zip(axes, LABELS, panels):
+    for ax, label, panel in zip(axes, labels, panels):
         # Frame centers are 16 ms from the boundaries; do not add synthetic frames.
         mesh = ax.pcolormesh(times, freq / 1000, panel, shading='auto',
                              cmap='magma', vmin=-80, vmax=0, rasterized=True)
@@ -137,12 +138,60 @@ def plot_example(streams, path):
     bar.set_label('Magnitude (dB relative to shared reference)')
     fig.savefig(path, dpi=180, metadata={'Software': 'Matplotlib'})
     plt.close(fig)
-    return dict(file=path.name, sha256=sha256(path), width=1620, height=1224,
+    return dict(file=path.name, sha256=sha256(path), width=1620, height=round(height * 180),
                 amplitude_reference=reference, reference='Maximum STFT magnitude across all three exported WAVs',
                 window='periodic Hann', window_samples=512, hop_samples=128,
                 fft_samples=1024, boundary=None, padded=False, scaling='spectrum',
                 frequency_hz=[0, 8000], color_limits_db=[-80, 0], colormap='magma',
                 normalization='20*log10(max(abs(STFT)/shared_reference, 1e-4))')
+
+
+def add_errors(example, output_dir):
+    """Exact residuals of published PCM16 signals, with no further gain or clipping."""
+    streams = []
+    for track in example['tracks']:
+        path = output_dir / track['file']
+        if sha256(path) != track['sha256']:
+            raise ValueError('Published source WAV hash mismatch')
+        rate, pcm = wavfile.read(path)
+        if rate != FS or pcm.dtype != np.int16 or pcm.shape != (example['samples'],):
+            raise ValueError('Expected the published mono PCM16 source WAV')
+        streams.append(pcm.astype(np.int32))
+    errors, tracks = [], []
+    for index, label in [(1, 'Baseline error'), (2, 'Error after mirror suppression')]:
+        # Subtract in int32: direct int16 subtraction could silently wrap.
+        difference = streams[0] - streams[index]
+        if np.max(np.abs(difference)) > 32767:
+            raise ValueError('Residual exceeds the peak limit; do not silently clip or rescale')
+        filename = f"{example['id']}-{ROLES[index]}-error.wav"
+        wavfile.write(output_dir / filename, FS, difference.astype(np.int16))
+        decoded = read_audio(output_dir / filename)
+        if not np.array_equal(decoded, difference / 32768):
+            raise ValueError('Residual PCM16 roundtrip is not exact')
+        errors.append(decoded)
+        tracks.append(dict(role=ROLES[index], label=label, file=filename,
+            sha256=sha256(output_dir / filename), samples=len(decoded),
+            peak=float(np.max(np.abs(decoded))), energy=float(decoded @ decoded),
+            target_file=example['tracks'][0]['file'], estimate_file=example['tracks'][index]['file']))
+    figure = plot_example(errors, output_dir / f"{example['id']}-error-spectrogram.png",
+                          labels=tuple(t['label'] for t in tracks),
+                          reference=example['figure']['amplitude_reference'])
+    figure['reference'] = 'Same reference as the corresponding Target / Estimate figure; no error-panel normalization'
+    example['errors'] = dict(definition='error = published target - published estimate',
+        additional_gain=1.0, format='PCM16 WAV', peak_limit=32767 / 32768,
+        subtraction='int32 subtraction of decoded PCM16 sample integers; exact PCM16 output, no clipping',
+        tracks=tracks, figure=figure)
+
+
+def export_published_errors(output_dir):
+    path = output_dir / 'metadata.json'
+    metadata = json.loads(path.read_text())
+    for example in metadata['examples']:
+        add_errors(example, output_dir)
+    metadata['schema_version'] = 2
+    metadata['error_export_software'] = dict(numpy=np.__version__, scipy=scipy.__version__, matplotlib=matplotlib.__version__)
+    path.write_text(json.dumps(metadata, indent=2, allow_nan=False) + '\n')
+    return metadata
 
 
 def export(manifest, output_dir):
@@ -193,14 +242,16 @@ def export(manifest, output_dir):
         software=dict(numpy=np.__version__, scipy=scipy.__version__, matplotlib=matplotlib.__version__),
         examples=examples)
     (output_dir / 'metadata.json').write_text(json.dumps(metadata, indent=2, allow_nan=False) + '\n')
-    return metadata
+    return export_published_errors(output_dir)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--manifest', type=Path, required=True)
+    source = parser.add_mutually_exclusive_group(required=True)
+    source.add_argument('--manifest', type=Path)
+    source.add_argument('--from-published', action='store_true', help='Reproduce error media from the distributed WAVs and metadata only')
     parser.add_argument('--output-dir', type=Path, default=ROOT / 'public' / 'examples')
     args = parser.parse_args()
-    metadata = export(args.manifest, args.output_dir)
+    metadata = export_published_errors(args.output_dir) if args.from_published else export(args.manifest, args.output_dir)
     for example in metadata['examples']:
         print(example['id'], {t['role']: t.get('metrics', {}).get('hamai_error_db') for t in example['tracks']})

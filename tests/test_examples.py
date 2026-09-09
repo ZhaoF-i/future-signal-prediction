@@ -124,6 +124,45 @@ class ExampleTests(unittest.TestCase):
                 self.assertEqual(len(source['sha256']), 64)
                 self.assertFalse(Path(source['dataset_file']).is_absolute())
 
+    def test_published_errors_are_exact_differences(self):
+        folder = ROOT / 'public/examples'
+        metadata = json.loads((folder / 'metadata.json').read_text())
+        for example in metadata['examples']:
+            sources = [wavfile.read(folder / t['file'])[1].astype(np.int32) for t in example['tracks']]
+            errors = example['errors']
+            self.assertEqual(errors['additional_gain'], 1)
+            self.assertEqual(errors['figure']['amplitude_reference'], example['figure']['amplitude_reference'])
+            self.assertEqual(errors['figure']['color_limits_db'], example['figure']['color_limits_db'])
+            for i, track in enumerate(errors['tracks'], 1):
+                rate, pcm = wavfile.read(folder / track['file'])
+                self.assertEqual(rate, 16000)
+                self.assertEqual(pcm.dtype, np.int16)
+                np.testing.assert_array_equal(pcm.astype(np.int32), sources[0] - sources[i])
+                decoded = pcm.astype(float) / 32768
+                self.assertEqual(float(decoded @ decoded), example['tracks'][i]['metrics']['error_energy'])
+                self.assertEqual(track['energy'], float(decoded @ decoded))
+                self.assertEqual(track['peak'], np.max(np.abs(decoded)))
+                self.assertLess(track['peak'], 1)
+                self.assertEqual(exporter.sha256(folder / track['file']), track['sha256'])
+            figure = folder / errors['figure']['file']
+            self.assertEqual(exporter.sha256(figure), errors['figure']['sha256'])
+            self.assertEqual(int.from_bytes(figure.read_bytes()[20:24], 'big'), errors['figure']['height'])
+
+    def test_error_export_rejects_overflow_and_changed_sources(self):
+        with tempfile.TemporaryDirectory() as directory:
+            folder = Path(directory)
+            tracks = []
+            for name, level in [('target', 30000), ('baseline', -30000), ('suppressed', 0)]:
+                path = folder / f'{name}.wav'
+                wavfile.write(path, 16000, np.full(512, level, dtype=np.int16))
+                tracks.append(dict(file=path.name, sha256=exporter.sha256(path)))
+            example = dict(id='test', samples=512, tracks=tracks)
+            with self.assertRaisesRegex(ValueError, 'exceeds'):
+                exporter.add_errors(example, folder)
+            tracks[0]['sha256'] = 'wrong'
+            with self.assertRaisesRegex(ValueError, 'hash mismatch'):
+                exporter.add_errors(example, folder)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "manifest_sha256": "572c70476f1134c845338abba0203e9875ce9fb4f1a8f8a9351906c584f23a3a",
   "metric_implementation_sha256": "ba88b864dabfc79f3a4b9b8e0ab08407da5f460ab26aded81e5ca5bef0e06c78",
   "metric_input": "Decoded published PCM16 WAVs, independently fitted per prediction",
@@ -170,6 +170,62 @@
         ],
         "colormap": "magma",
         "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
+      },
+      "errors": {
+        "definition": "error = published target - published estimate",
+        "additional_gain": 1.0,
+        "format": "PCM16 WAV",
+        "peak_limit": 0.999969482421875,
+        "subtraction": "int32 subtraction of decoded PCM16 sample integers; exact PCM16 output, no clipping",
+        "tracks": [
+          {
+            "role": "baseline",
+            "label": "Baseline error",
+            "file": "speech-baseline-error.wav",
+            "sha256": "5b412c51906a983d9d2632064934682cb6a0897ce7961fb278758de32e69c11d",
+            "samples": 64000,
+            "peak": 0.951904296875,
+            "energy": 57.65689508896321,
+            "target_file": "speech-target.wav",
+            "estimate_file": "speech-baseline.wav"
+          },
+          {
+            "role": "suppressed",
+            "label": "Error after mirror suppression",
+            "file": "speech-suppressed-error.wav",
+            "sha256": "aa03f87164cc2a73edcfea580dcb9c516accd87cd57a1c4c860b8a997d289f7b",
+            "samples": 64000,
+            "peak": 0.668060302734375,
+            "energy": 45.767854483798146,
+            "target_file": "speech-target.wav",
+            "estimate_file": "speech-suppressed.wav"
+          }
+        ],
+        "figure": {
+          "file": "speech-error-spectrogram.png",
+          "sha256": "645a548589ee3f418417e46ad591f226c44bfeb901f0d2a90c9fc584318750cb",
+          "width": 1620,
+          "height": 864,
+          "amplitude_reference": 0.2146430080096985,
+          "reference": "Same reference as the corresponding Target / Estimate figure; no error-panel normalization",
+          "window": "periodic Hann",
+          "window_samples": 512,
+          "hop_samples": 128,
+          "fft_samples": 1024,
+          "boundary": null,
+          "padded": false,
+          "scaling": "spectrum",
+          "frequency_hz": [
+            0,
+            8000
+          ],
+          "color_limits_db": [
+            -80,
+            0
+          ],
+          "colormap": "magma",
+          "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
+        }
       }
     },
     {
@@ -332,7 +388,68 @@
         ],
         "colormap": "magma",
         "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
+      },
+      "errors": {
+        "definition": "error = published target - published estimate",
+        "additional_gain": 1.0,
+        "format": "PCM16 WAV",
+        "peak_limit": 0.999969482421875,
+        "subtraction": "int32 subtraction of decoded PCM16 sample integers; exact PCM16 output, no clipping",
+        "tracks": [
+          {
+            "role": "baseline",
+            "label": "Baseline error",
+            "file": "noise-baseline-error.wav",
+            "sha256": "f7c9424ad6c233a01adef432ce0c9b8162877ca73f19cf27b087e6b763803a6c",
+            "samples": 47995,
+            "peak": 0.93743896484375,
+            "energy": 189.23213266208768,
+            "target_file": "noise-target.wav",
+            "estimate_file": "noise-baseline.wav"
+          },
+          {
+            "role": "suppressed",
+            "label": "Error after mirror suppression",
+            "file": "noise-suppressed-error.wav",
+            "sha256": "32fb0b5d4f115fb342687b35f1c1a0de999d5757bce8cd25555390474ff2874e",
+            "samples": 47995,
+            "peak": 0.935943603515625,
+            "energy": 184.73379573319107,
+            "target_file": "noise-target.wav",
+            "estimate_file": "noise-suppressed.wav"
+          }
+        ],
+        "figure": {
+          "file": "noise-error-spectrogram.png",
+          "sha256": "38aac6b595796d545fb86b3f5e7d419491c3b4a0ab884b2de759f15ec387061e",
+          "width": 1620,
+          "height": 864,
+          "amplitude_reference": 0.23811892741201202,
+          "reference": "Same reference as the corresponding Target / Estimate figure; no error-panel normalization",
+          "window": "periodic Hann",
+          "window_samples": 512,
+          "hop_samples": 128,
+          "fft_samples": 1024,
+          "boundary": null,
+          "padded": false,
+          "scaling": "spectrum",
+          "frequency_hz": [
+            0,
+            8000
+          ],
+          "color_limits_db": [
+            -80,
+            0
+          ],
+          "colormap": "magma",
+          "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
+        }
       }
     }
-  ]
+  ],
+  "error_export_software": {
+    "numpy": "2.1.3",
+    "scipy": "1.15.3",
+    "matplotlib": "3.10.0"
+  }
 }

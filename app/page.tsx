@@ -17,6 +17,7 @@ function MirrorExamples() {
     {exampleData.examples.map((example, index) => (
       <figure className="mirror-example" id={`figure-s${index + 1}`} key={example.id}>
         <h3>{example.domain} · {example.dataset}</h3>
+        <p className="panel-label">(a) Target and estimates</p>
         <a className="spectrogram-link" href={`./examples/${example.figure.file}`} aria-label={`Open full-resolution ${example.domain.toLowerCase()} spectrogram`}>
           <img className="spectrogram" src={`./examples/${example.figure.file}`}
             width={example.figure.width} height={example.figure.height} loading="lazy"
@@ -35,16 +36,35 @@ function MirrorExamples() {
             </div>
           ))}
         </div>
+        <p className="panel-label">(b) Prediction errors: target − estimate</p>
+        <a className="spectrogram-link" href={`./examples/${example.errors.figure.file}`} aria-label={`Open full-resolution ${example.domain.toLowerCase()} error spectrogram`}>
+          <img className="spectrogram" src={`./examples/${example.errors.figure.file}`}
+            width={example.errors.figure.width} height={example.errors.figure.height} loading="lazy"
+            alt={`${example.domain} prediction errors: Baseline error and Error after mirror suppression, using the same time interval and magnitude reference as panel (a).`} />
+        </a>
+        <div className="audio-comparison error-comparison">
+          {example.errors.tracks.map(track => (
+            <div className="audio-track" key={track.role}>
+              <p className="track-label" id={`${example.id}-${track.role}-error-label`}>{track.label}</p>
+              <p className="track-context">Target − {track.role === 'baseline' ? 'baseline estimate' : 'full-system estimate'}</p>
+              <audio controls preload="none" aria-labelledby={`${example.id}-${track.role}-error-label`}>
+                <source src={`./examples/${track.file}`} type="audio/wav" />
+                <a href={`./examples/${track.file}`}>Download error WAV</a>
+              </audio>
+            </div>
+          ))}
+        </div>
         <figcaption className="paper-figure-caption">
           <strong className="figure-label">Figure S{index + 1}.</strong>{' '}
           Mirror suppression on {example.dataset} <span className="sample-id">{example.sample_id}</span>.{' '}
+          (a) Target and model estimates. (b) Total prediction errors, computed as target − estimate from the published WAVs; these include all error components, not only the fitted mirror component. Error audio has no additional gain, and both panels use the same magnitude reference.{' '}
           {example.id === 'speech' ? 'The 4 s excerpt begins at sample 176000 (11 s) of the aligned interval.' : 'The excerpt spans all 47995 common samples (approximately 3 s).'}{' '}
           Baseline target and prediction are each trimmed by one initial sample to match the full system’s target; the aligned targets are identical. This is a comparison over the same target time interval, not a matched-advance ablation (F = 4 versus F = 5). The fitted mirror component is reduced; residual mirror energy is not assumed to be zero.
           <span className="example-credit">Source: <a href={example.dataset_credit.source_url}>{example.dataset}</a> · <a href={example.dataset_credit.license_url}>{example.dataset_credit.license}</a>. Attribution and excerpt processing: <a href="./examples/ATTRIBUTION.md">media credits</a>.</span>
         </figcaption>
       </figure>
     ))}
-    <p className="example-methods">All audio is mono, 16 kHz PCM16. Each group uses one shared gain (peak ≤ 0.95). Spectrograms use a 512-sample Hann window, 128-sample frame shift, and 1024-point FFT over 0–8 kHz. Within each figure, all three panels share one magnitude reference and an 80 dB color range. NMSE is 10 log₁₀ of error energy divided by target energy. <a href="./examples/metadata.json" download>Download clip metrics and metadata</a>.</p>
+    <p className="example-methods">All audio is mono, 16 kHz PCM16. Each target/estimate group uses one shared gain (peak ≤ 0.95); error tracks are their exact differences, without further normalization or clipping. Spectrograms use a 512-sample Hann window, 128-sample frame shift, and 1024-point FFT over 0–8 kHz. Within each example, target, estimates, and errors share one magnitude reference and an 80 dB color range. NMSE is 10 log₁₀ of error energy divided by target energy. <a href="./examples/metadata.json" download>Download clip metrics and metadata</a>.</p>
   </>;
 }
 

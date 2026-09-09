@@ -30,7 +30,7 @@ The complete public website is exported to `dist/client/`. The build converts as
 
 Push this website directory as the root of the selected GitHub repository, with default branch `main`. In repository **Settings → Pages → Build and deployment**, select **GitHub Actions**. The included workflow builds the portable static site and deploys the `dist/client/` artifact. For a different default branch, change the workflow push branch. GitHub Pages must be available for that repository/account.
 
-Only this website project belongs in the website repository, including the six selected example excerpts and their figures described below. Do not upload the surrounding paper workspace or bulk original audio datasets.
+Only this website project belongs in the website repository, including the six selected target/estimate excerpts, four derived error tracks, and their figures described below. Do not upload the surrounding paper workspace or bulk original audio datasets.
 
 ## Numerical verification
 
@@ -90,6 +90,16 @@ Every figure uses a periodic Hann window of 512 samples, a hop of 128, and an FF
 
 ### Reproduce the media
 
+Each example now also includes a two-row **prediction-error** spectrogram and two error players, under panel (b) of Figure S1 or S2. Error means **published target − published estimate**, including all prediction error, not just the fitted mirror component. Subtraction uses PCM16 sample integers promoted to int32 to avoid overflow, then exports an exact PCM16 difference. No extra gain, normalization, clipping, or inference is applied. These selected residuals fit PCM16; the exporter rejects overflow rather than silently clipping. The target/estimate peak limit remains 0.95; error peaks are recorded separately (the speech baseline residual reaches approximately 0.952). The original six WAVs, displayed metrics, and target/estimate figures are unchanged.
+
+Error spectrograms use exactly the same STFT parameters, magnitude reference, and −80 to 0 dB color limits as the corresponding target/estimate figure. Error energies match the error-energy values used in the displayed HA-MAI and NMSE. Metadata records the residual definition, parent WAV identifiers, gain of 1, hashes, peaks, energies, and plotting parameters.
+
+Reproduce the added error media using **only the published files**, without the private manifest or model outputs:
+
+```sh
+python scripts/export_examples.py --from-published --output-dir public/examples
+```
+
 Requires Python with NumPy, SciPy, and Matplotlib; the exact export versions are recorded in the metadata. From the repository root, provide the existing manifest, whose `result_dir` entries must point to locally accessible saved WAVs:
 
 ```sh
@@ -100,7 +110,7 @@ python -m unittest discover -s tests -p 'test_examples.py'
 npm run build
 ```
 
-The script verifies sampling rates, finite mono data, manifest advances, target agreement, crop bounds, and metric validity. It emits six WAVs, two PNGs, and metadata. Existing media credits are maintained separately. The committed assets allow normal website builds without Python or access to the source datasets. Tests independently verify final PCM16 metrics/energies, shared-gain quantization, alignment rejection, common spectrogram normalization, asset hashes, and the published example conditions.
+The full export verifies sampling rates, finite mono data, manifest advances, target agreement, crop bounds, and metric validity. It emits ten WAVs, four PNGs, and metadata. Existing media credits are maintained separately. The committed assets allow normal website builds without Python or access to the source datasets. Tests independently verify final PCM16 metrics/energies, exact error subtraction, overflow rejection, shared-gain quantization, alignment rejection, common spectrogram normalization, asset hashes, and the published example conditions.
 
 ### Dataset credits
 
