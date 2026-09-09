@@ -6,5 +6,5 @@ export const metadata: Metadata = {
   description: 'Supplementary material on the error-normalized Hop-Adaptive Mirror Artifact Index: definition, estimation, numerical limits, and boundary experiments.',
 };
 export default function RootLayout({ children }: Readonly<{children: React.ReactNode}>) {
-  return <html lang="en"><body>{children}</body></html>;
+  return <html lang="en"><head><link rel="stylesheet" href="./fonts/fonts.css" /></head><body>{children}</body></html>;
 }

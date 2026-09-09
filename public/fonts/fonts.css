@@ -1,0 +1,22 @@
+/* STIX Fonts Project; distributed under the adjacent SIL OFL licenses. */
+@font-face {
+  font-family: 'STIX Two Text';
+  src: url('./stix-two-text.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'STIX Two Text';
+  src: url('./stix-two-text-italic.woff2') format('woff2');
+  font-style: italic;
+  font-weight: 400 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'STIX Two Math';
+  src: url('./stix-two-math.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}

@@ -17,6 +17,12 @@ function Equation({ id, html, label }: { id: number; html: string; label: string
   );
 }
 
+function InlineMath({ html, label }: { html: string; label: string }) {
+  return <span className="inline-math" dangerouslySetInnerHTML={{
+    __html: `<math xmlns="http://www.w3.org/1998/Math/MathML" aria-label="${label}"><mrow>${html}</mrow></math>`,
+  }} />;
+}
+
 const experiment = [
   [2, '≈ 0', '−54.30'],
   [4, '≈ 0', '−47.46'],
@@ -38,7 +44,7 @@ export default function Home() {
 
         <section id="definition">
           <h2>S1. Definition and estimation</h2>
-          <p>Let <i>x</i>[<i>n</i>] and x̂[<i>n</i>] denote a target and its time-aligned prediction, with error <i>e</i>[<i>n</i>] = <i>x</i>[<i>n</i>] − x̂[<i>n</i>]. The error-normalized Hop-Adaptive Mirror Artifact Index is</p>
+          <p>Let <i>x</i>[<i>n</i>] and <InlineMath label="Predicted x" html='<mover><mi>x</mi><mo>^</mo></mover>' />[<i>n</i>] denote a target and its time-aligned prediction, with error <i>e</i>[<i>n</i>] = <i>x</i>[<i>n</i>] − <InlineMath label="Predicted x" html='<mover><mi>x</mi><mo>^</mo></mover>' />[<i>n</i>]. The error-normalized Hop-Adaptive Mirror Artifact Index is</p>
           <Equation id={1} label="HA-MAI error equals ten log base ten of mirror energy plus epsilon divided by total error energy plus epsilon" html={`${metric}<mo>=</mo><mn>10</mn><msub><mi mathvariant="normal">log</mi><mn>10</mn></msub><mfrac><mrow>${em}<mo>+</mo><mi>ε</mi></mrow><mrow>${ee}<mo>+</mo><mi>ε</mi></mrow></mfrac>`} />
           <p>where <i>E</i><sub>m</sub> is the fitted mirror energy, <i>E</i><sub>e</sub> is total prediction-error energy, and ε &gt; 0 stabilizes the ratio. The denominator is error energy, not target energy. Accordingly, this variant measures the periodic share of error rather than artifact magnitude relative to the target.</p>
           <p>Fixed-hop gain errors can be modeled as <i>e</i>[<i>n</i>] ≈ <i>x</i>[<i>n</i>]<i>g</i>[<i>n</i>], where <i>g</i> is a zero-mean sequence of nominal period <i>H</i>. Periodic modulation shifts the target spectrum into harmonic copies. To capture arbitrary modulation phase, use both real Fourier components:</p>
@@ -48,7 +54,7 @@ export default function Home() {
           <Equation id={3} label="Target-modulated templates and their Gram matrix" html='<msub><mi>T</mi><mrow><mi>n</mi><mo>,</mo><mi>j</mi></mrow></msub><mo>=</mo><mi>x</mi><mo>[</mo><mi>n</mi><mo>]</mo><msub><mi>b</mi><mi>j</mi></msub><mo>[</mo><mi>n</mi><mo>]</mo><mo>,</mo><mspace width="1em"/><mi>G</mi><mo>=</mo><msup><mi>T</mi><mi>⊤</mi></msup><mi>T</mi>' />
           <p>Because target weighting generally makes the templates nonorthogonal, fit their coefficients jointly using scaled ridge regularization:</p>
           <Equation id={4} label="Scaled ridge parameter and joint coefficient system" html='<mtable rowspacing="0.5em"><mtr><mtd><mi>α</mi><mo>=</mo><mi>λ</mi><mi mathvariant="normal">max</mi><mo>(</mo><mfrac><mrow><mi mathvariant="normal">tr</mi><mo>(</mo><mi>G</mi><mo>)</mo></mrow><mi>K</mi></mfrac><mo>,</mo><mi>ε</mi><mo>)</mo></mtd></mtr><mtr><mtd><mo>(</mo><mi>G</mi><mo>+</mo><mi>α</mi><mi>I</mi><mo>)</mo><mi>c</mi><mo>=</mo><msup><mi>T</mi><mi>⊤</mi></msup><mi>e</mi></mtd></mtr></mtable>' />
-          <p>The fitted component is ê<sub>mirror</sub> = <i>Tc</i>. Compute energies as sums of squared samples:</p>
+          <p>The fitted component is <InlineMath label="Fitted mirror error" html='<msub><mover><mi>e</mi><mo>^</mo></mover><mtext>mirror</mtext></msub>' /> = <i>Tc</i>. Compute energies as sums of squared samples:</p>
           <Equation id={5} label="Fitted mirror energy and total error energy" html={`${em}<mo>=</mo><msup><mrow><mo>‖</mo><mi>T</mi><mi>c</mi><mo>‖</mo></mrow><mn>2</mn></msup><mo>=</mo><msup><mi>c</mi><mi>⊤</mi></msup><mi>G</mi><mi>c</mi><mo>,</mo><mspace width="1em"/>${ee}<mo>=</mo><msup><mrow><mo>‖</mo><mi>e</mi><mo>‖</mo></mrow><mn>2</mn></msup>`} />
           <p>Use a linear solver with λ = 10<sup>−6</sup> and ε = 10<sup>−12</sup>. Fit each utterance independently. Reversing the error sign changes the fitted waveform’s sign but leaves both energies unchanged.</p>
         </section>
@@ -63,7 +69,7 @@ export default function Home() {
 
         <section id="evidence">
           <h2>S3. Boundary validation</h2>
-          <p>Thirty real clean targets were used: ten each from LibriSpeech, TIMIT, and AISHELL-1. The periodic construction x̂ = <i>x</i> + 0.2<i>xg</i> uses zero-mean <i>H</i>-periodic <i>g</i> with unit RMS over one period. The second construction replaces the entire prediction with independent, target-RMS-matched Gaussian noise; five fixed seeds give 150 evaluations per period.</p>
+          <p>Thirty real clean targets were used: ten each from LibriSpeech, TIMIT, and AISHELL-1. The periodic construction <InlineMath label="Predicted x" html='<mover><mi>x</mi><mo>^</mo></mover>' /> = <i>x</i> + 0.2<i>xg</i> uses zero-mean <i>H</i>-periodic <i>g</i> with unit RMS over one period. The second construction replaces the entire prediction with independent, target-RMS-matched Gaussian noise; five fixed seeds give 150 evaluations per period.</p>
           <div className="table-block">
             <p className="paper-table-caption"><strong className="table-label">Table S1.</strong> Energy-pooled HA-MAI<sub>error</sub> (dB). Pure periodic errors are slightly below zero due to ridge shrinkage. Unrounded values are available in the accompanying CSV.</p>
             <Table>

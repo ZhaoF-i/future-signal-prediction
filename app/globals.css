@@ -7,7 +7,9 @@
   --muted: #ffffff;
   --muted-foreground: #444444;
   --border: #999999;
-  --font-sans: Georgia, 'Times New Roman', serif;
+  --font-text: 'STIX Two Text', 'Times New Roman', serif;
+  --font-math: 'STIX Two Math', 'Cambria Math', math;
+  --font-sans: var(--font-text);
 }
 
 * { box-sizing: border-box; }
@@ -16,7 +18,8 @@ body {
   margin: 0;
   color: var(--foreground);
   background: var(--background);
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: var(--font-text);
+  font-synthesis: none;
   font-size: 1.0625rem;
   line-height: 1.75;
 }
@@ -35,7 +38,10 @@ a:focus-visible { outline: 2px solid #183d70; outline-offset: 3px; }
 sub, sup { font-size: .75em; }
 .equation { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: .8rem; margin: 1.15rem 0; padding: .3rem 0; }
 .math { overflow-x: auto; padding: .45rem 0; min-width: 0; }
-.math math { font-size: 1.1em; }
+math { font-family: var(--font-math); }
+.math math { font-size: 1.08em; }
+.inline-math { white-space: nowrap; }
+.inline-math math { font-size: 1em; }
 .equation-number { font-size: 1rem; white-space: nowrap; }
 .table-block { margin: 1.5rem 0; }
 .paper-table-caption { display: block; width: 100%; white-space: normal; font-size: .9375rem; line-height: 1.6; margin-bottom: .6rem; }
@@ -44,13 +50,13 @@ sub, sup { font-size: .75em; }
 .table-block table { border-collapse: collapse; width: 100%; border-top: 1.5px solid #222; border-bottom: 1.5px solid #222; font-size: .9375rem; line-height: 1.5; }
 .table-block thead { border-bottom: 1px solid #555; }
 .table-block th, .table-block td { padding: .55rem .5rem; height: auto; text-align: center; white-space: nowrap; }
-.table-block th { font-weight: 600; color: #1a1a1a; }
+.table-block th { font-weight: 700; color: #1a1a1a; }
 .table-block tbody tr, .table-block thead tr { border: 0; background: transparent; }
 .table-block tbody tr:hover { background: transparent; }
 .table-block td { font-variant-numeric: tabular-nums; }
 .conditions { padding-left: 1.5rem; margin: .5rem 0 1rem; }
 .conditions li { margin-bottom: .6rem; }
-code { font-family: 'Courier New', monospace; font-size: .875em; }
+code { font-family: ui-monospace, 'Cascadia Mono', 'Liberation Mono', monospace; font-size: .875em; }
 pre { margin: 1rem 0; padding: .8rem 1rem; background: #f6f6f6; border: 1px solid #ddd; overflow-x: auto; line-height: 1.65; }
 .paper-footer { margin-top: 2.5rem; padding-top: .8rem; border-top: 1px solid #bbb; text-align: center; color: #555; font-size: .875rem; }
 .skip-link { position: absolute; top: -100px; left: 1rem; padding: .5rem; background: white; }
