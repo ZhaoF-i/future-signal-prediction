@@ -1,0 +1,34 @@
+{
+  "1": {
+    "label": "HA-MAI error equals 10 log base 10 of the stabilized mirror-to-error energy ratio",
+    "tex": "\\text{HA-MAI}_{\\mathrm{error}} = 10\\log_{10}\\!\\left(\\frac{E_{\\mathrm{mirror}}+\\epsilon}{E_{\\mathrm{error}}+\\epsilon}\\right)"
+  },
+  "2": {
+    "label": "Cosine and sine basis functions at nominal period H",
+    "tex": "\\begin{aligned} b_{m,\\cos}[n] &= \\cos\\!\\left(\\frac{2\\pi mn}{H}\\right), \\\\[0.35em] b_{m,\\sin}[n] &= \\sin\\!\\left(\\frac{2\\pi mn}{H}\\right). \\end{aligned}"
+  },
+  "3": {
+    "label": "Multiply the target by each cosine and sine basis; T is an N by K real template matrix",
+    "tex": "\\begin{aligned} T_{m,\\cos}[n] &= x[n]\\,\\cos\\!\\left(\\frac{2\\pi mn}{H}\\right), \\\\[0.35em] T_{m,\\sin}[n] &= x[n]\\,\\sin\\!\\left(\\frac{2\\pi mn}{H}\\right), \\\\[0.35em] T &\\in \\mathbb{R}^{N\\times K}. \\end{aligned}"
+  },
+  "4": {
+    "label": "G equals T transpose T; rhs equals T transpose e; scale equals trace G over K; alpha equals lambda times max of scale and epsilon; solve for c",
+    "tex": "\\begin{aligned} G &= T^{\\mathsf T}T, \\\\[0.15em] \\mathrm{rhs} &= T^{\\mathsf T}e, \\\\[0.15em] \\mathrm{scale} &= \\frac{\\operatorname{trace}(G)}{K}, \\\\[0.15em] \\alpha &= \\lambda\\,\\max(\\mathrm{scale},\\epsilon), \\\\[0.15em] c &= \\operatorname{solve}(G+\\alpha I,\\,\\mathrm{rhs}). \\end{aligned}"
+  },
+  "5": {
+    "label": "Reconstructed mirror error equals T c; mirror energy is its squared L2 norm; error energy is the squared L2 norm of e",
+    "tex": "\\begin{aligned} \\widehat e_{\\mathrm{mirror}} &= Tc, \\\\[0.35em] E_{\\mathrm{mirror}} &= \\bigl\\lVert\\widehat e_{\\mathrm{mirror}}\\bigr\\rVert_2^2, \\\\[0.35em] E_{\\mathrm{error}} &= \\lVert e\\rVert_2^2. \\end{aligned}"
+  },
+  "6": {
+    "label": "HA-MAI error is bounded below by 10 log base 10 of epsilon over error energy plus epsilon, and above by zero",
+    "tex": "10\\log_{10}\\!\\left(\\frac{\\epsilon}{E_e+\\epsilon}\\right) \\le \\text{HA-MAI}_{\\mathrm{error}} \\le 0"
+  },
+  "7": {
+    "label": "Corpus score is the arithmetic mean of valid per-record dB scores",
+    "tex": "D_c = \\frac{1}{N_c}\\sum_{i\\in c}d_i"
+  },
+  "8": {
+    "label": "Domain macro score is the equal-weight mean of corpus scores",
+    "tex": "D_{\\mathrm{macro}} = \\frac{1}{C}\\sum_{c=1}^{C}D_c"
+  }
+}

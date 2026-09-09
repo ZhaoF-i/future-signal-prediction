@@ -5,7 +5,7 @@ An English paper supplement explaining the **Hop-Adaptive Mirror Artifact Index*
 $$\mathrm{HA\!\text{-}\!MAI}_{\mathrm{error}}=10\log_{10}\frac{E_m+\epsilon}{E_e+\epsilon}.$$
 
 The denominator is total prediction-error energy, **not target energy**.
-The page covers the complete non-DC basis, scaled ridge fitting, score interpretation, zero-error behavior, reference boundary experiments, and equal-weight per-unit dB reporting. All eight numbered equations are rendered in native MathML. Equations (S1)–(S5) follow the reference guide’s calculation steps with typeset fractions, subscripts, matrix products and squared L2 norms; (S5) does not expand the energies into summations. No external formula CDN is required.
+The page covers the complete non-DC basis, scaled ridge fitting, score interpretation, zero-error behavior, reference boundary experiments, and equal-weight per-unit dB reporting. All eight numbered equations are typeset at build time as self-contained SVG using MathJax with STIX2 glyphs. Inline math retains the local STIX Two Math font. Equations (S1)–(S5) follow the reference guide’s calculation steps with typeset fractions, subscripts, matrix products and squared L2 norms; (S5) does not expand the energies into summations. No browser-side equation renderer or external formula CDN is required.
 
 ## Local development
 
@@ -21,6 +21,8 @@ npm run dev
 ```sh
 npm run build
 ```
+
+Equation sources are maintained as LaTeX in `math/equations.json`. `npm run math` generates the SVG assets and size metadata; both `npm run dev` and `npm run build` run this step automatically. The renderer follows the [MathJax server-side component workflow](https://docs.mathjax.org/en/v4.0/server/components.html) and uses its [STIX2 font support](https://docs.mathjax.org/en/v4.0/output/fonts.html).
 
 The complete public website is exported to `dist/client/`. The build converts asset URLs to relative paths and removes unnecessary hydration scripts from the fully rendered article. Native equation links and downloads work without JavaScript, including under `/future-signal-prediction/`.
 

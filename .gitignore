@@ -43,3 +43,7 @@ next-env.d.ts
 *.tsbuildinfo
 __pycache__/
 *.pyc
+
+# Formula assets are regenerated from math/equations.json before dev/build
+/public/equations/
+/math/dimensions.generated.json
