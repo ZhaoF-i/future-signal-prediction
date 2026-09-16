@@ -146,10 +146,10 @@
         }
       ],
       "figure": {
-        "file": "speech-spectrogram.50e1cbea826e.png",
-        "sha256": "50e1cbea826e376e3e1bc440f52da303353c51645b17ab2191906c587934d789",
-        "width": 5079,
-        "height": 3893,
+        "file": "speech-spectrogram.32b588a5085a.png",
+        "sha256": "32b588a5085a3abc1f1bcb053fee8b8ee754c42f1bbe30a28de5f346e5807d9d",
+        "width": 20313,
+        "height": 15569,
         "amplitude_reference": 0.18003176362344608,
         "reference": "Maximum STFT magnitude across all three exported WAVs",
         "window": "periodic Hann",
@@ -181,7 +181,14 @@
         "time_axis_extent": "Edges of available STFT time bins; no synthetic boundary frames",
         "canvas_bbox": "tight",
         "canvas_padding_inches": 0.02,
-        "dpi": 600
+        "dpi": 2400,
+        "preview": {
+          "file": "speech-spectrogram.50e1cbea826e.png",
+          "sha256": "50e1cbea826e376e3e1bc440f52da303353c51645b17ab2191906c587934d789",
+          "width": 5079,
+          "height": 3893,
+          "dpi": 600
+        }
       },
       "errors": {
         "definition": "error = published target - published predicted signal",
@@ -214,10 +221,10 @@
           }
         ],
         "figure": {
-          "file": "speech-error-spectrogram.0a02c8450d08.png",
-          "sha256": "0a02c8450d08c7e9c89860dce3088031a8879cd5575136eadf87d07b6ae9df6e",
-          "width": 5079,
-          "height": 2867,
+          "file": "speech-error-spectrogram.9456ad7fd3e7.png",
+          "sha256": "9456ad7fd3e768d334d013af2c193851e25103e3b2ffa2795fa1cf4a62383831",
+          "width": 20313,
+          "height": 11465,
           "amplitude_reference": 0.18003176362344608,
           "reference": "Same reference as the corresponding Target / Predicted figure; no error-panel normalization",
           "window": "periodic Hann",
@@ -249,7 +256,14 @@
           "time_axis_extent": "Edges of available STFT time bins; no synthetic boundary frames",
           "canvas_bbox": "tight",
           "canvas_padding_inches": 0.02,
-          "dpi": 600
+          "dpi": 2400,
+          "preview": {
+            "file": "speech-error-spectrogram.0a02c8450d08.png",
+            "sha256": "0a02c8450d08c7e9c89860dce3088031a8879cd5575136eadf87d07b6ae9df6e",
+            "width": 5079,
+            "height": 2867,
+            "dpi": 600
+          }
         }
       }
     },
@@ -393,10 +407,10 @@
         }
       ],
       "figure": {
-        "file": "timit-spectrogram.4835128c911c.png",
-        "sha256": "4835128c911cc1cbc0e710746e87b0a258b46aa82d66f4ce5efe81189dd69333",
-        "width": 5079,
-        "height": 3893,
+        "file": "timit-spectrogram.3f311b746064.png",
+        "sha256": "3f311b74606483f7e2f2828b83824849a7fb3e185930760aa91f4250882736c7",
+        "width": 20313,
+        "height": 15569,
         "amplitude_reference": 0.13567821637727806,
         "reference": "Maximum STFT magnitude across all three exported WAVs",
         "window": "periodic Hann",
@@ -428,7 +442,14 @@
         "time_axis_extent": "Edges of available STFT time bins; no synthetic boundary frames",
         "canvas_bbox": "tight",
         "canvas_padding_inches": 0.02,
-        "dpi": 600
+        "dpi": 2400,
+        "preview": {
+          "file": "timit-spectrogram.4835128c911c.png",
+          "sha256": "4835128c911cc1cbc0e710746e87b0a258b46aa82d66f4ce5efe81189dd69333",
+          "width": 5079,
+          "height": 3893,
+          "dpi": 600
+        }
       },
       "errors": {
         "definition": "error = published target - published predicted signal",
@@ -461,10 +482,10 @@
           }
         ],
         "figure": {
-          "file": "timit-error-spectrogram.9c99303d5c22.png",
-          "sha256": "9c99303d5c2254028d40c585ed61bba01fe5bcd1d99355c91a72c831f73069d2",
-          "width": 5079,
-          "height": 2867,
+          "file": "timit-error-spectrogram.f1b1b07aa81c.png",
+          "sha256": "f1b1b07aa81ce2b12b1c79f0ede097e6cd50526a541fb6431dc316fc0446ec7e",
+          "width": 20313,
+          "height": 11465,
           "amplitude_reference": 0.13567821637727806,
           "reference": "Same reference as the corresponding Target / Predicted figure; no error-panel normalization",
           "window": "periodic Hann",
@@ -496,7 +517,14 @@
           "time_axis_extent": "Edges of available STFT time bins; no synthetic boundary frames",
           "canvas_bbox": "tight",
           "canvas_padding_inches": 0.02,
-          "dpi": 600
+          "dpi": 2400,
+          "preview": {
+            "file": "timit-error-spectrogram.9c99303d5c22.png",
+            "sha256": "9c99303d5c2254028d40c585ed61bba01fe5bcd1d99355c91a72c831f73069d2",
+            "width": 5079,
+            "height": 2867,
+            "dpi": 600
+          }
         }
       }
     },
@@ -640,10 +668,10 @@
         }
       ],
       "figure": {
-        "file": "aishell1-spectrogram.8d34e433d8ce.png",
-        "sha256": "8d34e433d8cec5317867dbd0bf4bd516e6f8e41a8b6bed77d9d6c9fca25f975d",
-        "width": 5079,
-        "height": 3893,
+        "file": "aishell1-spectrogram.f6b0c7380eb9.png",
+        "sha256": "f6b0c7380eb94e620e8300e93919daa4ff48ab3b2cdcb186c7d51a030c8129b1",
+        "width": 20313,
+        "height": 15569,
         "amplitude_reference": 0.2526813582044636,
         "reference": "Maximum STFT magnitude across all three exported WAVs",
         "window": "periodic Hann",
@@ -675,7 +703,14 @@
         "time_axis_extent": "Edges of available STFT time bins; no synthetic boundary frames",
         "canvas_bbox": "tight",
         "canvas_padding_inches": 0.02,
-        "dpi": 600
+        "dpi": 2400,
+        "preview": {
+          "file": "aishell1-spectrogram.8d34e433d8ce.png",
+          "sha256": "8d34e433d8cec5317867dbd0bf4bd516e6f8e41a8b6bed77d9d6c9fca25f975d",
+          "width": 5079,
+          "height": 3893,
+          "dpi": 600
+        }
       },
       "errors": {
         "definition": "error = published target - published predicted signal",
@@ -708,10 +743,10 @@
           }
         ],
         "figure": {
-          "file": "aishell1-error-spectrogram.929a7f801622.png",
-          "sha256": "929a7f8016220b9b77cac214b7ee0b911af11d03e6838963a4042bec5bf39633",
-          "width": 5079,
-          "height": 2867,
+          "file": "aishell1-error-spectrogram.194f429d1f92.png",
+          "sha256": "194f429d1f92244335ce62e61866d94c29c4877701e00b325f1d8d5fe3696919",
+          "width": 20313,
+          "height": 11465,
           "amplitude_reference": 0.2526813582044636,
           "reference": "Same reference as the corresponding Target / Predicted figure; no error-panel normalization",
           "window": "periodic Hann",
@@ -743,7 +778,14 @@
           "time_axis_extent": "Edges of available STFT time bins; no synthetic boundary frames",
           "canvas_bbox": "tight",
           "canvas_padding_inches": 0.02,
-          "dpi": 600
+          "dpi": 2400,
+          "preview": {
+            "file": "aishell1-error-spectrogram.929a7f801622.png",
+            "sha256": "929a7f8016220b9b77cac214b7ee0b911af11d03e6838963a4042bec5bf39633",
+            "width": 5079,
+            "height": 2867,
+            "dpi": 600
+          }
         }
       }
     },
@@ -887,10 +929,10 @@
         }
       ],
       "figure": {
-        "file": "noisex92-spectrogram.69dec9aa22a6.png",
-        "sha256": "69dec9aa22a6de2f19bbe8a8ff663e14723d73449a7b13f858a03a49f9d5b678",
-        "width": 5079,
-        "height": 3893,
+        "file": "noisex92-spectrogram.c2c1c157bcbe.png",
+        "sha256": "c2c1c157bcbe14eaea78dc99292c3d255a19e6272e263b552460b4901778c2e5",
+        "width": 20313,
+        "height": 15569,
         "amplitude_reference": 0.08459110333090561,
         "reference": "Maximum STFT magnitude across all three exported WAVs",
         "window": "periodic Hann",
@@ -922,7 +964,14 @@
         "time_axis_extent": "Edges of available STFT time bins; no synthetic boundary frames",
         "canvas_bbox": "tight",
         "canvas_padding_inches": 0.02,
-        "dpi": 600
+        "dpi": 2400,
+        "preview": {
+          "file": "noisex92-spectrogram.69dec9aa22a6.png",
+          "sha256": "69dec9aa22a6de2f19bbe8a8ff663e14723d73449a7b13f858a03a49f9d5b678",
+          "width": 5079,
+          "height": 3893,
+          "dpi": 600
+        }
       },
       "errors": {
         "definition": "error = published target - published predicted signal",
@@ -955,10 +1004,10 @@
           }
         ],
         "figure": {
-          "file": "noisex92-error-spectrogram.423e506723e8.png",
-          "sha256": "423e506723e88ed9e88e69eedab78d2e9bc1592734f2c4c2bd6b422a357e3015",
-          "width": 5079,
-          "height": 2867,
+          "file": "noisex92-error-spectrogram.ce379ed6bef3.png",
+          "sha256": "ce379ed6bef35c92e2b14f013ce976ad53f83f2b46934ab10753f3c39ecf4f3e",
+          "width": 20313,
+          "height": 11465,
           "amplitude_reference": 0.08459110333090561,
           "reference": "Same reference as the corresponding Target / Predicted figure; no error-panel normalization",
           "window": "periodic Hann",
@@ -990,7 +1039,14 @@
           "time_axis_extent": "Edges of available STFT time bins; no synthetic boundary frames",
           "canvas_bbox": "tight",
           "canvas_padding_inches": 0.02,
-          "dpi": 600
+          "dpi": 2400,
+          "preview": {
+            "file": "noisex92-error-spectrogram.423e506723e8.png",
+            "sha256": "423e506723e88ed9e88e69eedab78d2e9bc1592734f2c4c2bd6b422a357e3015",
+            "width": 5079,
+            "height": 2867,
+            "dpi": 600
+          }
         }
       }
     },
@@ -1134,10 +1190,10 @@
         }
       ],
       "figure": {
-        "file": "noise-spectrogram.f578c1d08ba0.png",
-        "sha256": "f578c1d08ba00a0d920b88eaf67d95fd26c2a62ffe0a90ef8b560841ff414269",
-        "width": 5079,
-        "height": 3893,
+        "file": "noise-spectrogram.f2ddc6d23b94.png",
+        "sha256": "f2ddc6d23b94c42dcb86a9a08fe63de49b7f6790041108d97cc1e52aadf533c6",
+        "width": 20313,
+        "height": 15569,
         "amplitude_reference": 0.23811892741201202,
         "reference": "Maximum STFT magnitude across all three exported WAVs",
         "window": "periodic Hann",
@@ -1169,7 +1225,14 @@
         "time_axis_extent": "Edges of available STFT time bins; no synthetic boundary frames",
         "canvas_bbox": "tight",
         "canvas_padding_inches": 0.02,
-        "dpi": 600
+        "dpi": 2400,
+        "preview": {
+          "file": "noise-spectrogram.f578c1d08ba0.png",
+          "sha256": "f578c1d08ba00a0d920b88eaf67d95fd26c2a62ffe0a90ef8b560841ff414269",
+          "width": 5079,
+          "height": 3893,
+          "dpi": 600
+        }
       },
       "errors": {
         "definition": "error = published target - published predicted signal",
@@ -1202,10 +1265,10 @@
           }
         ],
         "figure": {
-          "file": "noise-error-spectrogram.e563474eb7f2.png",
-          "sha256": "e563474eb7f2942ea09f7e463108b86851aa347ba1b42401263fbec6a2ebd53a",
-          "width": 5079,
-          "height": 2867,
+          "file": "noise-error-spectrogram.3ab15a491a91.png",
+          "sha256": "3ab15a491a91b808916093b2985b54a26ba112a32368b0868612ba5e52f751ef",
+          "width": 20313,
+          "height": 11465,
           "amplitude_reference": 0.23811892741201202,
           "reference": "Same reference as the corresponding Target / Predicted figure; no error-panel normalization",
           "window": "periodic Hann",
@@ -1237,7 +1300,14 @@
           "time_axis_extent": "Edges of available STFT time bins; no synthetic boundary frames",
           "canvas_bbox": "tight",
           "canvas_padding_inches": 0.02,
-          "dpi": 600
+          "dpi": 2400,
+          "preview": {
+            "file": "noise-error-spectrogram.e563474eb7f2.png",
+            "sha256": "e563474eb7f2942ea09f7e463108b86851aa347ba1b42401263fbec6a2ebd53a",
+            "width": 5079,
+            "height": 2867,
+            "dpi": 600
+          }
         }
       }
     },
@@ -1381,10 +1451,10 @@
         }
       ],
       "figure": {
-        "file": "esc50-spectrogram.b19e8e3c29cb.png",
-        "sha256": "b19e8e3c29cb6a1098fc5f3b45b9a422e78d12ae57d9dfee52419ff9c77e0966",
-        "width": 5079,
-        "height": 3893,
+        "file": "esc50-spectrogram.efd33b6e2bd4.png",
+        "sha256": "efd33b6e2bd4a998e57574570895d90b6823c577a63951ec755c03b7e5f8bca0",
+        "width": 20313,
+        "height": 15569,
         "amplitude_reference": 0.2840693826368067,
         "reference": "Maximum STFT magnitude across all three exported WAVs",
         "window": "periodic Hann",
@@ -1416,7 +1486,14 @@
         "time_axis_extent": "Edges of available STFT time bins; no synthetic boundary frames",
         "canvas_bbox": "tight",
         "canvas_padding_inches": 0.02,
-        "dpi": 600
+        "dpi": 2400,
+        "preview": {
+          "file": "esc50-spectrogram.b19e8e3c29cb.png",
+          "sha256": "b19e8e3c29cb6a1098fc5f3b45b9a422e78d12ae57d9dfee52419ff9c77e0966",
+          "width": 5079,
+          "height": 3893,
+          "dpi": 600
+        }
       },
       "errors": {
         "definition": "error = published target - published predicted signal",
@@ -1449,10 +1526,10 @@
           }
         ],
         "figure": {
-          "file": "esc50-error-spectrogram.91014c4c0354.png",
-          "sha256": "91014c4c035441ff188aef0ee128bf6e598a4eefcd554aeeb47e660a64543263",
-          "width": 5079,
-          "height": 2867,
+          "file": "esc50-error-spectrogram.4598beeb7f75.png",
+          "sha256": "4598beeb7f754cb1746ad95b07d2bd24bf74530e6f97843b638df9d7c1a1e7aa",
+          "width": 20313,
+          "height": 11465,
           "amplitude_reference": 0.2840693826368067,
           "reference": "Same reference as the corresponding Target / Predicted figure; no error-panel normalization",
           "window": "periodic Hann",
@@ -1484,7 +1561,14 @@
           "time_axis_extent": "Edges of available STFT time bins; no synthetic boundary frames",
           "canvas_bbox": "tight",
           "canvas_padding_inches": 0.02,
-          "dpi": 600
+          "dpi": 2400,
+          "preview": {
+            "file": "esc50-error-spectrogram.91014c4c0354.png",
+            "sha256": "91014c4c035441ff188aef0ee128bf6e598a4eefcd554aeeb47e660a64543263",
+            "width": 5079,
+            "height": 2867,
+            "dpi": 600
+          }
         }
       }
     }
