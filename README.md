@@ -1,11 +1,21 @@
 # HA-MAI — Supplementary material
 
-An English paper supplement explaining the **Hop-Adaptive Mirror Artifact Index**, using exactly:
+An English paper supplement explaining the **Hop-Adaptive Mirror Artifact Index**, using the manuscript’s error-normalized score:
 
-$$\mathrm{HA\!\text{-}\!MAI}_{\mathrm{error}}=10\log_{10}\frac{E_m+\epsilon}{E_e+\epsilon}.$$
+$$\mathrm{HA\!\text{-}\!MAI}=10\log_{10}\frac{E_m+\epsilon}{E_e+\epsilon}.$$
 
 The denominator is total prediction-error energy, **not target energy**.
-The page covers the complete non-DC basis, scaled ridge fitting, score interpretation, zero-error behavior, reference boundary experiments, and equal-weight per-unit dB reporting. All eight numbered equations are typeset at build time as self-contained SVG using MathJax with STIX2 glyphs. Inline math retains the local STIX Two Math font. Equations (S1)–(S5) follow the reference guide’s calculation steps with typeset fractions, subscripts, matrix products and squared L2 norms; (S5) does not expand the energies into summations. No browser-side equation renderer or external formula CDN is required.
+The page covers the complete non-DC basis, scaled ridge fitting, score interpretation, zero-error behavior, reference boundary experiments, and equal-weight per-unit dB reporting. The six displayed numbered equations are typeset at build time as self-contained SVG using MathJax with STIX2 glyphs. Inline math retains the local STIX Two Math font. Equations (S1)–(S5) follow the reference guide’s calculation steps with typeset fractions, subscripts, matrix products and squared L2 norms; (S5) does not expand the energies into summations. No browser-side equation renderer or external formula CDN is required.
+
+## Manuscript alignment
+
+The webpage follows the **2026-09-16** manuscript, *Sample-Level Speech and Noise Prediction: Unified Evaluation and Hop-Periodic Artifact Mitigation*, by Fei Zhao, Xueliang Zhang, and DeLiang Wang. The manuscript and report-provenance hashes are recorded in `public/data/manuscript-context.json`; the manuscript itself is not uploaded here. The six example corpora and four source model-output directories were checked against the current paper's provenance.
+
+The website has three sections. The former **S4. Reproducibility** and its displayed aggregation formulas were removed at the author's request; implementation and aggregation details remain in this README. HA-MAI uses the current paper's notation without the historical `error` subscript; its denominator and computation are unchanged. Source API fields retain `hamai_error_db` for compatibility.
+
+Standalone **S4-TD** is independently trained, distinct from the **S4-TD baseline** comparison model and from the complete system's internal base output. The complete system consists of S4-TD, **Prediction Enhancement PostNet (PE-PostNet)**, **Mirror Suppression PostNet (MS-PostNet)**, and **Adjacent RandomInterval** shared across all stages. For the displayed H=4 configuration, standalone B=F=4; complete B=F=5, commitment intervals are {4,5}, and the short-interval prior is q=0.9. F means prediction length, not a common position-wise horizon. In source manifests, `Base` and `RandomInterval` identify these saved output sets; `manifest_commit` is historical manifest metadata, not an independently established generating-checkpoint commit.
+
+The introduction now includes periodic gain/bias errors, target-synchronous mirror copies, DC-induced tonal artifacts, and the limitation that HA-MAI measures fitted **error share**, not absolute mirror energy. Paper evaluations use shared aligned-target RMS scaling and full evaluation units. Website metrics instead describe the explicitly aligned/cropped playback excerpts after one shared display gain; they are not substituted for the paper's corpus scores. The 720-record synthetic boundary check is an additional supplement experiment, separate from the six-corpus model evaluation.
 
 ## Local development
 
@@ -30,7 +40,7 @@ The complete public website is exported to `dist/client/`. The build converts as
 
 Push this website directory as the root of the selected GitHub repository, with default branch `main`. In repository **Settings → Pages → Build and deployment**, select **GitHub Actions**. The included workflow builds the portable static site and deploys the `dist/client/` artifact. For a different default branch, change the workflow push branch. GitHub Pages must be available for that repository/account.
 
-Only this website project belongs in the website repository, including the six selected target/estimate excerpts, four derived error tracks, and their figures described below. Do not upload the surrounding paper workspace or bulk original audio datasets.
+Only this website project belongs in the website repository, including the 18 selected target/estimate excerpts, 12 derived error tracks, and their figures described below. Do not upload the surrounding paper workspace or bulk original audio datasets.
 
 ## Numerical verification
 
@@ -69,28 +79,42 @@ This reproduces both current CSV files byte for byte. To process the original ex
 
 ## Qualitative mirror suppression examples
 
-Figures S1 and S2 use existing **H=4** Base and complete RandomInterval outputs selected from `hamai_full_24_branch/method_manifest.csv`; no inference is rerun and no fitted mirror component is subtracted. These are selected qualitative illustrations, not corpus averages or a claim that residual mirror energy is zero. The existing boundary table, S1–S8 equations, single-record implementation, and aggregation data are unchanged.
+Figures S1–S6 show one H=4 example from each test corpus. Saved source waveforms come from `hamai_full_24_branch/method_manifest.csv`; no inference is rerun and no fitted mirror component is subtracted. These are selected qualitative illustrations, not corpus averages or a claim of zero residual mirror energy.
 
-- **Speech:** LibriSpeech test-clean `7021-79759-0004`, 64000 samples (4 s) beginning at sample 176000 (11 s) of the aligned interval.
-- **Noise:** DEMAND `NPARK_S00641_seg0015`, all 47995 common samples (2.9996875 s).
+| Figure | Test corpus | Sample | Aligned start | Samples |
+| --- | --- | --- | ---: | ---: |
+| S1 | LibriSpeech test-clean | 7021-79759-0004 | 176000 | 64000 |
+| S2 | TIMIT TEST | DR3/MGJF0/SI1901 | 0 | 49555 |
+| S3 | AISHELL-1 test | BAC009S0916W0352 | 0 | 64000 |
+| S4 | NoiseX-92 | hfchannel_S00624_seg0000 | 0 | 47995 |
+| S5 | DEMAND | NPARK_S00641_seg0015 | 0 | 47995 |
+| S6 | ESC-50 | 1-187207-A-20 (crying baby) | 0 | 79995 |
 
-The baseline has advance **F=4** and the complete system **F=5**. Remove the first sample from both baseline target and prediction, then take the common valid interval with the full-system pair. Both selected pairs have exactly identical aligned targets before quantization. This is a comparison over the **same target time interval**, not a matched-advance ablation. The detector period remains H=4 for both models.
+Remove the first sample from both standalone target and prediction, then take the common valid interval with the complete-system pair. All six aligned target pairs are exactly identical before quantization. This is a comparison over the **same target time interval**, not a matched-prediction-length ablation. The detector period remains H=4 for both models.
 
 ### Selection rule
 
-The approved examples were chosen from paired saved outputs, using the unquantized audio. For each eligible speech target, examine 4 s windows with starts spaced by 16000 samples, also including the final possible start; choose the window with highest target energy, taking the earliest on a tie. Noise uses each entire common interval without padding, looping, or concatenation. Require valid metrics, baseline HA-MAI error above −20 dB, a decrease of at least 10 dB, and full-system NMSE no worse than baseline. Sort eligible candidates by HA-MAI reduction (with sample identifier as tie-breaker) and take the upper median at index `len(candidates)//2`: 88 eligible speech candidates and 15 eligible noise candidates (from 54 paired DEMAND targets). This selection deliberately favors visible mirror suppression and cannot establish typical performance. The exporter reproduces the **fixed selected clips**, rather than rerunning this search.
+Retain the previously published LibriSpeech and DEMAND clips. For each added corpus, inspect only paired saved H=4 outputs. For speech, use the highest-energy window up to 4 s, testing starts every 16000 samples plus the final possible start (earliest on a tie); shorter utterances use the full common interval. For noise, use the full common interval: approximately 3 s for NoiseX-92/DEMAND and 5 s for ESC-50. Require valid metrics, standalone HA-MAI above −20 dB, a reduction of at least 10 dB, and complete-system NMSE no worse than standalone. Added candidates must also admit exact unclipped PCM16 residuals after the shared export gain. Rank by HA-MAI reduction, then saved filename, and take the upper median at `len(candidates)//2`.
+
+Eligible added-corpus counts are 114 (TIMIT), 112 (AISHELL-1), 17 (NoiseX-92), and 70 (ESC-50). The previous LibriSpeech/DEMAND counts were 88/15. Selection favors examples of mirror suppression and does not establish typical performance. `scripts/additional_examples.json` fixes the new samples and credits. Reproduce the added-corpus selection with:
+
+```sh
+python scripts/select_additional_examples.py \
+  --manifest /path/to/hamai_full_24_branch/method_manifest.csv \
+  --output /tmp/selected-examples.json
+```
 
 ### Audio, spectra, and metrics
 
-Within each example, all three tracks receive one gain derived from their joint peak. The largest PCM16 level at or below 0.95 is used as the peak limit. No per-track loudness adjustment, DC removal, resampling, or additional filtering is performed. Quantize with `round(gain*x*32768)` and decode with `int16/32768`. HA-MAI error and NMSE are recomputed on the decoded **published WAVs**, so playback, plots, and displayed numbers refer to the same signals. Target is a reference and has no reported zero-error HA-MAI score. NMSE is `10*log10(error_energy/target_energy)` without an additional fitted gain; both selected predictions have valid, nonzero energies.
+Within each example, all three tracks receive one gain derived from their joint peak. The largest PCM16 level at or below 0.95 is used as the peak limit. No per-track loudness adjustment, DC removal, resampling, or additional filtering is performed. Quantize with `round(gain*x*32768)` and decode with `int16/32768`. HA-MAI error and NMSE are recomputed on the decoded **published WAVs**, so playback, plots, and displayed numbers refer to the same signals. Target is a reference and has no reported zero-error HA-MAI score. NMSE is `10*log10(error_energy/target_energy)` without an additional fitted gain; all selected predictions have valid, nonzero energies.
 
-Every figure uses a periodic Hann window of 512 samples, a hop of 128, and an FFT of 1024 at 16 kHz, with no boundary extension or padded final frame. STFT magnitudes use SciPy's `spectrum` scaling. The maximum magnitude across all three exported tracks is their **shared reference**; `20*log10(magnitude/reference)` is floored at −80 dB. All panels share the 0–8 kHz frequency range, time interval, and −80 to 0 dB color scale. The figures use STIX lettering; the webpage retains its local STIX Two fonts. Native audio controls need no JavaScript and do not autoplay.
+Every figure uses a periodic Hann window of 512 samples, a hop of 128, and an FFT of 1024 at 16 kHz, with no boundary extension or padded final frame. STFT magnitudes use SciPy's `spectrum` scaling. The maximum magnitude across all three exported tracks is their **shared reference**; `20*log10(magnitude/reference)` is floored at −80 dB. All panels share the 0–8 kHz frequency range, time interval, and −80 to 0 dB color scale. Dashed reference lines mark 2, 4, and 6 kHz as in the manuscript. On the webpage, figures are centered at a maximum width of 660 px and link to full-resolution PNGs. The figures use STIX lettering; the webpage retains its local STIX Two fonts. Native audio controls need no JavaScript and do not autoplay.
 
-`public/examples/metadata.json` is the single source of the webpage's clip metrics. It records source dataset identifiers, model methods/advances/commits, source WAV and manifest SHA-256 hashes, alignment and crop ranges (zero-based, end-exclusive), sample counts, shared gains, exported peaks/hashes, metric energies/parameters/statuses, spectrogram settings, and software versions. Private absolute paths and model checkpoints are not published.
+`public/examples/metadata.json` is the single source of the webpage's clip metrics. It records source dataset identifiers, model methods/prediction lengths/historical manifest commits, source WAV and manifest SHA-256 hashes, alignment and crop ranges (zero-based, end-exclusive), sample counts, shared gains, exported peaks/hashes, metric energies/parameters/statuses, spectrogram settings, and software versions. Private absolute paths and model checkpoints are not published.
 
 ### Reproduce the media
 
-Each example now also includes a two-row **prediction-error** spectrogram and two error players, under panel (b) of Figure S1 or S2. Error means **published target − published estimate**, including all prediction error, not just the fitted mirror component. Subtraction uses PCM16 sample integers promoted to int32 to avoid overflow, then exports an exact PCM16 difference. No extra gain, normalization, clipping, or inference is applied. These selected residuals fit PCM16; the exporter rejects overflow rather than silently clipping. The target/estimate peak limit remains 0.95; error peaks are recorded separately (the speech baseline residual reaches approximately 0.952). The original six WAVs, displayed metrics, and target/estimate figures are unchanged.
+Each example now also includes a two-row **prediction-error** spectrogram and two error players, under panel (b) of Figures S1–S6. Error means **published target − published estimate**, including all prediction error, not just the fitted mirror component. Subtraction uses PCM16 sample integers promoted to int32 to avoid overflow, then exports an exact PCM16 difference. No extra gain, normalization, clipping, or inference is applied. These selected residuals fit PCM16; the exporter rejects overflow rather than silently clipping. The target/estimate peak limit remains 0.95; error peaks are recorded separately (the speech baseline residual reaches approximately 0.952). The previously published LibriSpeech and DEMAND WAVs and numeric scores are preserved; figure labels now follow the manuscript.
 
 Error spectrograms use exactly the same STFT parameters, magnitude reference, and −80 to 0 dB color limits as the corresponding target/estimate figure. Error energies match the error-energy values used in the displayed HA-MAI and NMSE. Metadata records the residual definition, parent WAV identifiers, gain of 1, hashes, peaks, energies, and plotting parameters.
 
@@ -110,7 +134,7 @@ python -m unittest discover -s tests -p 'test_examples.py'
 npm run build
 ```
 
-The full export verifies sampling rates, finite mono data, manifest advances, target agreement, crop bounds, and metric validity. It emits ten WAVs, four PNGs, and metadata. Existing media credits are maintained separately. The committed assets allow normal website builds without Python or access to the source datasets. Tests independently verify final PCM16 metrics/energies, exact error subtraction, overflow rejection, shared-gain quantization, alignment rejection, common spectrogram normalization, asset hashes, and the published example conditions.
+The full export verifies sampling rates, finite mono data, manifest advances, target agreement, crop bounds, and metric validity. It emits 30 WAVs, 12 PNGs, and metadata. Existing media credits are maintained separately. The committed assets allow normal website builds without Python or access to the source datasets. Tests independently verify final PCM16 metrics/energies, exact error subtraction, overflow rejection, shared-gain quantization, alignment rejection, common spectrogram normalization, asset hashes, and the published example conditions.
 
 ### Dataset credits
 
@@ -140,7 +164,7 @@ $$F=\frac{E_m}{E_e+\epsilon}.$$
 
 Because the dB definition also adds epsilon to the numerator, its exact relation to the fraction is
 
-$$\mathrm{HA\!\text{-}\!MAI}_{\mathrm{error}}=10\log_{10}\left(F+\frac{\epsilon}{E_e+\epsilon}\right).$$
+$$\mathrm{HA\!\text{-}\!MAI}=10\log_{10}\left(F+\frac{\epsilon}{E_e+\epsilon}\right).$$
 
 It is only approximately `10*log10(F)` when stabilization is negligible. For fixed error energy, the lower bound is `10*log10(eps/(Ee+eps))`; there is no finite lower bound independent of error energy. At exact zero error, the fraction is zero but the stipulated dB formula returns zero dB.
 
@@ -174,4 +198,4 @@ For an individual record only, −10/−20/−30 dB indicate approximately 10%/1
 
 $$10^{D_c/10}=\left(\prod_{i\in c}\frac{E_{m,i}+\epsilon}{E_{e,i}+\epsilon}\right)^{1/N_c}.$$
 
-This supplement defines the **error-normalized variant only**. A target-normalized HA-MAI has a different denominator and interpretation. Existing target-normalized manuscript scores cannot be relabeled as error-normalized scores without verifying or recomputing their underlying energies and aggregation.
+This supplement defines the **error-normalized variant only**. A target-normalized HA-MAI has a different denominator and interpretation. Historical target-normalized scores in archived versions must not be relabeled as the current manuscript’s HA-MAI; the current manuscript already uses error normalization and per-unit dB averaging.

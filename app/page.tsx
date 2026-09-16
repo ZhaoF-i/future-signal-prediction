@@ -13,7 +13,9 @@ function formatDb(value: number) {
 function MirrorExamples() {
   return <>
     <h3>Real model examples (<i>H</i> = 4)</h3>
-    <p>Figures S1–S2 compare saved Base predictions with the complete RandomInterval system. These selected speech and noise excerpts illustrate mirror suppression; they are not population averages. Both HA-MAI error and NMSE are computed from the audio available below. Lower values indicate a smaller fitted mirror share and lower normalized prediction error, respectively.</p>
+    <p>Figures S1–S6 provide one selected example from each of the six test corpora. Standalone S4-TD is trained independently; it is not the internal base output of the complete system. The complete system combines S4-TD, PE-PostNet, MS-PostNet, and Adjacent RandomInterval. These qualitative examples are not corpus averages.</p>
+    <p>For these configurations, standalone S4-TD uses B = F = H = 4. The complete system uses B = F = 5 and commitment intervals H<sub>k</sub> ∈ {'{4, 5}'}, with short-interval prior q = 0.9. The detector uses H = 4 for both. We trim one initial sample from the standalone target and estimate, then compare identical targets over a common interval. This compares the combined systems, not a matched-F ablation of MS-PostNet.</p>
+    <nav className="example-index" aria-label="Examples by test corpus">{exampleData.examples.map((example, index) => <a key={example.id} href={`#figure-s${index + 1}`}>{example.dataset}</a>)}</nav>
     {exampleData.examples.map((example, index) => (
       <figure className="mirror-example" id={`figure-s${index + 1}`} key={example.id}>
         <h3>{example.domain} · {example.dataset}</h3>
@@ -21,18 +23,18 @@ function MirrorExamples() {
         <a className="spectrogram-link" href={`./examples/${example.figure.file}`} aria-label={`Open full-resolution ${example.domain.toLowerCase()} spectrogram`}>
           <img className="spectrogram" src={`./examples/${example.figure.file}`}
             width={example.figure.width} height={example.figure.height} loading="lazy"
-            alt={`${example.domain} example ${example.sample_id}: aligned Target, Baseline, and After mirror suppression spectrograms, with one shared −80 to 0 dB color scale.`} />
+            alt={`${example.domain} example ${example.sample_id}: aligned Target, Standalone S4-TD, and Complete system spectrograms, with one shared −80 to 0 dB color scale.`} />
         </a>
         <div className="audio-comparison">
           {example.tracks.map(track => (
             <div className="audio-track" key={track.role}>
               <p className="track-label" id={`${example.id}-${track.role}-label`}>{track.label}</p>
-              <p className="track-context">{track.role === 'target' ? 'Reference' : track.role === 'baseline' ? 'Base · F = 4' : 'Full system · F = 5'}</p>
+              <p className="track-context">{track.role === 'target' ? 'Reference' : track.role === 'baseline' ? 'B = F = 4' : 'B = F = 5; Hₖ ∈ {4, 5}'}</p>
               <audio controls preload="none" aria-labelledby={`${example.id}-${track.role}-label`}>
                 <source src={`./examples/${track.file}`} type="audio/wav" />
                 <a href={`./examples/${track.file}`}>Download WAV</a>
               </audio>
-              {track.metrics && <p className="track-metrics">HA-MAI error: <span>{formatDb(track.metrics.hamai_error_db)}</span><br />NMSE: <span>{formatDb(track.metrics.nmse_db)}</span></p>}
+              {track.metrics && <p className="track-metrics">HA-MAI: <span>{formatDb(track.metrics.hamai_error_db)}</span><br />NMSE: <span>{formatDb(track.metrics.nmse_db)}</span></p>}
             </div>
           ))}
         </div>
@@ -40,13 +42,13 @@ function MirrorExamples() {
         <a className="spectrogram-link" href={`./examples/${example.errors.figure.file}`} aria-label={`Open full-resolution ${example.domain.toLowerCase()} error spectrogram`}>
           <img className="spectrogram" src={`./examples/${example.errors.figure.file}`}
             width={example.errors.figure.width} height={example.errors.figure.height} loading="lazy"
-            alt={`${example.domain} prediction errors: Baseline error and Error after mirror suppression, using the same time interval and magnitude reference as panel (a).`} />
+            alt={`${example.domain} prediction errors: Standalone S4-TD error and Complete-system error, using the same time interval and magnitude reference as panel (a).`} />
         </a>
         <div className="audio-comparison error-comparison">
           {example.errors.tracks.map(track => (
             <div className="audio-track" key={track.role}>
               <p className="track-label" id={`${example.id}-${track.role}-error-label`}>{track.label}</p>
-              <p className="track-context">Target − {track.role === 'baseline' ? 'baseline estimate' : 'full-system estimate'}</p>
+              <p className="track-context">Target − {track.role === 'baseline' ? 'standalone estimate' : 'complete-system estimate'}</p>
               <audio controls preload="none" aria-labelledby={`${example.id}-${track.role}-error-label`}>
                 <source src={`./examples/${track.file}`} type="audio/wav" />
                 <a href={`./examples/${track.file}`}>Download error WAV</a>
@@ -57,14 +59,12 @@ function MirrorExamples() {
         <figcaption className="paper-figure-caption">
           <strong className="figure-label">Figure S{index + 1}.</strong>{' '}
           Mirror suppression on {example.dataset} <span className="sample-id">{example.sample_id}</span>.{' '}
-          (a) Target and model estimates. (b) Total prediction errors, computed as target − estimate from the published WAVs; these include all error components, not only the fitted mirror component. Error audio has no additional gain, and both panels use the same magnitude reference.{' '}
-          {example.id === 'speech' ? 'The 4 s excerpt begins at sample 176000 (11 s) of the aligned interval.' : 'The excerpt spans all 47995 common samples (approximately 3 s).'}{' '}
-          Baseline target and prediction are each trimmed by one initial sample to match the full system’s target; the aligned targets are identical. This is a comparison over the same target time interval, not a matched-advance ablation (F = 4 versus F = 5). The fitted mirror component is reduced; residual mirror energy is not assumed to be zero.
+          A {example.duration_seconds.toFixed(2)} s excerpt starting at sample {example.alignment.crop_start_sample} of the aligned interval. (a) Target and estimates. (b) Total prediction errors, target − estimate, including both mirror and other error components. HA-MAI and NMSE are computed on the published excerpt; lower values mean a smaller fitted error share and lower relative error energy, respectively.
           <span className="example-credit">Source: <a href={example.dataset_credit.source_url}>{example.dataset}</a> · <a href={example.dataset_credit.license_url}>{example.dataset_credit.license}</a>. Attribution and excerpt processing: <a href="./examples/ATTRIBUTION.md">media credits</a>.</span>
         </figcaption>
       </figure>
     ))}
-    <p className="example-methods">All audio is mono, 16 kHz PCM16. Each target/estimate group uses one shared gain (peak ≤ 0.95); error tracks are their exact differences, without further normalization or clipping. Spectrograms use a 512-sample Hann window, 128-sample frame shift, and 1024-point FFT over 0–8 kHz. Within each example, target, estimates, and errors share one magnitude reference and an 80 dB color range. NMSE is 10 log₁₀ of error energy divided by target energy. <a href="./examples/metadata.json" download>Download clip metrics and metadata</a>.</p>
+    <p className="example-methods">All audio is mono, 16 kHz PCM16. Each target/estimate group uses one shared gain (peak ≤ 0.95); error tracks are their exact differences, without further normalization or clipping. Spectrograms use a 512-sample Hann window, 128-sample frame shift, and 1024-point FFT over 0–8 kHz. Within each example, target, estimates, and errors share one magnitude reference and an 80 dB color range. Dashed lines mark the 2, 4, and 6 kHz mirror-symmetry axes. Click a figure to view it at full resolution. NMSE is 10 log₁₀ of error energy divided by target energy. <a href="./examples/metadata.json" download>Download clip metrics and metadata</a>.</p>
   </>;
 }
 
@@ -108,14 +108,15 @@ export default function Home() {
       <main className="paper" id="content">
         <header className="paper-header">
           <p className="document-type">Supplementary Material</p>
-          <h1>Hop-Adaptive Mirror Artifact Index</h1>
-          <p className="subtitle">Error-normalized formulation for future-signal prediction</p>
+          <h1>Sample-Level Speech and Noise Prediction</h1>
+          <p className="subtitle">Unified evaluation and hop-periodic artifact mitigation</p>
         </header>
-        <p className="abstract">This supplement specifies the error-normalized HA-MAI, its estimation procedure, boundary validation, and selected model examples of mirror suppression. Implementation details and numerical checks are provided in the accompanying repository.</p>
+        <p className="abstract">This supplement accompanies the paper “Sample-Level Speech and Noise Prediction: Unified Evaluation and Hop-Periodic Artifact Mitigation.” It explains HA-MAI and provides target, prediction, and error examples from the six test corpora. Speech and noise predictors are trained separately under a common causal protocol; prediction length F is specified in samples.</p>
 
         <section id="definition">
           <h2>S1. Definition and estimation</h2>
-          <p>A fixed inference hop can make prediction errors repeat across positions within each output block. HA-MAI tests for the part of the error that resembles the target multiplied by a periodic gain pattern. Such modulation creates shifted copies of the target spectrum, which can appear as folded or mirrored structure in a one-sided spectrum.</p>
+          <p>Fixed-hop blockwise prediction repeatedly associates each output position with the same sampling-grid phase. The paper models the error as <i>e</i>[<i>n</i>] ≈ <i>a</i><sub>r</sub><i>x</i>[<i>n</i>] + <i>b</i><sub>r</sub> + η[<i>n</i>], where <i>r</i> = <i>n</i> mod <i>H</i>, <i>a</i><sub>r</sub> and <i>b</i><sub>r</sub> are periodic gain and bias errors, and η is non-periodic error. The Hop-Adaptive Mirror Artifact Index (HA-MAI) measures the gain-related component captured by target-modulated periodic templates.</p>
+          <p>Periodic gain modulation shifts copies of the target spectrum by multiples of <i>F</i><sub>s</sub>/<i>H</i>. Its first harmonic can produce reflections about <i>F</i><sub>s</sub>/(2<i>H</i>), giving 4, 2, 1, and 0.5 kHz at 16 kHz for <i>H</i> = 2, 4, 8, and 16. For the H = 4 examples below, mirror patterns may appear about 2, 4, and 6 kHz. These target-synchronous artifacts differ from ordinary DFT conjugate symmetry and unrelated high-frequency errors. Modulation of a nonzero DC component can also produce the whistle-like tonal artifacts described in the paper.</p>
           <p><strong>Error-normalized score.</strong> Let <i>x</i>[<i>n</i>] be the target and <InlineMath label="Predicted x" html='<mover><mi>x</mi><mo>^</mo></mover>' />[<i>n</i>] its time-aligned prediction. For a record of <i>N</i> samples, <i>n</i> runs from 0 to <i>N</i> − 1. Define <i>e</i>[<i>n</i>] = <i>x</i>[<i>n</i>] − <InlineMath label="Predicted x" html='<mover><mi>x</mi><mo>^</mo></mover>' />[<i>n</i>]. The score compares fitted mirror energy with total error energy:</p>
           <Equation id="1" />
           <p>Here <i>E</i><sub>mirror</sub> is the energy of the fitted mirror component, <i>E</i><sub>error</sub> is total prediction-error energy, and ε &gt; 0 stabilizes the ratio. These energies are abbreviated as <i>E</i><sub>m</sub> and <i>E</i><sub>e</sub> below. Thus (S1) asks how large the fitted mirror component is relative to the total error. The factor 10 converts an energy ratio to decibels. Equations (S2)–(S5) specify how to estimate its numerator.</p>
@@ -139,36 +140,27 @@ export default function Home() {
           <h2>S2. Interpretation and limitations</h2>
           <p>For an individual record, when stabilization is negligible, −10, −20, and −30 dB indicate mirror shares of approximately 10%, 1%, and 0.1%. Nonnegative ridge ensures 0 ≤ <i>E</i><sub>m</sub> ≤ <i>E</i><sub>e</sub>, giving the fixed-error-energy bounds</p>
           <Equation id="6" />
-          <p>A mean dB score corresponds to the geometric mean of the stabilized energy ratios. It must not be interpreted as an arithmetic mean of mirror percentages.</p>
+          <p>The paper computes HA-MAI for each evaluation unit, averages its dB values within each corpus, then weights the three corpora in each domain equally. A mean dB score corresponds to the geometric mean of the stabilized energy ratios, not an arithmetic mean of mirror percentages. The score in this supplement is the paper’s error-normalized HA-MAI.</p>
           <p>Exact zero error yields 0 dB through ε/ε and must be labeled <em>no error</em>, rather than interpreted as a high mirror share. Near-zero error is dominated by stabilization; a silent target makes the detector uninformative.</p>
-          <p>A lower index does not imply more accurate prediction: unrelated error can lower the ratio by increasing its denominator. Report HA-MAI with NMSE and SDR, or SI-SDR with its convention stated. Mirror-to-target energy provides complementary information about absolute artifact strength. Keep <i>H</i> fixed across compared methods, including randomized-interval counterparts; changing the fitted dimension changes the chance-correlation baseline.</p>
+          <p>A lower index does not imply more accurate prediction: unrelated error can lower the ratio by increasing its denominator. The paper reports HA-MAI together with NMSE and SDR: lower NMSE and higher SDR indicate better waveform prediction. Keep <i>H</i> fixed across compared methods, including randomized-interval counterparts; changing the fitted dimension changes the chance-correlation baseline.</p>
+          <p>In the paper, PE-PostNet improves waveform accuracy, while the complete system adds MS-PostNet and Adjacent RandomInterval across all three stages. Lower HA-MAI describes a reduced fitted share of total error; it alone does not prove a reduction in absolute mirror energy or isolate periodic bias errors. The complete system uses the shorter commitment interval as the detector period, matching its fixed-hop counterpart.</p>
         </section>
 
         <section id="evidence">
           <h2>S3. Boundary validation and model examples</h2>
           <p>Thirty real clean targets were used: ten each from LibriSpeech, TIMIT, and AISHELL-1. The periodic construction <InlineMath label="Predicted x" html='<mover><mi>x</mi><mo>^</mo></mover>' /> = <i>x</i> + 0.2<i>xg</i> uses zero-mean <i>H</i>-periodic <i>g</i> with unit RMS over one period. The second construction replaces the entire prediction with independent, target-RMS-matched Gaussian noise; five fixed seeds give 150 evaluations per period.</p>
           <div className="table-block">
-            <p className="paper-table-caption"><strong className="table-label">Table S1.</strong> Mean per-unit HA-MAI error (dB). Pure periodic errors are slightly below zero due to ridge shrinkage. Unrounded values are available in the accompanying CSV.</p>
+            <p className="paper-table-caption"><strong className="table-label">Table S1.</strong> Mean per-unit HA-MAI (dB). Pure periodic errors are slightly below zero due to ridge shrinkage. Unrounded values are available in the <a href="./data/boundary-mean-summary.csv">summary CSV</a>.</p>
             <Table>
               <TableHeader><TableRow><TableHead scope="col">Period <i>H</i></TableHead><TableHead scope="col">Periodic mirror error</TableHead><TableHead scope="col">Gaussian prediction</TableHead></TableRow></TableHeader>
               <TableBody>{experiment.map(row => <TableRow key={row[0]}>{row.map((v, i) => <TableCell key={i}>{v}</TableCell>)}</TableRow>)}</TableBody>
             </Table>
           </div>
-          <p>For each condition and period, Table S1 averages the independently computed per-unit dB scores with equal weights. Each target is one periodic-error record; each target × seed is one Gaussian record (30 and 150 records per period, respectively). All 720 records exceed the energy thresholds in Section S4. The periodic error is almost completely recovered. Gaussian predictions score low despite poor waveform fidelity, confirming that the index measures a specific error structure. Their fitted energy reflects finite-sample target/template and noise correlations; these results do not establish a universal noise floor.</p>
+          <p>For each condition and period, Table S1 averages the independently computed per-unit dB scores with equal weights. Each target is one periodic-error record; each target × seed is one Gaussian record (30 and 150 records per period, respectively). All 720 records have non-silent targets and error energy above 100ε. The periodic error is almost completely recovered. Gaussian predictions score low despite poor waveform fidelity, confirming that the index measures a specific error structure. Their fitted energy reflects finite-sample target/template and noise correlations; these results do not establish a universal noise floor.</p>
           <MirrorExamples />
         </section>
 
-        <section id="implementation">
-          <h2>S4. Reproducibility</h2>
-          <p>Use aligned, finite, equal-length waveforms with identical sampling rates and evaluation intervals. Report <i>H</i>, λ, ε, segment length, treatment of silent and near-zero-error samples, and valid-sample counts. For each valid record <i>i</i>, fit independently and compute <i>d</i><sub>i</sub> using (S1). The corpus score is the arithmetic mean over its <i>N</i><sub>c</sub> valid records:</p>
-          <Equation id="7" />
-          <p>An equal-weight domain macro score over <i>C</i> corpora is then</p>
-          <Equation id="8" />
-          <p>Records are not weighted by audio length or error energy. Table S1 uses the per-unit mean over all records for each condition and period; its balanced corpus counts also make it equal to (S8). For unbalanced corpora, these two means can differ.</p>
-          <p>Count invalid records, silent targets (target energy ≤ ε), exact zero errors, and near-zero errors (0 &lt; <i>E</i><sub>e</sub> ≤ 100ε) separately and exclude them from the valid-record mean. Silent-target status takes precedence over error-energy status. If no valid records remain, report the score as unavailable; do not substitute 0 dB. A domain macro is unavailable if any included corpus has no valid records.</p>
-          <p>The <a href="./hamai.py" download>NumPy implementation</a> uses <code>period=H</code>. Download the <a href="./data/boundary-mean-summary.csv" download>mean summary CSV</a> and <a href="./data/boundary-per-unit.csv" download>anonymized per-unit CSV</a>. The reproducible summary script, phase-wise sufficient statistics, and usage examples are documented in the <a href="https://github.com/ZhaoF-i/future-signal-prediction#implementation-details">repository README</a>.</p>
-        </section>
-        <footer className="paper-footer">Supplementary material · HA-MAI<sub>error</sub></footer>
+        <footer className="paper-footer">Supplementary material · HA-MAI · <a href="https://github.com/ZhaoF-i/future-signal-prediction">Code, data, and implementation details</a></footer>
       </main>
     </>
   );

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the two fixed qualitative examples from saved Base/RandomInterval WAVs.
+"""Export six fixed qualitative examples from saved S4-TD/complete-system WAVs.
 
 No model inference or waveform correction is performed. See README for selection.
 Only the input manifest may contain private paths; published metadata never does.
@@ -24,7 +24,7 @@ sys.path.insert(0, str(ROOT / 'public'))
 from hamai import hamai_error
 
 FS = 16000
-LABELS = ('Target', 'Baseline', 'After mirror suppression')
+LABELS = ('Target', 'Standalone S4-TD', 'Complete system')
 ROLES = ('target', 'baseline', 'suppressed')
 SPECS = (
     dict(id='speech', domain='Speech', dataset='LibriSpeech test-clean',
@@ -42,6 +42,8 @@ SPECS = (
          attribution='Joachim Thiemann, Nobutaka Ito, and Emmanuel Vincent; DEMAND (2013), version 1.0.',
          license='CC BY-SA 3.0', license_url='https://creativecommons.org/licenses/by-sa/3.0/'),
 )
+ADDITIONAL_SPECS = json.loads((ROOT / 'scripts' / 'additional_examples.json').read_text())
+SPECS = (SPECS[0], *ADDITIONAL_SPECS[:3], SPECS[1], ADDITIONAL_SPECS[3])
 
 
 def sha256(path):
@@ -130,6 +132,8 @@ def plot_example(streams, path, labels=LABELS, reference=None):
         ax.set_ylabel('Frequency (kHz)')
         ax.set_ylim(0, 8)
         ax.set_yticks([0, 2, 4, 6, 8])
+        for axis_khz in (2, 4, 6):
+            ax.axhline(axis_khz, color='white', alpha=0.6, linewidth=0.65, linestyle=(0, (3, 3)))
         ax.set_xlim(0, len(streams[0]) / FS)
         ax.tick_params(labelsize=11)
     axes[-1].set_xlabel('Time within excerpt (s)')
@@ -143,6 +147,7 @@ def plot_example(streams, path, labels=LABELS, reference=None):
                 window='periodic Hann', window_samples=512, hop_samples=128,
                 fft_samples=1024, boundary=None, padded=False, scaling='spectrum',
                 frequency_hz=[0, 8000], color_limits_db=[-80, 0], colormap='magma',
+                mirror_axes_khz=[2, 4, 6],
                 normalization='20*log10(max(abs(STFT)/shared_reference, 1e-4))')
 
 
@@ -158,7 +163,7 @@ def add_errors(example, output_dir):
             raise ValueError('Expected the published mono PCM16 source WAV')
         streams.append(pcm.astype(np.int32))
     errors, tracks = [], []
-    for index, label in [(1, 'Baseline error'), (2, 'Error after mirror suppression')]:
+    for index, label in [(1, 'Standalone S4-TD error'), (2, 'Complete-system error')]:
         # Subtract in int32: direct int16 subtraction could silently wrap.
         difference = streams[0] - streams[index]
         if np.max(np.abs(difference)) > 32767:
@@ -208,7 +213,9 @@ def export(manifest, output_dir):
                 raise ValueError('Expected one manifest row with the specified advance')
             row = matches[0]
             # Deliberately whitelist public model metadata, excluding workspace/checkpoint/result_dir.
-            models.append(dict(method=method, advance_samples=advance, commit=row['commit']))
+            models.append(dict(method=method, prediction_length_samples=advance,
+                               paper_label='Standalone S4-TD' if method == 'Base' else 'Complete system',
+                               manifest_commit=row['commit']))
             for role in ('target', 'estimate'):
                 filename = spec['filename'].replace('_target_', f'_{role}_')
                 path = Path(row['result_dir']) / spec['folder'] / filename
@@ -227,9 +234,10 @@ def export(manifest, output_dir):
                 common_samples=common, target_max_abs_difference=difference,
                 crop_start_sample=spec['start'], crop_end_sample_exclusive=spec['start'] + spec['samples'],
                 crop_origin='Common interval after alignment; zero-based',
-                comparison='Same target time interval, not a matched-advance ablation'),
+                comparison='Same target time interval, not a matched-prediction-length ablation'),
             selection=dict(purpose='Selected qualitative illustration, not a population average',
                 eligible_count=spec['eligible_count'], rank_rule='Upper median HA-MAI reduction among eligible candidates',
+                window_rule='Highest-energy window up to 4 s, 1 s start grid plus final start; earliest tie' if spec['domain'] == 'Speech' else 'Full common interval',
                 baseline_hamai_above_db=-20, minimum_reduction_db=10, require_nmse_improvement=True),
             audio=dict(format='PCM16 WAV', shared_gain=gain, peak_limit=0.95,
                 quantization='round(gain*x*32768); decode as int16/32768; no dither',

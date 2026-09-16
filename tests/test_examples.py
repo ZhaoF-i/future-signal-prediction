@@ -69,12 +69,15 @@ class ExampleTests(unittest.TestCase):
         for private_prefix in ('/datapool/', '/home/', '/tmp/', 'result_dir', 'checkpoint'):
             self.assertNotIn(private_prefix, text)
         self.assertEqual(metadata['metric_implementation_sha256'], exporter.sha256(ROOT / 'public/hamai.py'))
-        expected = {'speech': (64000, [-17.02, -38.93]), 'noise': (47995, [-18.42, -42.59])}
+        expected = {'speech': (64000, [-17.02, -38.93]), 'noise': (47995, [-18.42, -42.59]),
+                    'timit': (49555, [-13.56, -34.21]), 'aishell1': (64000, [-16.81, -40.49]),
+                    'noisex92': (47995, [-8.53, -37.07]), 'esc50': (79995, [-15.33, -39.19])}
+        self.assertEqual({e['id'] for e in metadata['examples']}, set(expected))
         for example in metadata['examples']:
             count, rounded = expected[example['id']]
             self.assertEqual(example['samples'], count)
             self.assertEqual(example['alignment']['target_max_abs_difference'], 0)
-            self.assertEqual([m['advance_samples'] for m in example['models']], [4, 5])
+            self.assertEqual([m['prediction_length_samples'] for m in example['models']], [4, 5])
             self.assertEqual(example['figure']['color_limits_db'], [-80, 0])
             signals = []
             for track in example['tracks']:

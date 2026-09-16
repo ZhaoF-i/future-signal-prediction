@@ -22,10 +22,19 @@ Source: [DEMAND dataset and original license notice](https://zenodo.org/records/
 
 ## Changes and provenance
 
-The prediction tracks are saved outputs of the Base and complete RandomInterval models. The exporter aligns their target intervals, selects one excerpt per domain, applies a single gain shared by the three tracks in each domain, and converts them to mono 16 kHz PCM16 WAV. It does not infer new predictions, subtract a fitted mirror waveform, loop, splice, or normalize tracks separately. The figures visualize these exported WAVs.
+The prediction tracks are saved outputs of the Base and complete RandomInterval models. The exporter aligns their target intervals, selects one excerpt per corpus, applies a single gain shared by the three tracks in each example, and converts them to mono 16 kHz PCM16 WAV. It does not infer new predictions, subtract a fitted mirror waveform, loop, splice, or normalize tracks separately. The figures visualize these exported WAVs.
 
 The additional error tracks are exact differences of the published target and estimate WAVs, with no additional gain or clipping. They represent total prediction error, not an isolated mirror waveform. Error figures use the same magnitude reference as the corresponding target/estimate figure.
 
 Speech uses 64000 samples starting at sample 176000 of the aligned interval. Noise uses the complete 47995-sample common interval. The Base target and prediction lose one initial sample for alignment; the complete system is untrimmed at its start. Base and full-system prediction advances are 4 and 5 samples, respectively.
 
 [metadata.json](metadata.json) records exact crops, shared gains, processing parameters, model commit identifiers, source WAV hashes, published asset hashes, and metrics recomputed after PCM16 decoding. File identifiers refer to saved evaluation outputs; no private filesystem paths are distributed.
+
+## Additional test corpora
+
+The following credits cover each dataset-prefixed target, standalone estimate, complete-system estimate, two error WAVs, and both spectrograms. Each was aligned, excerpted where stated, scaled with one common gain, quantized to PCM16, and visualized. Error audio is exact target-minus-estimate subtraction. Dataset-specific terms are retained; these files are not assigned a blanket open license.
+
+- **TIMIT TEST** (`timit-*`): DR3/MGJF0/SI1901, 49555 aligned samples. John S. Garofolo, Lori F. Lamel, William M. Fisher, Jonathan G. Fiscus, David S. Pallett, Nancy L. Dahlgren, and Victor Zue, *TIMIT Acoustic-Phonetic Continuous Speech Corpus*, LDC93S1 (1993). [Dataset and LDC terms](https://catalog.ldc.upenn.edu/LDC93S1). The research illustration does not grant rights to redistribute the TIMIT corpus.
+- **AISHELL-1 test** (`aishell1-*`): BAC009S0916W0352, first 64000 aligned samples. Hui Bu, Jiayu Du, Xingyu Na, Bengu Wu, and Hao Zheng, *AISHELL-1* (2017), Beijing Shell Shell Technology Co., Ltd. [OpenSLR 33](https://www.openslr.org/33/), [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
+- **NoiseX-92** (`noisex92-*`): HF radio channel recording, saved segment hfchannel_S00624_seg0000, 47995 aligned samples. Andrew Varga and Herman J. M. Steeneken, *Assessment for automatic speech recognition: II. NOISEX-92*, Speech Communication 12 (1993), DOI 10.1016/0167-6393(93)90095-3. [SPIB source and recording description](https://spib.linse.ufsc.br/noise.html). No Creative Commons license is asserted for this source.
+- **ESC-50** (`esc50-*`): 1-187207-A-20.wav (crying baby), 79995 aligned samples. Karol J. Piczak, *ESC: Dataset for Environmental Sound Classification* (2015). [ESC-50](https://github.com/karolpiczak/ESC-50), dataset license [CC BY-NC 3.0](https://creativecommons.org/licenses/by-nc/3.0/). The original recording is [More baby noises… by k3pp, Freesound 187207](https://freesound.org/people/k3pp/sounds/187207/), listed as CC0 in the [per-clip attribution](https://github.com/karolpiczak/ESC-50/blob/master/LICENSE).

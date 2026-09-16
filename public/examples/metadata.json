@@ -22,13 +22,15 @@
       "models": [
         {
           "method": "Base",
-          "advance_samples": 4,
-          "commit": "2be5c18"
+          "prediction_length_samples": 4,
+          "paper_label": "Standalone S4-TD",
+          "manifest_commit": "2be5c18"
         },
         {
           "method": "RandomInterval",
-          "advance_samples": 5,
-          "commit": "c5126e3"
+          "prediction_length_samples": 5,
+          "paper_label": "Complete system",
+          "manifest_commit": "c5126e3"
         }
       ],
       "sources": [
@@ -75,12 +77,13 @@
         "crop_start_sample": 176000,
         "crop_end_sample_exclusive": 240000,
         "crop_origin": "Common interval after alignment; zero-based",
-        "comparison": "Same target time interval, not a matched-advance ablation"
+        "comparison": "Same target time interval, not a matched-prediction-length ablation"
       },
       "selection": {
         "purpose": "Selected qualitative illustration, not a population average",
         "eligible_count": 88,
         "rank_rule": "Upper median HA-MAI reduction among eligible candidates",
+        "window_rule": "Highest-energy window up to 4 s, 1 s start grid plus final start; earliest tie",
         "baseline_hamai_above_db": -20,
         "minimum_reduction_db": 10,
         "require_nmse_improvement": true
@@ -103,7 +106,7 @@
         },
         {
           "role": "baseline",
-          "label": "Baseline",
+          "label": "Standalone S4-TD",
           "file": "speech-baseline.wav",
           "sha256": "f3b1da7df9ba6c39769ca66f7bbc016803c3e0fdf33276bd92927f1793d18cce",
           "samples": 64000,
@@ -125,7 +128,7 @@
         },
         {
           "role": "suppressed",
-          "label": "After mirror suppression",
+          "label": "Complete system",
           "file": "speech-suppressed.wav",
           "sha256": "7b97452ed669b4cb0a056461b8360043ce8ee74170dd1bcab8cbf4ba536f10dc",
           "samples": 64000,
@@ -148,7 +151,7 @@
       ],
       "figure": {
         "file": "speech-spectrogram.png",
-        "sha256": "dbc9bb421789372a838d5bd8220d330f7a7e1c6c76185cd341593916bd5902c8",
+        "sha256": "6100f1f333156f780eaa90311fdd5e890eaf23456bd328af0b5e3af944abc2e8",
         "width": 1620,
         "height": 1224,
         "amplitude_reference": 0.2146430080096985,
@@ -169,6 +172,11 @@
           0
         ],
         "colormap": "magma",
+        "mirror_axes_khz": [
+          2,
+          4,
+          6
+        ],
         "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
       },
       "errors": {
@@ -180,7 +188,7 @@
         "tracks": [
           {
             "role": "baseline",
-            "label": "Baseline error",
+            "label": "Standalone S4-TD error",
             "file": "speech-baseline-error.wav",
             "sha256": "5b412c51906a983d9d2632064934682cb6a0897ce7961fb278758de32e69c11d",
             "samples": 64000,
@@ -191,7 +199,7 @@
           },
           {
             "role": "suppressed",
-            "label": "Error after mirror suppression",
+            "label": "Complete-system error",
             "file": "speech-suppressed-error.wav",
             "sha256": "aa03f87164cc2a73edcfea580dcb9c516accd87cd57a1c4c860b8a997d289f7b",
             "samples": 64000,
@@ -203,7 +211,7 @@
         ],
         "figure": {
           "file": "speech-error-spectrogram.png",
-          "sha256": "645a548589ee3f418417e46ad591f226c44bfeb901f0d2a90c9fc584318750cb",
+          "sha256": "9bb9d9a8fac9ffc7b9ae38fe54b10c7b3abf2aafdb0bac98ef873212adc78b79",
           "width": 1620,
           "height": 864,
           "amplitude_reference": 0.2146430080096985,
@@ -224,6 +232,704 @@
             0
           ],
           "colormap": "magma",
+          "mirror_axes_khz": [
+            2,
+            4,
+            6
+          ],
+          "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
+        }
+      }
+    },
+    {
+      "id": "timit",
+      "domain": "Speech",
+      "dataset": "TIMIT TEST",
+      "sample_id": "DR3/MGJF0/SI1901",
+      "period": 4,
+      "sample_rate": 16000,
+      "samples": 49555,
+      "duration_seconds": 3.0971875,
+      "models": [
+        {
+          "method": "Base",
+          "prediction_length_samples": 4,
+          "paper_label": "Standalone S4-TD",
+          "manifest_commit": "2be5c18"
+        },
+        {
+          "method": "RandomInterval",
+          "prediction_length_samples": 5,
+          "paper_label": "Complete system",
+          "manifest_commit": "c5126e3"
+        }
+      ],
+      "sources": [
+        {
+          "method": "Base",
+          "role": "target",
+          "dataset_file": "timit_audio/DR3__MGJF0__SI1901_WAV_wav_target_speech.wav",
+          "sha256": "8a4941ae3e42c5a2caa39c8764146b9760d2684f462a0deec77d95aa9d397647",
+          "samples": 49556
+        },
+        {
+          "method": "Base",
+          "role": "estimate",
+          "dataset_file": "timit_audio/DR3__MGJF0__SI1901_WAV_wav_estimate_speech.wav",
+          "sha256": "db2ab894694eadc255a1a4c03b9207319014f7b03a75f5cd982ca2163d4a494a",
+          "samples": 49556
+        },
+        {
+          "method": "RandomInterval",
+          "role": "target",
+          "dataset_file": "timit_audio/DR3__MGJF0__SI1901_WAV_wav_target_speech.wav",
+          "sha256": "a52b637d2ebbe1a3ab0772087320d0edce23820e4f4e48b76ab9fdbaade5a0ee",
+          "samples": 49555
+        },
+        {
+          "method": "RandomInterval",
+          "role": "estimate",
+          "dataset_file": "timit_audio/DR3__MGJF0__SI1901_WAV_wav_estimate_speech.wav",
+          "sha256": "bfc7b3677f9160246175d6b50a87aee002f1dabef680f6fce1a3ba540118aaf5",
+          "samples": 49555
+        }
+      ],
+      "dataset_credit": {
+        "source_url": "https://catalog.ldc.upenn.edu/LDC93S1",
+        "attribution": "John S. Garofolo et al.; TIMIT Acoustic-Phonetic Continuous Speech Corpus, LDC93S1 (1993).",
+        "license": "LDC dataset terms",
+        "license_url": "https://catalog.ldc.upenn.edu/LDC93S1"
+      },
+      "alignment": {
+        "base_trim_start_samples": 1,
+        "full_trim_start_samples": 0,
+        "common_samples": 49555,
+        "target_max_abs_difference": 0.0,
+        "crop_start_sample": 0,
+        "crop_end_sample_exclusive": 49555,
+        "crop_origin": "Common interval after alignment; zero-based",
+        "comparison": "Same target time interval, not a matched-prediction-length ablation"
+      },
+      "selection": {
+        "purpose": "Selected qualitative illustration, not a population average",
+        "eligible_count": 114,
+        "rank_rule": "Upper median HA-MAI reduction among eligible candidates",
+        "window_rule": "Highest-energy window up to 4 s, 1 s start grid plus final start; earliest tie",
+        "baseline_hamai_above_db": -20,
+        "minimum_reduction_db": 10,
+        "require_nmse_improvement": true
+      },
+      "audio": {
+        "format": "PCM16 WAV",
+        "shared_gain": 5.230006720430108,
+        "peak_limit": 0.95,
+        "quantization": "round(gain*x*32768); decode as int16/32768; no dither",
+        "changes": "Time alignment, excerpt selection, one shared gain, PCM16 quantization; predictions are saved model outputs"
+      },
+      "tracks": [
+        {
+          "role": "target",
+          "label": "Target",
+          "file": "timit-target.wav",
+          "sha256": "00fd24618e5ff9a873aa020e82fbd744fbdd9bbe1c6e973563cf82faf0110efb",
+          "samples": 49555,
+          "peak": 0.949981689453125
+        },
+        {
+          "role": "baseline",
+          "label": "Standalone S4-TD",
+          "file": "timit-baseline.wav",
+          "sha256": "b9b9391be0ecb32ce7c25555918d3ee1644575f7c2bcfa639e5c9f86a10948cf",
+          "samples": 49555,
+          "peak": 0.922760009765625,
+          "metrics": {
+            "hamai_error_db": -13.559280370538964,
+            "mirror_energy": 1.5591002220412107,
+            "error_energy": 35.38360436819494,
+            "target_energy": 418.9901026757434,
+            "mirror_fraction": 0.044062786985109584,
+            "status": "ok",
+            "valid": true,
+            "period": 4,
+            "basis_count": 3,
+            "ridge": 1e-06,
+            "eps": 1e-12,
+            "nmse_db": -10.734016937980652
+          }
+        },
+        {
+          "role": "suppressed",
+          "label": "Complete system",
+          "file": "timit-suppressed.wav",
+          "sha256": "b1d339994c234e9e30908cadee4c416256fc5e3e4a9d4917479a9e9ec6fa0e3a",
+          "samples": 49555,
+          "peak": 0.914703369140625,
+          "metrics": {
+            "hamai_error_db": -34.21270490581269,
+            "mirror_energy": 0.012710974798372784,
+            "error_energy": 33.53121947403997,
+            "target_energy": 418.9901026757434,
+            "mirror_fraction": 0.00037907881066518627,
+            "status": "ok",
+            "valid": true,
+            "period": 4,
+            "basis_count": 3,
+            "ridge": 1e-06,
+            "eps": 1e-12,
+            "nmse_db": -10.967544159696512
+          }
+        }
+      ],
+      "figure": {
+        "file": "timit-spectrogram.png",
+        "sha256": "d08cec7fae21cdd948c40e643c3e57efd32be293fc95ef1172719dbddc051579",
+        "width": 1620,
+        "height": 1224,
+        "amplitude_reference": 0.13567821637727806,
+        "reference": "Maximum STFT magnitude across all three exported WAVs",
+        "window": "periodic Hann",
+        "window_samples": 512,
+        "hop_samples": 128,
+        "fft_samples": 1024,
+        "boundary": null,
+        "padded": false,
+        "scaling": "spectrum",
+        "frequency_hz": [
+          0,
+          8000
+        ],
+        "color_limits_db": [
+          -80,
+          0
+        ],
+        "colormap": "magma",
+        "mirror_axes_khz": [
+          2,
+          4,
+          6
+        ],
+        "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
+      },
+      "errors": {
+        "definition": "error = published target - published estimate",
+        "additional_gain": 1.0,
+        "format": "PCM16 WAV",
+        "peak_limit": 0.999969482421875,
+        "subtraction": "int32 subtraction of decoded PCM16 sample integers; exact PCM16 output, no clipping",
+        "tracks": [
+          {
+            "role": "baseline",
+            "label": "Standalone S4-TD error",
+            "file": "timit-baseline-error.wav",
+            "sha256": "a354e5c1b3941001cffd0d90eb6480a088961463bc215ba7a10b62a4a826c028",
+            "samples": 49555,
+            "peak": 0.5494384765625,
+            "energy": 35.38360436819494,
+            "target_file": "timit-target.wav",
+            "estimate_file": "timit-baseline.wav"
+          },
+          {
+            "role": "suppressed",
+            "label": "Complete-system error",
+            "file": "timit-suppressed-error.wav",
+            "sha256": "564d988beb023152b7eae99c2a7a5643205227b99b318dc02b6cd2cbd9befb6b",
+            "samples": 49555,
+            "peak": 0.4375,
+            "energy": 33.53121947403997,
+            "target_file": "timit-target.wav",
+            "estimate_file": "timit-suppressed.wav"
+          }
+        ],
+        "figure": {
+          "file": "timit-error-spectrogram.png",
+          "sha256": "26e04a248251bdeb991da9663620d838d452955d0d9495975bc1b1d0f66bc385",
+          "width": 1620,
+          "height": 864,
+          "amplitude_reference": 0.13567821637727806,
+          "reference": "Same reference as the corresponding Target / Estimate figure; no error-panel normalization",
+          "window": "periodic Hann",
+          "window_samples": 512,
+          "hop_samples": 128,
+          "fft_samples": 1024,
+          "boundary": null,
+          "padded": false,
+          "scaling": "spectrum",
+          "frequency_hz": [
+            0,
+            8000
+          ],
+          "color_limits_db": [
+            -80,
+            0
+          ],
+          "colormap": "magma",
+          "mirror_axes_khz": [
+            2,
+            4,
+            6
+          ],
+          "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
+        }
+      }
+    },
+    {
+      "id": "aishell1",
+      "domain": "Speech",
+      "dataset": "AISHELL-1 test",
+      "sample_id": "BAC009S0916W0352",
+      "period": 4,
+      "sample_rate": 16000,
+      "samples": 64000,
+      "duration_seconds": 4.0,
+      "models": [
+        {
+          "method": "Base",
+          "prediction_length_samples": 4,
+          "paper_label": "Standalone S4-TD",
+          "manifest_commit": "2be5c18"
+        },
+        {
+          "method": "RandomInterval",
+          "prediction_length_samples": 5,
+          "paper_label": "Complete system",
+          "manifest_commit": "c5126e3"
+        }
+      ],
+      "sources": [
+        {
+          "method": "Base",
+          "role": "target",
+          "dataset_file": "aishell1_audio/test__S0916__BAC009S0916W0352_wav_target_speech.wav",
+          "sha256": "9408a2a89776dd548be0d18a745b8c82a96a390ee7f4427d0862de2c43e2f0be",
+          "samples": 75640
+        },
+        {
+          "method": "Base",
+          "role": "estimate",
+          "dataset_file": "aishell1_audio/test__S0916__BAC009S0916W0352_wav_estimate_speech.wav",
+          "sha256": "657ee1695c821bd0c51d99d643f28a787bfd4cef5508c4a5227db516e09fba19",
+          "samples": 75640
+        },
+        {
+          "method": "RandomInterval",
+          "role": "target",
+          "dataset_file": "aishell1_audio/test__S0916__BAC009S0916W0352_wav_target_speech.wav",
+          "sha256": "a526ca1aa076b9e4f0c2c95db56e66f2e209a79be47928792b4a60f8b5e4f9c5",
+          "samples": 75640
+        },
+        {
+          "method": "RandomInterval",
+          "role": "estimate",
+          "dataset_file": "aishell1_audio/test__S0916__BAC009S0916W0352_wav_estimate_speech.wav",
+          "sha256": "c4c2ecff5df0dc6cba95f97191212d9190197da5a09068eb8f86db04da765ce4",
+          "samples": 75640
+        }
+      ],
+      "dataset_credit": {
+        "source_url": "https://www.openslr.org/33/",
+        "attribution": "Hui Bu, Jiayu Du, Xingyu Na, Bengu Wu, and Hao Zheng; AISHELL-1 (2017), Beijing Shell Shell Technology Co., Ltd.",
+        "license": "Apache 2.0",
+        "license_url": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "alignment": {
+        "base_trim_start_samples": 1,
+        "full_trim_start_samples": 0,
+        "common_samples": 75639,
+        "target_max_abs_difference": 0.0,
+        "crop_start_sample": 0,
+        "crop_end_sample_exclusive": 64000,
+        "crop_origin": "Common interval after alignment; zero-based",
+        "comparison": "Same target time interval, not a matched-prediction-length ablation"
+      },
+      "selection": {
+        "purpose": "Selected qualitative illustration, not a population average",
+        "eligible_count": 112,
+        "rank_rule": "Upper median HA-MAI reduction among eligible candidates",
+        "window_rule": "Highest-energy window up to 4 s, 1 s start grid plus final start; earliest tie",
+        "baseline_hamai_above_db": -20,
+        "minimum_reduction_db": 10,
+        "require_nmse_improvement": true
+      },
+      "audio": {
+        "format": "PCM16 WAV",
+        "shared_gain": 7.0619328493647915,
+        "peak_limit": 0.95,
+        "quantization": "round(gain*x*32768); decode as int16/32768; no dither",
+        "changes": "Time alignment, excerpt selection, one shared gain, PCM16 quantization; predictions are saved model outputs"
+      },
+      "tracks": [
+        {
+          "role": "target",
+          "label": "Target",
+          "file": "aishell1-target.wav",
+          "sha256": "ce51ea5aecd5728bebd36557b79ce072bab9d30f46b858dca44f72ba5ba2c7ec",
+          "samples": 64000,
+          "peak": 0.949981689453125
+        },
+        {
+          "role": "baseline",
+          "label": "Standalone S4-TD",
+          "file": "aishell1-baseline.wav",
+          "sha256": "006906a515e1f887434c47b61704685a00091ea1460ff1bd9df7d252e6edf0ee",
+          "samples": 64000,
+          "peak": 0.9061279296875,
+          "metrics": {
+            "hamai_error_db": -16.80784183632619,
+            "mirror_energy": 2.4873494552796207,
+            "error_energy": 119.26719037909061,
+            "target_energy": 1569.6632745498791,
+            "mirror_fraction": 0.020855269981405303,
+            "status": "ok",
+            "valid": true,
+            "period": 4,
+            "basis_count": 3,
+            "ridge": 1e-06,
+            "eps": 1e-12,
+            "nmse_db": -11.192855086530418
+          }
+        },
+        {
+          "role": "suppressed",
+          "label": "Complete system",
+          "file": "aishell1-suppressed.wav",
+          "sha256": "f352ee9a047ba7978e3fa3d055eaa7bd0efee66370bcfa67eb49992a557cbdfd",
+          "samples": 64000,
+          "peak": 0.8934326171875,
+          "metrics": {
+            "hamai_error_db": -40.48769584462268,
+            "mirror_energy": 0.008659979785819566,
+            "error_energy": 96.89167478308082,
+            "target_energy": 1569.6632745498791,
+            "mirror_fraction": 8.93779553837548e-05,
+            "status": "ok",
+            "valid": true,
+            "period": 4,
+            "basis_count": 3,
+            "ridge": 1e-06,
+            "eps": 1e-12,
+            "nmse_db": -12.095200343951259
+          }
+        }
+      ],
+      "figure": {
+        "file": "aishell1-spectrogram.png",
+        "sha256": "373aa5ff4571e2ed5192257b0574dfbca6ef1c2e7368c135e9a10c21e8fe7901",
+        "width": 1620,
+        "height": 1224,
+        "amplitude_reference": 0.2526813582044636,
+        "reference": "Maximum STFT magnitude across all three exported WAVs",
+        "window": "periodic Hann",
+        "window_samples": 512,
+        "hop_samples": 128,
+        "fft_samples": 1024,
+        "boundary": null,
+        "padded": false,
+        "scaling": "spectrum",
+        "frequency_hz": [
+          0,
+          8000
+        ],
+        "color_limits_db": [
+          -80,
+          0
+        ],
+        "colormap": "magma",
+        "mirror_axes_khz": [
+          2,
+          4,
+          6
+        ],
+        "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
+      },
+      "errors": {
+        "definition": "error = published target - published estimate",
+        "additional_gain": 1.0,
+        "format": "PCM16 WAV",
+        "peak_limit": 0.999969482421875,
+        "subtraction": "int32 subtraction of decoded PCM16 sample integers; exact PCM16 output, no clipping",
+        "tracks": [
+          {
+            "role": "baseline",
+            "label": "Standalone S4-TD error",
+            "file": "aishell1-baseline-error.wav",
+            "sha256": "1cc6490329c1d51982c9b9064079915e2de3ea6e70fd21b3d5e08bbcd5353c7d",
+            "samples": 64000,
+            "peak": 0.778961181640625,
+            "energy": 119.26719037909061,
+            "target_file": "aishell1-target.wav",
+            "estimate_file": "aishell1-baseline.wav"
+          },
+          {
+            "role": "suppressed",
+            "label": "Complete-system error",
+            "file": "aishell1-suppressed-error.wav",
+            "sha256": "a8d30220c520cc4c15076247ecb95bfc420511dee93d39794bf2e4084ec67daa",
+            "samples": 64000,
+            "peak": 0.841552734375,
+            "energy": 96.89167478308082,
+            "target_file": "aishell1-target.wav",
+            "estimate_file": "aishell1-suppressed.wav"
+          }
+        ],
+        "figure": {
+          "file": "aishell1-error-spectrogram.png",
+          "sha256": "fd347726e2e68e0547489af7f1698113945af1376e8ca1dea2143b8fc638a42b",
+          "width": 1620,
+          "height": 864,
+          "amplitude_reference": 0.2526813582044636,
+          "reference": "Same reference as the corresponding Target / Estimate figure; no error-panel normalization",
+          "window": "periodic Hann",
+          "window_samples": 512,
+          "hop_samples": 128,
+          "fft_samples": 1024,
+          "boundary": null,
+          "padded": false,
+          "scaling": "spectrum",
+          "frequency_hz": [
+            0,
+            8000
+          ],
+          "color_limits_db": [
+            -80,
+            0
+          ],
+          "colormap": "magma",
+          "mirror_axes_khz": [
+            2,
+            4,
+            6
+          ],
+          "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
+        }
+      }
+    },
+    {
+      "id": "noisex92",
+      "domain": "Noise",
+      "dataset": "NoiseX-92",
+      "sample_id": "hfchannel_S00624_seg0000",
+      "period": 4,
+      "sample_rate": 16000,
+      "samples": 47995,
+      "duration_seconds": 2.9996875,
+      "models": [
+        {
+          "method": "Base",
+          "prediction_length_samples": 4,
+          "paper_label": "Standalone S4-TD",
+          "manifest_commit": "5989a54"
+        },
+        {
+          "method": "RandomInterval",
+          "prediction_length_samples": 5,
+          "paper_label": "Complete system",
+          "manifest_commit": "b0c49a3"
+        }
+      ],
+      "sources": [
+        {
+          "method": "Base",
+          "role": "target",
+          "dataset_file": "noisex92_audio/noisex92_hfchannel_S00624_seg0000_target_noise.wav",
+          "sha256": "371963af9e7f4051457996f10f886a47ca1461af672a7e7fdc1d46f30faa135d",
+          "samples": 47996
+        },
+        {
+          "method": "Base",
+          "role": "estimate",
+          "dataset_file": "noisex92_audio/noisex92_hfchannel_S00624_seg0000_estimate_noise.wav",
+          "sha256": "8c1228deac6aa8f7f4dbcfb210235d0862dbb4f56e7f71957de2475d3bf35c64",
+          "samples": 47996
+        },
+        {
+          "method": "RandomInterval",
+          "role": "target",
+          "dataset_file": "noisex92_audio/noisex92_hfchannel_S00624_seg0000_target_noise.wav",
+          "sha256": "46877fabc5974665d1e473e15f9a76365b371beda133cb4574b966541db282a9",
+          "samples": 47995
+        },
+        {
+          "method": "RandomInterval",
+          "role": "estimate",
+          "dataset_file": "noisex92_audio/noisex92_hfchannel_S00624_seg0000_estimate_noise.wav",
+          "sha256": "5790629998cb7f245d47f4609e61f8d09c8a92b03a8371178ac9e528f2ed0500",
+          "samples": 47995
+        }
+      ],
+      "dataset_credit": {
+        "source_url": "https://spib.linse.ufsc.br/noise.html",
+        "attribution": "Andrew Varga and Herman J. M. Steeneken; NOISEX-92 (1993), HF radio channel recording.",
+        "license": "Dataset source",
+        "license_url": "https://spib.linse.ufsc.br/noise.html"
+      },
+      "alignment": {
+        "base_trim_start_samples": 1,
+        "full_trim_start_samples": 0,
+        "common_samples": 47995,
+        "target_max_abs_difference": 0.0,
+        "crop_start_sample": 0,
+        "crop_end_sample_exclusive": 47995,
+        "crop_origin": "Common interval after alignment; zero-based",
+        "comparison": "Same target time interval, not a matched-prediction-length ablation"
+      },
+      "selection": {
+        "purpose": "Selected qualitative illustration, not a population average",
+        "eligible_count": 17,
+        "rank_rule": "Upper median HA-MAI reduction among eligible candidates",
+        "window_rule": "Full common interval",
+        "baseline_hamai_above_db": -20,
+        "minimum_reduction_db": 10,
+        "require_nmse_improvement": true
+      },
+      "audio": {
+        "format": "PCM16 WAV",
+        "shared_gain": 2.646320599330535,
+        "peak_limit": 0.95,
+        "quantization": "round(gain*x*32768); decode as int16/32768; no dither",
+        "changes": "Time alignment, excerpt selection, one shared gain, PCM16 quantization; predictions are saved model outputs"
+      },
+      "tracks": [
+        {
+          "role": "target",
+          "label": "Target",
+          "file": "noisex92-target.wav",
+          "sha256": "75f75bbfa5bb0878379f7c9ca6715827bba75ac11a36c6966674b8df01d50df1",
+          "samples": 47995,
+          "peak": 0.943511962890625
+        },
+        {
+          "role": "baseline",
+          "label": "Standalone S4-TD",
+          "file": "noisex92-baseline.wav",
+          "sha256": "d2d1627a384cc8611f94f393a439370c3c7eb4dcd0d9c20e6b1e091fd5e4cbc3",
+          "samples": 47995,
+          "peak": 0.949981689453125,
+          "metrics": {
+            "hamai_error_db": -8.526699811314383,
+            "mirror_energy": 191.64678883161707,
+            "error_energy": 1365.1221954710782,
+            "target_energy": 3079.38414848689,
+            "mirror_fraction": 0.1403880102949196,
+            "status": "ok",
+            "valid": true,
+            "period": 4,
+            "basis_count": 3,
+            "ridge": 1e-06,
+            "eps": 1e-12,
+            "nmse_db": -3.5329234196634154
+          }
+        },
+        {
+          "role": "suppressed",
+          "label": "Complete system",
+          "file": "noisex92-suppressed.wav",
+          "sha256": "99d1ed26b10a772d5ab235e6e09b83ffd982a4bf6d2edd6e2211c3a4e3955b14",
+          "samples": 47995,
+          "peak": 0.94073486328125,
+          "metrics": {
+            "hamai_error_db": -37.070783239140866,
+            "mirror_energy": 0.2632371738242127,
+            "error_energy": 1340.9900127490982,
+            "target_energy": 3079.38414848689,
+            "mirror_fraction": 0.0001963006221683656,
+            "status": "ok",
+            "valid": true,
+            "period": 4,
+            "basis_count": 3,
+            "ridge": 1e-06,
+            "eps": 1e-12,
+            "nmse_db": -3.6103832647683323
+          }
+        }
+      ],
+      "figure": {
+        "file": "noisex92-spectrogram.png",
+        "sha256": "6a99d07fc81b06dc0418b182e226c9158d812d61a50c6c900d72200af1b86679",
+        "width": 1620,
+        "height": 1224,
+        "amplitude_reference": 0.08459110333090561,
+        "reference": "Maximum STFT magnitude across all three exported WAVs",
+        "window": "periodic Hann",
+        "window_samples": 512,
+        "hop_samples": 128,
+        "fft_samples": 1024,
+        "boundary": null,
+        "padded": false,
+        "scaling": "spectrum",
+        "frequency_hz": [
+          0,
+          8000
+        ],
+        "color_limits_db": [
+          -80,
+          0
+        ],
+        "colormap": "magma",
+        "mirror_axes_khz": [
+          2,
+          4,
+          6
+        ],
+        "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
+      },
+      "errors": {
+        "definition": "error = published target - published estimate",
+        "additional_gain": 1.0,
+        "format": "PCM16 WAV",
+        "peak_limit": 0.999969482421875,
+        "subtraction": "int32 subtraction of decoded PCM16 sample integers; exact PCM16 output, no clipping",
+        "tracks": [
+          {
+            "role": "baseline",
+            "label": "Standalone S4-TD error",
+            "file": "noisex92-baseline-error.wav",
+            "sha256": "545828e93fcf333ccf069971329dab15a60d9ed8edaaa4c6cfc4375f9b42e4b5",
+            "samples": 47995,
+            "peak": 0.786224365234375,
+            "energy": 1365.1221954710782,
+            "target_file": "noisex92-target.wav",
+            "estimate_file": "noisex92-baseline.wav"
+          },
+          {
+            "role": "suppressed",
+            "label": "Complete-system error",
+            "file": "noisex92-suppressed-error.wav",
+            "sha256": "11aa51eb9dbdd210c6c31c0ac22d5d9b2b3663144101c8a3802f8bf260b39f1e",
+            "samples": 47995,
+            "peak": 0.78472900390625,
+            "energy": 1340.9900127490982,
+            "target_file": "noisex92-target.wav",
+            "estimate_file": "noisex92-suppressed.wav"
+          }
+        ],
+        "figure": {
+          "file": "noisex92-error-spectrogram.png",
+          "sha256": "519586d82e3334b65b60ad30887803baa91518cdc66b924e00c77cac3cbff645",
+          "width": 1620,
+          "height": 864,
+          "amplitude_reference": 0.08459110333090561,
+          "reference": "Same reference as the corresponding Target / Estimate figure; no error-panel normalization",
+          "window": "periodic Hann",
+          "window_samples": 512,
+          "hop_samples": 128,
+          "fft_samples": 1024,
+          "boundary": null,
+          "padded": false,
+          "scaling": "spectrum",
+          "frequency_hz": [
+            0,
+            8000
+          ],
+          "color_limits_db": [
+            -80,
+            0
+          ],
+          "colormap": "magma",
+          "mirror_axes_khz": [
+            2,
+            4,
+            6
+          ],
           "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
         }
       }
@@ -240,13 +946,15 @@
       "models": [
         {
           "method": "Base",
-          "advance_samples": 4,
-          "commit": "5989a54"
+          "prediction_length_samples": 4,
+          "paper_label": "Standalone S4-TD",
+          "manifest_commit": "5989a54"
         },
         {
           "method": "RandomInterval",
-          "advance_samples": 5,
-          "commit": "b0c49a3"
+          "prediction_length_samples": 5,
+          "paper_label": "Complete system",
+          "manifest_commit": "b0c49a3"
         }
       ],
       "sources": [
@@ -293,12 +1001,13 @@
         "crop_start_sample": 0,
         "crop_end_sample_exclusive": 47995,
         "crop_origin": "Common interval after alignment; zero-based",
-        "comparison": "Same target time interval, not a matched-advance ablation"
+        "comparison": "Same target time interval, not a matched-prediction-length ablation"
       },
       "selection": {
         "purpose": "Selected qualitative illustration, not a population average",
         "eligible_count": 15,
         "rank_rule": "Upper median HA-MAI reduction among eligible candidates",
+        "window_rule": "Full common interval",
         "baseline_hamai_above_db": -20,
         "minimum_reduction_db": 10,
         "require_nmse_improvement": true
@@ -321,7 +1030,7 @@
         },
         {
           "role": "baseline",
-          "label": "Baseline",
+          "label": "Standalone S4-TD",
           "file": "noise-baseline.wav",
           "sha256": "e70b575302d1fc722245d122985ec9fa3d32831e30d4fab174a3036d99b2fce8",
           "samples": 47995,
@@ -343,7 +1052,7 @@
         },
         {
           "role": "suppressed",
-          "label": "After mirror suppression",
+          "label": "Complete system",
           "file": "noise-suppressed.wav",
           "sha256": "3b777b9b374d3afb8b72133093950da3ce33e487a9e2b79b713c9b8c85fbf452",
           "samples": 47995,
@@ -366,7 +1075,7 @@
       ],
       "figure": {
         "file": "noise-spectrogram.png",
-        "sha256": "d573646ef85772f77bf4545ad72642a004a5ceb06e991c92d403ab4ea459b59b",
+        "sha256": "96bc41098f18783129efed8524ac3746737b460ed89af732eac3f222d80bee30",
         "width": 1620,
         "height": 1224,
         "amplitude_reference": 0.23811892741201202,
@@ -387,6 +1096,11 @@
           0
         ],
         "colormap": "magma",
+        "mirror_axes_khz": [
+          2,
+          4,
+          6
+        ],
         "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
       },
       "errors": {
@@ -398,7 +1112,7 @@
         "tracks": [
           {
             "role": "baseline",
-            "label": "Baseline error",
+            "label": "Standalone S4-TD error",
             "file": "noise-baseline-error.wav",
             "sha256": "f7c9424ad6c233a01adef432ce0c9b8162877ca73f19cf27b087e6b763803a6c",
             "samples": 47995,
@@ -409,7 +1123,7 @@
           },
           {
             "role": "suppressed",
-            "label": "Error after mirror suppression",
+            "label": "Complete-system error",
             "file": "noise-suppressed-error.wav",
             "sha256": "32fb0b5d4f115fb342687b35f1c1a0de999d5757bce8cd25555390474ff2874e",
             "samples": 47995,
@@ -421,7 +1135,7 @@
         ],
         "figure": {
           "file": "noise-error-spectrogram.png",
-          "sha256": "38aac6b595796d545fb86b3f5e7d419491c3b4a0ab884b2de759f15ec387061e",
+          "sha256": "84d0345605a41351f6d4a24ece579592584ef040cc395a9eb79ca4ccd942e7a2",
           "width": 1620,
           "height": 864,
           "amplitude_reference": 0.23811892741201202,
@@ -442,6 +1156,242 @@
             0
           ],
           "colormap": "magma",
+          "mirror_axes_khz": [
+            2,
+            4,
+            6
+          ],
+          "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
+        }
+      }
+    },
+    {
+      "id": "esc50",
+      "domain": "Noise",
+      "dataset": "ESC-50",
+      "sample_id": "1-187207-A-20 (crying baby)",
+      "period": 4,
+      "sample_rate": 16000,
+      "samples": 79995,
+      "duration_seconds": 4.9996875,
+      "models": [
+        {
+          "method": "Base",
+          "prediction_length_samples": 4,
+          "paper_label": "Standalone S4-TD",
+          "manifest_commit": "5989a54"
+        },
+        {
+          "method": "RandomInterval",
+          "prediction_length_samples": 5,
+          "paper_label": "Complete system",
+          "manifest_commit": "b0c49a3"
+        }
+      ],
+      "sources": [
+        {
+          "method": "Base",
+          "role": "target",
+          "dataset_file": "esc50_audio/esc50_crying_baby_S00078_seg0000_target_noise.wav",
+          "sha256": "1a7f89cd8a675eb92d9d2309e2387dbd5c7f934d2ae29f4f56bbe17f6a4a7fe3",
+          "samples": 79996
+        },
+        {
+          "method": "Base",
+          "role": "estimate",
+          "dataset_file": "esc50_audio/esc50_crying_baby_S00078_seg0000_estimate_noise.wav",
+          "sha256": "4186a3209f00b55ef505638eb5958ab7aa9f84c16e4421192cd4578dc983e017",
+          "samples": 79996
+        },
+        {
+          "method": "RandomInterval",
+          "role": "target",
+          "dataset_file": "esc50_audio/esc50_crying_baby_S00078_seg0000_target_noise.wav",
+          "sha256": "d7b0d372609837ac713d037335a500d78da66596e9cce3f4c8ea560d511b19da",
+          "samples": 79995
+        },
+        {
+          "method": "RandomInterval",
+          "role": "estimate",
+          "dataset_file": "esc50_audio/esc50_crying_baby_S00078_seg0000_estimate_noise.wav",
+          "sha256": "d82466905ebf73d57165dff39a95064db3e644f87ccc3cec5b6fe17f5bf643f8",
+          "samples": 79995
+        }
+      ],
+      "dataset_credit": {
+        "source_url": "https://github.com/karolpiczak/ESC-50",
+        "attribution": "Karol J. Piczak; ESC (2015). Clip 1-187207-A-20.wav derives from More baby noises... by k3pp, Freesound 187207 (CC0).",
+        "license": "CC BY-NC 3.0",
+        "license_url": "https://creativecommons.org/licenses/by-nc/3.0/"
+      },
+      "alignment": {
+        "base_trim_start_samples": 1,
+        "full_trim_start_samples": 0,
+        "common_samples": 79995,
+        "target_max_abs_difference": 0.0,
+        "crop_start_sample": 0,
+        "crop_end_sample_exclusive": 79995,
+        "crop_origin": "Common interval after alignment; zero-based",
+        "comparison": "Same target time interval, not a matched-prediction-length ablation"
+      },
+      "selection": {
+        "purpose": "Selected qualitative illustration, not a population average",
+        "eligible_count": 70,
+        "rank_rule": "Upper median HA-MAI reduction among eligible candidates",
+        "window_rule": "Full common interval",
+        "baseline_hamai_above_db": -20,
+        "minimum_reduction_db": 10,
+        "require_nmse_improvement": true
+      },
+      "audio": {
+        "format": "PCM16 WAV",
+        "shared_gain": 1.0081470025459778,
+        "peak_limit": 0.95,
+        "quantization": "round(gain*x*32768); decode as int16/32768; no dither",
+        "changes": "Time alignment, excerpt selection, one shared gain, PCM16 quantization; predictions are saved model outputs"
+      },
+      "tracks": [
+        {
+          "role": "target",
+          "label": "Target",
+          "file": "esc50-target.wav",
+          "sha256": "a843a8a9fe694926833ea924e8c831ad3fd580bf72c494024bc79eb887c1c8e0",
+          "samples": 79995,
+          "peak": 0.949981689453125
+        },
+        {
+          "role": "baseline",
+          "label": "Standalone S4-TD",
+          "file": "esc50-baseline.wav",
+          "sha256": "2a59b73209475d29c919d1b073fec991ee4723200562876c936be72bab647e6e",
+          "samples": 79995,
+          "peak": 0.940338134765625,
+          "metrics": {
+            "hamai_error_db": -15.326547202381992,
+            "mirror_energy": 4.558616350109743,
+            "error_energy": 155.4131503617391,
+            "target_energy": 2064.0188388228416,
+            "mirror_fraction": 0.02933224337515258,
+            "status": "ok",
+            "valid": true,
+            "period": 4,
+            "basis_count": 3,
+            "ridge": 1e-06,
+            "eps": 1e-12,
+            "nmse_db": -11.232258928237012
+          }
+        },
+        {
+          "role": "suppressed",
+          "label": "Complete system",
+          "file": "esc50-suppressed.wav",
+          "sha256": "68ebdf692f4d71844f5057630fdec1f6ea8d1c59611ab7e5efa597cb59fec80b",
+          "samples": 79995,
+          "peak": 0.9248046875,
+          "metrics": {
+            "hamai_error_db": -39.187648507337464,
+            "mirror_energy": 0.01558203110977622,
+            "error_energy": 129.23760996107012,
+            "target_energy": 2064.0188388228416,
+            "mirror_fraction": 0.00012056885851161927,
+            "status": "ok",
+            "valid": true,
+            "period": 4,
+            "basis_count": 3,
+            "ridge": 1e-06,
+            "eps": 1e-12,
+            "nmse_db": -12.03324739037666
+          }
+        }
+      ],
+      "figure": {
+        "file": "esc50-spectrogram.png",
+        "sha256": "563a3f33a14f3c27d56e67425998df077f74666ba0da668afa69a9237da6f7d3",
+        "width": 1620,
+        "height": 1224,
+        "amplitude_reference": 0.2840693826368067,
+        "reference": "Maximum STFT magnitude across all three exported WAVs",
+        "window": "periodic Hann",
+        "window_samples": 512,
+        "hop_samples": 128,
+        "fft_samples": 1024,
+        "boundary": null,
+        "padded": false,
+        "scaling": "spectrum",
+        "frequency_hz": [
+          0,
+          8000
+        ],
+        "color_limits_db": [
+          -80,
+          0
+        ],
+        "colormap": "magma",
+        "mirror_axes_khz": [
+          2,
+          4,
+          6
+        ],
+        "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
+      },
+      "errors": {
+        "definition": "error = published target - published estimate",
+        "additional_gain": 1.0,
+        "format": "PCM16 WAV",
+        "peak_limit": 0.999969482421875,
+        "subtraction": "int32 subtraction of decoded PCM16 sample integers; exact PCM16 output, no clipping",
+        "tracks": [
+          {
+            "role": "baseline",
+            "label": "Standalone S4-TD error",
+            "file": "esc50-baseline-error.wav",
+            "sha256": "b42153e637521a4eee1dfc62b20e08bf26c04f5f62beec5e4776f71270b2c4ed",
+            "samples": 79995,
+            "peak": 0.75006103515625,
+            "energy": 155.4131503617391,
+            "target_file": "esc50-target.wav",
+            "estimate_file": "esc50-baseline.wav"
+          },
+          {
+            "role": "suppressed",
+            "label": "Complete-system error",
+            "file": "esc50-suppressed-error.wav",
+            "sha256": "4977bb254a74e4eef55b306b9dd9ec8454652ebcf63ebfa71d7dc246479a6c94",
+            "samples": 79995,
+            "peak": 0.522064208984375,
+            "energy": 129.23760996107012,
+            "target_file": "esc50-target.wav",
+            "estimate_file": "esc50-suppressed.wav"
+          }
+        ],
+        "figure": {
+          "file": "esc50-error-spectrogram.png",
+          "sha256": "df9458d521f8807be887f30de218ff26f5a8882b566eab066970a2b71341b0ea",
+          "width": 1620,
+          "height": 864,
+          "amplitude_reference": 0.2840693826368067,
+          "reference": "Same reference as the corresponding Target / Estimate figure; no error-panel normalization",
+          "window": "periodic Hann",
+          "window_samples": 512,
+          "hop_samples": 128,
+          "fft_samples": 1024,
+          "boundary": null,
+          "padded": false,
+          "scaling": "spectrum",
+          "frequency_hz": [
+            0,
+            8000
+          ],
+          "color_limits_db": [
+            -80,
+            0
+          ],
+          "colormap": "magma",
+          "mirror_axes_khz": [
+            2,
+            4,
+            6
+          ],
           "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
         }
       }

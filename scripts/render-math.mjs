@@ -1,4 +1,4 @@
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, readdir, unlink } from 'node:fs/promises';
 
 // Typeset during the build: each SVG embeds its STIX2 glyph paths and needs
 // neither client-side MathJax nor a font/CDN request to display the equation.
@@ -17,6 +17,10 @@ await MathJax.startup.promise;
 const definitions = JSON.parse(await readFile(new URL('../math/equations.json', import.meta.url), 'utf8'));
 const output = new URL('../public/equations/', import.meta.url);
 await mkdir(output, { recursive: true });
+for (const file of await readdir(output)) {
+  const match = /^s(\d+)\.svg$/.exec(file);
+  if (match && !(match[1] in definitions)) await unlink(new URL(file, output));
+}
 await writeFile(new URL('MathJax-LICENSE.txt', output),
   await readFile(new URL('../node_modules/@mathjax/src/LICENSE', import.meta.url)));
 await writeFile(new URL('STIX-OFL.txt', output),
