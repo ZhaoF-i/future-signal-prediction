@@ -147,9 +147,9 @@
       ],
       "figure": {
         "file": "speech-spectrogram.png",
-        "sha256": "c08ebb584f03360e86ee8d06a187a22a033309ded8edbe08c887f55db1a7e91d",
-        "width": 1620,
-        "height": 1224,
+        "sha256": "875bdc37551a62491cf99d28accfd174c52db5d5427797f01ff9923a7974c870",
+        "width": 1525,
+        "height": 1169,
         "amplitude_reference": 0.18003176362344608,
         "reference": "Maximum STFT magnitude across all three exported WAVs",
         "window": "periodic Hann",
@@ -173,7 +173,14 @@
           4,
           6
         ],
-        "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
+        "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))",
+        "displayed_time_seconds": [
+          0.012,
+          2.156
+        ],
+        "time_axis_extent": "Edges of available STFT time bins; no synthetic boundary frames",
+        "canvas_bbox": "tight",
+        "canvas_padding_inches": 0.02
       },
       "errors": {
         "definition": "error = published target - published predicted signal",
@@ -207,9 +214,9 @@
         ],
         "figure": {
           "file": "speech-error-spectrogram.png",
-          "sha256": "2e2200ed45a7d02accd8a914c0c0d502844ef0ed30eb6a8e3bfbdf4b3de19d7d",
-          "width": 1620,
-          "height": 864,
+          "sha256": "25c6c86dadb5554acf3ffe9d00ef20135e7395e01c138837f5445476f2c0bafe",
+          "width": 1525,
+          "height": 861,
           "amplitude_reference": 0.18003176362344608,
           "reference": "Same reference as the corresponding Target / Predicted figure; no error-panel normalization",
           "window": "periodic Hann",
@@ -233,7 +240,14 @@
             4,
             6
           ],
-          "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
+          "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))",
+          "displayed_time_seconds": [
+            0.012,
+            2.156
+          ],
+          "time_axis_extent": "Edges of available STFT time bins; no synthetic boundary frames",
+          "canvas_bbox": "tight",
+          "canvas_padding_inches": 0.02
         }
       }
     },
@@ -378,9 +392,9 @@
       ],
       "figure": {
         "file": "timit-spectrogram.png",
-        "sha256": "d08cec7fae21cdd948c40e643c3e57efd32be293fc95ef1172719dbddc051579",
-        "width": 1620,
-        "height": 1224,
+        "sha256": "58e6bb590ba52b0b0793a1629f573d587c802fcc22cc80058ae45290406d03f3",
+        "width": 1525,
+        "height": 1169,
         "amplitude_reference": 0.13567821637727806,
         "reference": "Maximum STFT magnitude across all three exported WAVs",
         "window": "periodic Hann",
@@ -404,7 +418,14 @@
           4,
           6
         ],
-        "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
+        "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))",
+        "displayed_time_seconds": [
+          0.012,
+          3.084
+        ],
+        "time_axis_extent": "Edges of available STFT time bins; no synthetic boundary frames",
+        "canvas_bbox": "tight",
+        "canvas_padding_inches": 0.02
       },
       "errors": {
         "definition": "error = published target - published predicted signal",
@@ -438,9 +459,9 @@
         ],
         "figure": {
           "file": "timit-error-spectrogram.png",
-          "sha256": "26e04a248251bdeb991da9663620d838d452955d0d9495975bc1b1d0f66bc385",
-          "width": 1620,
-          "height": 864,
+          "sha256": "8233602d071095dea97416fcdfcfd63b627f3450ec4f1ab47e5839e942e59d07",
+          "width": 1525,
+          "height": 861,
           "amplitude_reference": 0.13567821637727806,
           "reference": "Same reference as the corresponding Target / Predicted figure; no error-panel normalization",
           "window": "periodic Hann",
@@ -464,7 +485,14 @@
             4,
             6
           ],
-          "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
+          "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))",
+          "displayed_time_seconds": [
+            0.012,
+            3.084
+          ],
+          "time_axis_extent": "Edges of available STFT time bins; no synthetic boundary frames",
+          "canvas_bbox": "tight",
+          "canvas_padding_inches": 0.02
         }
       }
     },
@@ -609,9 +637,9 @@
       ],
       "figure": {
         "file": "aishell1-spectrogram.png",
-        "sha256": "373aa5ff4571e2ed5192257b0574dfbca6ef1c2e7368c135e9a10c21e8fe7901",
-        "width": 1620,
-        "height": 1224,
+        "sha256": "e5588d559c97b402a2d688680a396547c3c49904664ad654b0c2b905b1d075f5",
+        "width": 1525,
+        "height": 1169,
         "amplitude_reference": 0.2526813582044636,
         "reference": "Maximum STFT magnitude across all three exported WAVs",
         "window": "periodic Hann",
@@ -635,7 +663,14 @@
           4,
           6
         ],
-        "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
+        "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))",
+        "displayed_time_seconds": [
+          0.012,
+          3.988
+        ],
+        "time_axis_extent": "Edges of available STFT time bins; no synthetic boundary frames",
+        "canvas_bbox": "tight",
+        "canvas_padding_inches": 0.02
       },
       "errors": {
         "definition": "error = published target - published predicted signal",
@@ -669,9 +704,9 @@
         ],
         "figure": {
           "file": "aishell1-error-spectrogram.png",
-          "sha256": "fd347726e2e68e0547489af7f1698113945af1376e8ca1dea2143b8fc638a42b",
-          "width": 1620,
-          "height": 864,
+          "sha256": "c42abf1037b44058e03c6e376c0d55cc35f50d86e8af1a0338d5ee5abd7c7cdf",
+          "width": 1525,
+          "height": 861,
           "amplitude_reference": 0.2526813582044636,
           "reference": "Same reference as the corresponding Target / Predicted figure; no error-panel normalization",
           "window": "periodic Hann",
@@ -695,7 +730,14 @@
             4,
             6
           ],
-          "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
+          "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))",
+          "displayed_time_seconds": [
+            0.012,
+            3.988
+          ],
+          "time_axis_extent": "Edges of available STFT time bins; no synthetic boundary frames",
+          "canvas_bbox": "tight",
+          "canvas_padding_inches": 0.02
         }
       }
     },
@@ -840,9 +882,9 @@
       ],
       "figure": {
         "file": "noisex92-spectrogram.png",
-        "sha256": "6a99d07fc81b06dc0418b182e226c9158d812d61a50c6c900d72200af1b86679",
-        "width": 1620,
-        "height": 1224,
+        "sha256": "cfc147ebdb2a96fdf374285397f82ac89fcf70f61333d14b368c7cb62b0d4309",
+        "width": 1525,
+        "height": 1169,
         "amplitude_reference": 0.08459110333090561,
         "reference": "Maximum STFT magnitude across all three exported WAVs",
         "window": "periodic Hann",
@@ -866,7 +908,14 @@
           4,
           6
         ],
-        "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
+        "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))",
+        "displayed_time_seconds": [
+          0.012,
+          2.98
+        ],
+        "time_axis_extent": "Edges of available STFT time bins; no synthetic boundary frames",
+        "canvas_bbox": "tight",
+        "canvas_padding_inches": 0.02
       },
       "errors": {
         "definition": "error = published target - published predicted signal",
@@ -900,9 +949,9 @@
         ],
         "figure": {
           "file": "noisex92-error-spectrogram.png",
-          "sha256": "519586d82e3334b65b60ad30887803baa91518cdc66b924e00c77cac3cbff645",
-          "width": 1620,
-          "height": 864,
+          "sha256": "f62527f7c79bf56351f1c5fc5dcab0612a860dbed330b3774a8e5718d770922b",
+          "width": 1525,
+          "height": 861,
           "amplitude_reference": 0.08459110333090561,
           "reference": "Same reference as the corresponding Target / Predicted figure; no error-panel normalization",
           "window": "periodic Hann",
@@ -926,7 +975,14 @@
             4,
             6
           ],
-          "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
+          "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))",
+          "displayed_time_seconds": [
+            0.012,
+            2.98
+          ],
+          "time_axis_extent": "Edges of available STFT time bins; no synthetic boundary frames",
+          "canvas_bbox": "tight",
+          "canvas_padding_inches": 0.02
         }
       }
     },
@@ -1071,9 +1127,9 @@
       ],
       "figure": {
         "file": "noise-spectrogram.png",
-        "sha256": "96bc41098f18783129efed8524ac3746737b460ed89af732eac3f222d80bee30",
-        "width": 1620,
-        "height": 1224,
+        "sha256": "15a552e82c825132c5184c6bde507a58191e2e852266d97b66463448ddf260e0",
+        "width": 1525,
+        "height": 1169,
         "amplitude_reference": 0.23811892741201202,
         "reference": "Maximum STFT magnitude across all three exported WAVs",
         "window": "periodic Hann",
@@ -1097,7 +1153,14 @@
           4,
           6
         ],
-        "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
+        "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))",
+        "displayed_time_seconds": [
+          0.012,
+          2.98
+        ],
+        "time_axis_extent": "Edges of available STFT time bins; no synthetic boundary frames",
+        "canvas_bbox": "tight",
+        "canvas_padding_inches": 0.02
       },
       "errors": {
         "definition": "error = published target - published predicted signal",
@@ -1131,9 +1194,9 @@
         ],
         "figure": {
           "file": "noise-error-spectrogram.png",
-          "sha256": "84d0345605a41351f6d4a24ece579592584ef040cc395a9eb79ca4ccd942e7a2",
-          "width": 1620,
-          "height": 864,
+          "sha256": "8c141475dc2b94240ca65ec3ae0772d3e1199bba0e0c8e316561b202a034860f",
+          "width": 1525,
+          "height": 861,
           "amplitude_reference": 0.23811892741201202,
           "reference": "Same reference as the corresponding Target / Predicted figure; no error-panel normalization",
           "window": "periodic Hann",
@@ -1157,7 +1220,14 @@
             4,
             6
           ],
-          "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
+          "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))",
+          "displayed_time_seconds": [
+            0.012,
+            2.98
+          ],
+          "time_axis_extent": "Edges of available STFT time bins; no synthetic boundary frames",
+          "canvas_bbox": "tight",
+          "canvas_padding_inches": 0.02
         }
       }
     },
@@ -1302,9 +1372,9 @@
       ],
       "figure": {
         "file": "esc50-spectrogram.png",
-        "sha256": "563a3f33a14f3c27d56e67425998df077f74666ba0da668afa69a9237da6f7d3",
-        "width": 1620,
-        "height": 1224,
+        "sha256": "74180aae629fae2254c7e80d81591fd45f0c7be6c399ec106e91cbfb992363fd",
+        "width": 1525,
+        "height": 1169,
         "amplitude_reference": 0.2840693826368067,
         "reference": "Maximum STFT magnitude across all three exported WAVs",
         "window": "periodic Hann",
@@ -1328,7 +1398,14 @@
           4,
           6
         ],
-        "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
+        "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))",
+        "displayed_time_seconds": [
+          0.012,
+          4.9799999999999995
+        ],
+        "time_axis_extent": "Edges of available STFT time bins; no synthetic boundary frames",
+        "canvas_bbox": "tight",
+        "canvas_padding_inches": 0.02
       },
       "errors": {
         "definition": "error = published target - published predicted signal",
@@ -1362,9 +1439,9 @@
         ],
         "figure": {
           "file": "esc50-error-spectrogram.png",
-          "sha256": "df9458d521f8807be887f30de218ff26f5a8882b566eab066970a2b71341b0ea",
-          "width": 1620,
-          "height": 864,
+          "sha256": "b2813077b8705f3991d34899e3ffb2629d998ff21a7d83abf7cb04ea2a617198",
+          "width": 1525,
+          "height": 861,
           "amplitude_reference": 0.2840693826368067,
           "reference": "Same reference as the corresponding Target / Predicted figure; no error-panel normalization",
           "window": "periodic Hann",
@@ -1388,7 +1465,14 @@
             4,
             6
           ],
-          "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
+          "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))",
+          "displayed_time_seconds": [
+            0.012,
+            4.9799999999999995
+          ],
+          "time_axis_extent": "Edges of available STFT time bins; no synthetic boundary frames",
+          "canvas_bbox": "tight",
+          "canvas_padding_inches": 0.02
         }
       }
     }
