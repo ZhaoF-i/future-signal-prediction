@@ -14,12 +14,12 @@ function MirrorExamples() {
   return <>
     <h3>Real model examples (<i>H</i> = 4)</h3>
     <p>Figures S1–S6 provide one selected example from each of the six test corpora. Standalone S4-TD is trained independently; it is not the internal base output of the complete system. The complete system combines S4-TD, PE-PostNet, MS-PostNet, and Adjacent RandomInterval. These qualitative examples are not corpus averages.</p>
-    <p>For these configurations, standalone S4-TD uses B = F = H = 4. The complete system uses B = F = 5 and commitment intervals H<sub>k</sub> ∈ {'{4, 5}'}, with short-interval prior q = 0.9. The detector uses H = 4 for both. We trim one initial sample from the standalone target and estimate, then compare identical targets over a common interval. This compares the combined systems, not a matched-F ablation of MS-PostNet.</p>
+    <p>For these configurations, standalone S4-TD uses B = F = H = 4. The complete system uses B = F = 5 and commitment intervals H<sub>k</sub> ∈ {'{4, 5}'}, with short-interval prior q = 0.9. The detector uses H = 4 for both. We trim one initial sample from the standalone target and predicted signal, then compare identical targets over a common interval. This compares the combined systems, not a matched-F ablation of MS-PostNet.</p>
     <nav className="example-index" aria-label="Examples by test corpus">{exampleData.examples.map((example, index) => <a key={example.id} href={`#figure-s${index + 1}`}>{example.dataset}</a>)}</nav>
     {exampleData.examples.map((example, index) => (
       <figure className="mirror-example" id={`figure-s${index + 1}`} key={example.id}>
         <h3>{example.domain} · {example.dataset}</h3>
-        <p className="panel-label">(a) Target and estimates</p>
+        <p className="panel-label">(a) Target and predicted signals</p>
         <a className="spectrogram-link" href={`./examples/${example.figure.file}`} aria-label={`Open full-resolution ${example.domain.toLowerCase()} spectrogram`}>
           <img className="spectrogram" src={`./examples/${example.figure.file}`}
             width={example.figure.width} height={example.figure.height} loading="lazy"
@@ -38,7 +38,7 @@ function MirrorExamples() {
             </div>
           ))}
         </div>
-        <p className="panel-label">(b) Prediction errors: target − estimate</p>
+        <p className="panel-label">(b) Prediction errors: target − predicted signal</p>
         <a className="spectrogram-link" href={`./examples/${example.errors.figure.file}`} aria-label={`Open full-resolution ${example.domain.toLowerCase()} error spectrogram`}>
           <img className="spectrogram" src={`./examples/${example.errors.figure.file}`}
             width={example.errors.figure.width} height={example.errors.figure.height} loading="lazy"
@@ -48,7 +48,7 @@ function MirrorExamples() {
           {example.errors.tracks.map(track => (
             <div className="audio-track" key={track.role}>
               <p className="track-label" id={`${example.id}-${track.role}-error-label`}>{track.label}</p>
-              <p className="track-context">Target − {track.role === 'baseline' ? 'standalone estimate' : 'complete-system estimate'}</p>
+              <p className="track-context">Target − {track.role === 'baseline' ? 'standalone predicted signal' : 'complete-system predicted signal'}</p>
               <audio controls preload="none" aria-labelledby={`${example.id}-${track.role}-error-label`}>
                 <source src={`./examples/${track.file}`} type="audio/wav" />
                 <a href={`./examples/${track.file}`}>Download error WAV</a>
@@ -59,12 +59,12 @@ function MirrorExamples() {
         <figcaption className="paper-figure-caption">
           <strong className="figure-label">Figure S{index + 1}.</strong>{' '}
           Mirror suppression on {example.dataset} <span className="sample-id">{example.sample_id}</span>.{' '}
-          A {example.duration_seconds.toFixed(2)} s excerpt starting at sample {example.alignment.crop_start_sample} of the aligned interval. (a) Target and estimates. (b) Total prediction errors, target − estimate, including both mirror and other error components. HA-MAI and NMSE are computed on the published excerpt; lower values mean a smaller fitted error share and lower relative error energy, respectively.
+          A {example.duration_seconds.toFixed(2)} s excerpt starting at sample {example.alignment.crop_start_sample} of the aligned interval. (a) Target and predicted signals. (b) Total prediction errors, target − predicted signal, including both mirror and other error components. HA-MAI and NMSE are computed on the published excerpt; lower values mean a smaller fitted error share and lower relative error energy, respectively.
           <span className="example-credit">Source: <a href={example.dataset_credit.source_url}>{example.dataset}</a> · <a href={example.dataset_credit.license_url}>{example.dataset_credit.license}</a>. Attribution and excerpt processing: <a href="./examples/ATTRIBUTION.md">media credits</a>.</span>
         </figcaption>
       </figure>
     ))}
-    <p className="example-methods">All audio is mono, 16 kHz PCM16. Each target/estimate group uses one shared gain (peak ≤ 0.95); error tracks are their exact differences, without further normalization or clipping. Spectrograms use a 512-sample Hann window, 128-sample frame shift, and 1024-point FFT over 0–8 kHz. Within each example, target, estimates, and errors share one magnitude reference and an 80 dB color range. Dashed lines mark the 2, 4, and 6 kHz mirror-symmetry axes. Click a figure to view it at full resolution. NMSE is 10 log₁₀ of error energy divided by target energy. <a href="./examples/metadata.json" download>Download clip metrics and metadata</a>.</p>
+    <p className="example-methods">All audio is mono, 16 kHz PCM16. Each target/predicted-signal group uses one shared gain (peak ≤ 0.95); error tracks are their exact differences, without further normalization or clipping. Spectrograms use a 512-sample Hann window, 128-sample frame shift, and 1024-point FFT over 0–8 kHz. Within each example, target, predicted signals, and errors share one magnitude reference and an 80 dB color range. Dashed lines mark the 2, 4, and 6 kHz mirror-symmetry axes. Click a figure to view it at full resolution. NMSE is 10 log₁₀ of error energy divided by target energy. <a href="./examples/metadata.json" download>Download clip metrics and metadata</a>.</p>
   </>;
 }
 

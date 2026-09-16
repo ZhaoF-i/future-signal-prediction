@@ -40,7 +40,7 @@ The complete public website is exported to `dist/client/`. The build converts as
 
 Push this website directory as the root of the selected GitHub repository, with default branch `main`. In repository **Settings → Pages → Build and deployment**, select **GitHub Actions**. The included workflow builds the portable static site and deploys the `dist/client/` artifact. For a different default branch, change the workflow push branch. GitHub Pages must be available for that repository/account.
 
-Only this website project belongs in the website repository, including the 18 selected target/estimate excerpts, 12 derived error tracks, and their figures described below. Do not upload the surrounding paper workspace or bulk original audio datasets.
+Only this website project belongs in the website repository, including the 18 selected target/predicted-signal excerpts, 12 derived error tracks, and their figures described below. Do not upload the surrounding paper workspace or bulk original audio datasets.
 
 ## Numerical verification
 
@@ -114,9 +114,9 @@ Every figure uses a periodic Hann window of 512 samples, a hop of 128, and an FF
 
 ### Reproduce the media
 
-Each example now also includes a two-row **prediction-error** spectrogram and two error players, under panel (b) of Figures S1–S6. Error means **published target − published estimate**, including all prediction error, not just the fitted mirror component. Subtraction uses PCM16 sample integers promoted to int32 to avoid overflow, then exports an exact PCM16 difference. No extra gain, normalization, clipping, or inference is applied. These selected residuals fit PCM16; the exporter rejects overflow rather than silently clipping. The target/estimate peak limit remains 0.95; error peaks are recorded separately (the speech baseline residual reaches approximately 0.952). The previously published LibriSpeech and DEMAND WAVs and numeric scores are preserved; figure labels now follow the manuscript.
+Each example now also includes a two-row **prediction-error** spectrogram and two error players, under panel (b) of Figures S1–S6. Error means **published target − published predicted signal**, including all prediction error, not just the fitted mirror component. Subtraction uses PCM16 sample integers promoted to int32 to avoid overflow, then exports an exact PCM16 difference. No extra gain, normalization, clipping, or inference is applied. These selected residuals fit PCM16; the exporter rejects overflow rather than silently clipping. The target/predicted-signal peak limit remains 0.95; error peaks are recorded separately (the speech baseline residual reaches approximately 0.952). The previously published LibriSpeech and DEMAND WAVs and numeric scores are preserved; figure labels now follow the manuscript.
 
-Error spectrograms use exactly the same STFT parameters, magnitude reference, and −80 to 0 dB color limits as the corresponding target/estimate figure. Error energies match the error-energy values used in the displayed HA-MAI and NMSE. Metadata records the residual definition, parent WAV identifiers, gain of 1, hashes, peaks, energies, and plotting parameters.
+Error spectrograms use exactly the same STFT parameters, magnitude reference, and −80 to 0 dB color limits as the corresponding target/predicted-signal figure. Error energies match the error-energy values used in the displayed HA-MAI and NMSE. Metadata records the residual definition, parent WAV identifiers, gain of 1, hashes, peaks, energies, and plotting parameters.
 
 Reproduce the added error media using **only the published files**, without the private manifest or model outputs:
 
@@ -142,7 +142,7 @@ LibriSpeech: Vassil Panayotov, Guoguo Chen, Daniel Povey, and Sanjeev Khudanpur,
 
 ## Implementation details
 
-The webpage uses `x` for the target and `H` for the nominal detection period. These correspond to `target` and `period` in `hamai_error`. The CSV's `period` column has the same meaning. The page defines `e = target - estimate`; the implementation uses the opposite sign, which changes the fitted coefficients' signs but leaves energies and HA-MAI values unchanged.
+The webpage uses `x` for the target and `H` for the nominal detection period. These correspond to `target` and `period` in `hamai_error`. The CSV's `period` column has the same meaning. The page defines error as target minus predicted signal (`e = target - estimate` in the implementation); the implementation uses the opposite sign, which changes the fitted coefficients' signs but leaves energies and HA-MAI values unchanged.
 
 ### Phase-wise sufficient statistics
 

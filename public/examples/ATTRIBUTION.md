@@ -24,7 +24,7 @@ Source: [DEMAND dataset and original license notice](https://zenodo.org/records/
 
 The prediction tracks are saved outputs of the Base and complete RandomInterval models. The exporter aligns their target intervals, selects one excerpt per corpus, applies a single gain shared by the three tracks in each example, and converts them to mono 16 kHz PCM16 WAV. It does not infer new predictions, subtract a fitted mirror waveform, loop, splice, or normalize tracks separately. The figures visualize these exported WAVs.
 
-The additional error tracks are exact differences of the published target and estimate WAVs, with no additional gain or clipping. They represent total prediction error, not an isolated mirror waveform. Error figures use the same magnitude reference as the corresponding target/estimate figure.
+The additional error tracks are exact differences of the published target and predicted WAVs, with no additional gain or clipping. They represent total prediction error, not an isolated mirror waveform. Error figures use the same magnitude reference as the corresponding target/predicted-signal figure.
 
 Speech uses 64000 samples starting at sample 176000 of the aligned interval. Noise uses the complete 47995-sample common interval. The Base target and prediction lose one initial sample for alignment; the complete system is untrimmed at its start. Base and full-system prediction advances are 4 and 5 samples, respectively.
 
@@ -32,7 +32,7 @@ Speech uses 64000 samples starting at sample 176000 of the aligned interval. Noi
 
 ## Additional test corpora
 
-The following credits cover each dataset-prefixed target, standalone estimate, complete-system estimate, two error WAVs, and both spectrograms. Each was aligned, excerpted where stated, scaled with one common gain, quantized to PCM16, and visualized. Error audio is exact target-minus-estimate subtraction. Dataset-specific terms are retained; these files are not assigned a blanket open license.
+The following credits cover each dataset-prefixed target, standalone predicted signal, complete-system predicted signal, two error WAVs, and both spectrograms. Each was aligned, excerpted where stated, scaled with one common gain, quantized to PCM16, and visualized. Error audio is exact target-minus-predicted-signal subtraction. Dataset-specific terms are retained; these files are not assigned a blanket open license.
 
 - **TIMIT TEST** (`timit-*`): DR3/MGJF0/SI1901, 49555 aligned samples. John S. Garofolo, Lori F. Lamel, William M. Fisher, Jonathan G. Fiscus, David S. Pallett, Nancy L. Dahlgren, and Victor Zue, *TIMIT Acoustic-Phonetic Continuous Speech Corpus*, LDC93S1 (1993). [Dataset and LDC terms](https://catalog.ldc.upenn.edu/LDC93S1). The research illustration does not grant rights to redistribute the TIMIT corpus.
 - **AISHELL-1 test** (`aishell1-*`): BAC009S0916W0352, first 64000 aligned samples. Hui Bu, Jiayu Du, Xingyu Na, Bengu Wu, and Hao Zheng, *AISHELL-1* (2017), Beijing Shell Shell Technology Co., Ltd. [OpenSLR 33](https://www.openslr.org/33/), [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).

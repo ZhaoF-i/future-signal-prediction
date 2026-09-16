@@ -181,8 +181,8 @@ def add_errors(example, output_dir):
     figure = plot_example(errors, output_dir / f"{example['id']}-error-spectrogram.png",
                           labels=tuple(t['label'] for t in tracks),
                           reference=example['figure']['amplitude_reference'])
-    figure['reference'] = 'Same reference as the corresponding Target / Estimate figure; no error-panel normalization'
-    example['errors'] = dict(definition='error = published target - published estimate',
+    figure['reference'] = 'Same reference as the corresponding Target / Predicted figure; no error-panel normalization'
+    example['errors'] = dict(definition='error = published target - published predicted signal',
         additional_gain=1.0, format='PCM16 WAV', peak_limit=32767 / 32768,
         subtraction='int32 subtraction of decoded PCM16 sample integers; exact PCM16 output, no clipping',
         tracks=tracks, figure=figure)

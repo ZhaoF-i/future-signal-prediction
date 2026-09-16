@@ -180,7 +180,7 @@
         "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
       },
       "errors": {
-        "definition": "error = published target - published estimate",
+        "definition": "error = published target - published predicted signal",
         "additional_gain": 1.0,
         "format": "PCM16 WAV",
         "peak_limit": 0.999969482421875,
@@ -215,7 +215,7 @@
           "width": 1620,
           "height": 864,
           "amplitude_reference": 0.2146430080096985,
-          "reference": "Same reference as the corresponding Target / Estimate figure; no error-panel normalization",
+          "reference": "Same reference as the corresponding Target / Predicted figure; no error-panel normalization",
           "window": "periodic Hann",
           "window_samples": 512,
           "hop_samples": 128,
@@ -411,7 +411,7 @@
         "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
       },
       "errors": {
-        "definition": "error = published target - published estimate",
+        "definition": "error = published target - published predicted signal",
         "additional_gain": 1.0,
         "format": "PCM16 WAV",
         "peak_limit": 0.999969482421875,
@@ -446,7 +446,7 @@
           "width": 1620,
           "height": 864,
           "amplitude_reference": 0.13567821637727806,
-          "reference": "Same reference as the corresponding Target / Estimate figure; no error-panel normalization",
+          "reference": "Same reference as the corresponding Target / Predicted figure; no error-panel normalization",
           "window": "periodic Hann",
           "window_samples": 512,
           "hop_samples": 128,
@@ -642,7 +642,7 @@
         "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
       },
       "errors": {
-        "definition": "error = published target - published estimate",
+        "definition": "error = published target - published predicted signal",
         "additional_gain": 1.0,
         "format": "PCM16 WAV",
         "peak_limit": 0.999969482421875,
@@ -677,7 +677,7 @@
           "width": 1620,
           "height": 864,
           "amplitude_reference": 0.2526813582044636,
-          "reference": "Same reference as the corresponding Target / Estimate figure; no error-panel normalization",
+          "reference": "Same reference as the corresponding Target / Predicted figure; no error-panel normalization",
           "window": "periodic Hann",
           "window_samples": 512,
           "hop_samples": 128,
@@ -873,7 +873,7 @@
         "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
       },
       "errors": {
-        "definition": "error = published target - published estimate",
+        "definition": "error = published target - published predicted signal",
         "additional_gain": 1.0,
         "format": "PCM16 WAV",
         "peak_limit": 0.999969482421875,
@@ -908,7 +908,7 @@
           "width": 1620,
           "height": 864,
           "amplitude_reference": 0.08459110333090561,
-          "reference": "Same reference as the corresponding Target / Estimate figure; no error-panel normalization",
+          "reference": "Same reference as the corresponding Target / Predicted figure; no error-panel normalization",
           "window": "periodic Hann",
           "window_samples": 512,
           "hop_samples": 128,
@@ -1104,7 +1104,7 @@
         "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
       },
       "errors": {
-        "definition": "error = published target - published estimate",
+        "definition": "error = published target - published predicted signal",
         "additional_gain": 1.0,
         "format": "PCM16 WAV",
         "peak_limit": 0.999969482421875,
@@ -1139,7 +1139,7 @@
           "width": 1620,
           "height": 864,
           "amplitude_reference": 0.23811892741201202,
-          "reference": "Same reference as the corresponding Target / Estimate figure; no error-panel normalization",
+          "reference": "Same reference as the corresponding Target / Predicted figure; no error-panel normalization",
           "window": "periodic Hann",
           "window_samples": 512,
           "hop_samples": 128,
@@ -1335,7 +1335,7 @@
         "normalization": "20*log10(max(abs(STFT)/shared_reference, 1e-4))"
       },
       "errors": {
-        "definition": "error = published target - published estimate",
+        "definition": "error = published target - published predicted signal",
         "additional_gain": 1.0,
         "format": "PCM16 WAV",
         "peak_limit": 0.999969482421875,
@@ -1370,7 +1370,7 @@
           "width": 1620,
           "height": 864,
           "amplitude_reference": 0.2840693826368067,
-          "reference": "Same reference as the corresponding Target / Estimate figure; no error-panel normalization",
+          "reference": "Same reference as the corresponding Target / Predicted figure; no error-panel normalization",
           "window": "periodic Hann",
           "window_samples": 512,
           "hop_samples": 128,
