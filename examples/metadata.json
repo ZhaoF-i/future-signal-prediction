@@ -146,7 +146,7 @@
         }
       ],
       "figure": {
-        "file": "speech-spectrogram.png",
+        "file": "speech-spectrogram.875bdc37551a.png",
         "sha256": "875bdc37551a62491cf99d28accfd174c52db5d5427797f01ff9923a7974c870",
         "width": 1525,
         "height": 1169,
@@ -213,7 +213,7 @@
           }
         ],
         "figure": {
-          "file": "speech-error-spectrogram.png",
+          "file": "speech-error-spectrogram.25c6c86dadb5.png",
           "sha256": "25c6c86dadb5554acf3ffe9d00ef20135e7395e01c138837f5445476f2c0bafe",
           "width": 1525,
           "height": 861,
@@ -391,7 +391,7 @@
         }
       ],
       "figure": {
-        "file": "timit-spectrogram.png",
+        "file": "timit-spectrogram.58e6bb590ba5.png",
         "sha256": "58e6bb590ba52b0b0793a1629f573d587c802fcc22cc80058ae45290406d03f3",
         "width": 1525,
         "height": 1169,
@@ -458,7 +458,7 @@
           }
         ],
         "figure": {
-          "file": "timit-error-spectrogram.png",
+          "file": "timit-error-spectrogram.8233602d0710.png",
           "sha256": "8233602d071095dea97416fcdfcfd63b627f3450ec4f1ab47e5839e942e59d07",
           "width": 1525,
           "height": 861,
@@ -636,7 +636,7 @@
         }
       ],
       "figure": {
-        "file": "aishell1-spectrogram.png",
+        "file": "aishell1-spectrogram.e5588d559c97.png",
         "sha256": "e5588d559c97b402a2d688680a396547c3c49904664ad654b0c2b905b1d075f5",
         "width": 1525,
         "height": 1169,
@@ -703,7 +703,7 @@
           }
         ],
         "figure": {
-          "file": "aishell1-error-spectrogram.png",
+          "file": "aishell1-error-spectrogram.c42abf1037b4.png",
           "sha256": "c42abf1037b44058e03c6e376c0d55cc35f50d86e8af1a0338d5ee5abd7c7cdf",
           "width": 1525,
           "height": 861,
@@ -881,7 +881,7 @@
         }
       ],
       "figure": {
-        "file": "noisex92-spectrogram.png",
+        "file": "noisex92-spectrogram.cfc147ebdb2a.png",
         "sha256": "cfc147ebdb2a96fdf374285397f82ac89fcf70f61333d14b368c7cb62b0d4309",
         "width": 1525,
         "height": 1169,
@@ -948,7 +948,7 @@
           }
         ],
         "figure": {
-          "file": "noisex92-error-spectrogram.png",
+          "file": "noisex92-error-spectrogram.f62527f7c79b.png",
           "sha256": "f62527f7c79bf56351f1c5fc5dcab0612a860dbed330b3774a8e5718d770922b",
           "width": 1525,
           "height": 861,
@@ -1126,7 +1126,7 @@
         }
       ],
       "figure": {
-        "file": "noise-spectrogram.png",
+        "file": "noise-spectrogram.15a552e82c82.png",
         "sha256": "15a552e82c825132c5184c6bde507a58191e2e852266d97b66463448ddf260e0",
         "width": 1525,
         "height": 1169,
@@ -1193,7 +1193,7 @@
           }
         ],
         "figure": {
-          "file": "noise-error-spectrogram.png",
+          "file": "noise-error-spectrogram.8c141475dc2b.png",
           "sha256": "8c141475dc2b94240ca65ec3ae0772d3e1199bba0e0c8e316561b202a034860f",
           "width": 1525,
           "height": 861,
@@ -1371,7 +1371,7 @@
         }
       ],
       "figure": {
-        "file": "esc50-spectrogram.png",
+        "file": "esc50-spectrogram.74180aae629f.png",
         "sha256": "74180aae629fae2254c7e80d81591fd45f0c7be6c399ec106e91cbfb992363fd",
         "width": 1525,
         "height": 1169,
@@ -1438,7 +1438,7 @@
           }
         ],
         "figure": {
-          "file": "esc50-error-spectrogram.png",
+          "file": "esc50-error-spectrogram.b2813077b870.png",
           "sha256": "b2813077b8705f3991d34899e3ffb2629d998ff21a7d83abf7cb04ea2a617198",
           "width": 1525,
           "height": 861,

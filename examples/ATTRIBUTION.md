@@ -4,8 +4,8 @@ These are selected qualitative examples for the HA-MAI supplement, not dataset-w
 
 ## Speech: LibriSpeech
 
-`speech-target.wav`, `speech-baseline.wav`, `speech-suppressed.wav`, and `speech-spectrogram.png` derive from LibriSpeech test-clean utterance **1089-134691-0003**.
-The derived `speech-baseline-error.wav`, `speech-suppressed-error.wav`, and `speech-error-spectrogram.png` retain the same attribution and license.
+`speech-target.wav`, `speech-baseline.wav`, `speech-suppressed.wav`, and `speech-spectrogram.875bdc37551a.png` derive from LibriSpeech test-clean utterance **1089-134691-0003**.
+The derived `speech-baseline-error.wav`, `speech-suppressed-error.wav`, and `speech-error-spectrogram.25c6c86dadb5.png` retain the same attribution and license.
 
 Credit: Vassil Panayotov, Guoguo Chen, Daniel Povey, and Sanjeev Khudanpur, *LibriSpeech: An ASR corpus based on public domain audio books*, ICASSP 2015. The corpus derives from LibriVox recordings.
 
@@ -13,8 +13,8 @@ Source: [LibriSpeech / OpenSLR 12](https://www.openslr.org/12/). These media are
 
 ## Noise: DEMAND
 
-`noise-target.wav`, `noise-baseline.wav`, `noise-suppressed.wav`, and `noise-spectrogram.png` derive from DEMAND's NPARK recording, saved evaluation segment **NPARK_S00641_seg0015**.
-The derived `noise-baseline-error.wav`, `noise-suppressed-error.wav`, and `noise-error-spectrogram.png` retain the same attribution and license.
+`noise-target.wav`, `noise-baseline.wav`, `noise-suppressed.wav`, and `noise-spectrogram.15a552e82c82.png` derive from DEMAND's NPARK recording, saved evaluation segment **NPARK_S00641_seg0015**.
+The derived `noise-baseline-error.wav`, `noise-suppressed-error.wav`, and `noise-error-spectrogram.8c141475dc2b.png` retain the same attribution and license.
 
 Credit: Joachim Thiemann, Nobutaka Ito, and Emmanuel Vincent, *DEMAND: a collection of multi-channel recordings of acoustic noise in diverse environments*, version 1.0, 2013, DOI: 10.5281/zenodo.1227121.
 
