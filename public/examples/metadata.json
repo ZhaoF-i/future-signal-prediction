@@ -14,11 +14,11 @@
       "id": "speech",
       "domain": "Speech",
       "dataset": "LibriSpeech test-clean",
-      "sample_id": "7021-79759-0004",
+      "sample_id": "1089-134691-0003",
       "period": 4,
       "sample_rate": 16000,
-      "samples": 64000,
-      "duration_seconds": 4.0,
+      "samples": 34795,
+      "duration_seconds": 2.1746875,
       "models": [
         {
           "method": "Base",
@@ -37,30 +37,30 @@
         {
           "method": "Base",
           "role": "target",
-          "dataset_file": "librispeech_test_clean_audio/7021__79759__7021-79759-0004_flac_target_speech.wav",
-          "sha256": "f69a1f8b1d4929da21b969a770bbff63a31cdb77b78f782db2c7ad20d8d6729c",
-          "samples": 391516
+          "dataset_file": "librispeech_test_clean_audio/1089__134691__1089-134691-0003_flac_target_speech.wav",
+          "sha256": "569276e33770337b7dd696bbe78431b5746948fcce9ea710b75de8484e6a33cb",
+          "samples": 34796
         },
         {
           "method": "Base",
           "role": "estimate",
-          "dataset_file": "librispeech_test_clean_audio/7021__79759__7021-79759-0004_flac_estimate_speech.wav",
-          "sha256": "ff7b101e1ff90799bb916a643d6449f310746811b7a25a97113a3b3f90284223",
-          "samples": 391516
+          "dataset_file": "librispeech_test_clean_audio/1089__134691__1089-134691-0003_flac_estimate_speech.wav",
+          "sha256": "6fab830b59adc90059c9b50aeb23c6146a3745a6ffcf6bc65ae80353564c1215",
+          "samples": 34796
         },
         {
           "method": "RandomInterval",
           "role": "target",
-          "dataset_file": "librispeech_test_clean_audio/7021__79759__7021-79759-0004_flac_target_speech.wav",
-          "sha256": "153a3048854c312916174d17fe1bd8913ef8f6495186d5a4441da00aa8b2ff5d",
-          "samples": 391515
+          "dataset_file": "librispeech_test_clean_audio/1089__134691__1089-134691-0003_flac_target_speech.wav",
+          "sha256": "43ad11a8113be114e34e75f1ff086a32a92807e70b08c8979674a9bf905e434d",
+          "samples": 34795
         },
         {
           "method": "RandomInterval",
           "role": "estimate",
-          "dataset_file": "librispeech_test_clean_audio/7021__79759__7021-79759-0004_flac_estimate_speech.wav",
-          "sha256": "e1442dddcec05405e8efe9a8dcdc27329bed2cfa3a9e11da3159325b1648c3ce",
-          "samples": 391515
+          "dataset_file": "librispeech_test_clean_audio/1089__134691__1089-134691-0003_flac_estimate_speech.wav",
+          "sha256": "1df3f6678acc15aac7d7754391b6bbf6ab74f30d459348a4f3b9522c5d45f622",
+          "samples": 34795
         }
       ],
       "dataset_credit": {
@@ -72,25 +72,21 @@
       "alignment": {
         "base_trim_start_samples": 1,
         "full_trim_start_samples": 0,
-        "common_samples": 391515,
+        "common_samples": 34795,
         "target_max_abs_difference": 0.0,
-        "crop_start_sample": 176000,
-        "crop_end_sample_exclusive": 240000,
+        "crop_start_sample": 0,
+        "crop_end_sample_exclusive": 34795,
         "crop_origin": "Common interval after alignment; zero-based",
         "comparison": "Same target time interval, not a matched-prediction-length ablation"
       },
       "selection": {
-        "purpose": "Selected qualitative illustration, not a population average",
-        "eligible_count": 88,
-        "rank_rule": "Upper median HA-MAI reduction among eligible candidates",
-        "window_rule": "Highest-energy window up to 4 s, 1 s start grid plus final start; earliest tie",
-        "baseline_hamai_above_db": -20,
-        "minimum_reduction_db": 10,
-        "require_nmse_improvement": true
+        "purpose": "Author-selected qualitative illustration, not a population average",
+        "sample_rule": "Author-specified file",
+        "window_rule": "Full common interval"
       },
       "audio": {
         "format": "PCM16 WAV",
-        "shared_gain": 1.4326675257731958,
+        "shared_gain": 2.0161891735850412,
         "peak_limit": 0.95,
         "quantization": "round(gain*x*32768); decode as int16/32768; no dither",
         "changes": "Time alignment, excerpt selection, one shared gain, PCM16 quantization; predictions are saved model outputs"
@@ -100,61 +96,61 @@
           "role": "target",
           "label": "Target",
           "file": "speech-target.wav",
-          "sha256": "dbd442b0cd8b6948850224add0264ca326419da9eb25bd704f20ffe68529b6fb",
-          "samples": 64000,
-          "peak": 0.949981689453125
+          "sha256": "a8e39c2f99f1c90bc47bef94a7a96ba4e5e32ff19dd1de1245172500b1128227",
+          "samples": 34795,
+          "peak": 0.9366455078125
         },
         {
           "role": "baseline",
           "label": "Standalone S4-TD",
           "file": "speech-baseline.wav",
-          "sha256": "f3b1da7df9ba6c39769ca66f7bbc016803c3e0fdf33276bd92927f1793d18cce",
-          "samples": 64000,
-          "peak": 0.8782958984375,
+          "sha256": "6cf9ebbe41765d13a533e687e68fcb9fd94c8bb117d0006608a7d7a538d6b2df",
+          "samples": 34795,
+          "peak": 0.949981689453125,
           "metrics": {
-            "hamai_error_db": -17.01749477235676,
-            "mirror_energy": 1.1457814162608961,
-            "error_energy": 57.65689508896321,
-            "target_energy": 929.329877060838,
-            "mirror_fraction": 0.01987240926680084,
+            "hamai_error_db": -17.11299449473403,
+            "mirror_energy": 0.26490989820246863,
+            "error_energy": 13.626917770132422,
+            "target_energy": 255.26958803553134,
+            "mirror_fraction": 0.019440192028096083,
             "status": "ok",
             "valid": true,
             "period": 4,
             "basis_count": 3,
             "ridge": 1e-06,
             "eps": 1e-12,
-            "nmse_db": -12.073186482569458
+            "nmse_db": -12.726014422616922
           }
         },
         {
           "role": "suppressed",
           "label": "Complete system",
           "file": "speech-suppressed.wav",
-          "sha256": "7b97452ed669b4cb0a056461b8360043ce8ee74170dd1bcab8cbf4ba536f10dc",
-          "samples": 64000,
-          "peak": 0.879150390625,
+          "sha256": "f06730c6d93c8f8997dd3e8c1e873bcb33f4e3bb874bfb613e22f689c1e55a68",
+          "samples": 34795,
+          "peak": 0.915496826171875,
           "metrics": {
-            "hamai_error_db": -38.93073242602678,
-            "mirror_energy": 0.005854466311453194,
-            "error_energy": 45.767854483798146,
-            "target_energy": 929.329877060838,
-            "mirror_fraction": 0.00012791655578973121,
+            "hamai_error_db": -28.60292280212509,
+            "mirror_energy": 0.017682361543849286,
+            "error_energy": 12.818362418562174,
+            "target_energy": 255.26958803553134,
+            "mirror_fraction": 0.001379455578369528,
             "status": "ok",
             "valid": true,
             "period": 4,
             "basis_count": 3,
             "ridge": 1e-06,
             "eps": 1e-12,
-            "nmse_db": -13.076093455778466
+            "nmse_db": -12.99166531095893
           }
         }
       ],
       "figure": {
         "file": "speech-spectrogram.png",
-        "sha256": "6100f1f333156f780eaa90311fdd5e890eaf23456bd328af0b5e3af944abc2e8",
+        "sha256": "c08ebb584f03360e86ee8d06a187a22a033309ded8edbe08c887f55db1a7e91d",
         "width": 1620,
         "height": 1224,
-        "amplitude_reference": 0.2146430080096985,
+        "amplitude_reference": 0.18003176362344608,
         "reference": "Maximum STFT magnitude across all three exported WAVs",
         "window": "periodic Hann",
         "window_samples": 512,
@@ -190,10 +186,10 @@
             "role": "baseline",
             "label": "Standalone S4-TD error",
             "file": "speech-baseline-error.wav",
-            "sha256": "5b412c51906a983d9d2632064934682cb6a0897ce7961fb278758de32e69c11d",
-            "samples": 64000,
-            "peak": 0.951904296875,
-            "energy": 57.65689508896321,
+            "sha256": "53905cfc56e98e95f2e7ce32655dd4dc19b561642f17c7a15391cbc533baac84",
+            "samples": 34795,
+            "peak": 0.3623046875,
+            "energy": 13.626917770132422,
             "target_file": "speech-target.wav",
             "estimate_file": "speech-baseline.wav"
           },
@@ -201,20 +197,20 @@
             "role": "suppressed",
             "label": "Complete-system error",
             "file": "speech-suppressed-error.wav",
-            "sha256": "aa03f87164cc2a73edcfea580dcb9c516accd87cd57a1c4c860b8a997d289f7b",
-            "samples": 64000,
-            "peak": 0.668060302734375,
-            "energy": 45.767854483798146,
+            "sha256": "2dd4fa3ea4581bd73b2ad80b43a5f70a64d0d692d838eb9038dae006975d26e0",
+            "samples": 34795,
+            "peak": 0.41815185546875,
+            "energy": 12.818362418562174,
             "target_file": "speech-target.wav",
             "estimate_file": "speech-suppressed.wav"
           }
         ],
         "figure": {
           "file": "speech-error-spectrogram.png",
-          "sha256": "9bb9d9a8fac9ffc7b9ae38fe54b10c7b3abf2aafdb0bac98ef873212adc78b79",
+          "sha256": "2e2200ed45a7d02accd8a914c0c0d502844ef0ed30eb6a8e3bfbdf4b3de19d7d",
           "width": 1620,
           "height": 864,
-          "amplitude_reference": 0.2146430080096985,
+          "amplitude_reference": 0.18003176362344608,
           "reference": "Same reference as the corresponding Target / Predicted figure; no error-panel normalization",
           "window": "periodic Hann",
           "window_samples": 512,

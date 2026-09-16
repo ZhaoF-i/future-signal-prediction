@@ -83,7 +83,7 @@ Figures S1–S6 show one H=4 example from each test corpus. Saved source wavefor
 
 | Figure | Test corpus | Sample | Aligned start | Samples |
 | --- | --- | --- | ---: | ---: |
-| S1 | LibriSpeech test-clean | 7021-79759-0004 | 176000 | 64000 |
+| S1 | LibriSpeech test-clean | 1089-134691-0003 | 0 | 34795 |
 | S2 | TIMIT TEST | DR3/MGJF0/SI1901 | 0 | 49555 |
 | S3 | AISHELL-1 test | BAC009S0916W0352 | 0 | 64000 |
 | S4 | NoiseX-92 | hfchannel_S00624_seg0000 | 0 | 47995 |
@@ -94,9 +94,9 @@ Remove the first sample from both standalone target and prediction, then take th
 
 ### Selection rule
 
-Retain the previously published LibriSpeech and DEMAND clips. For each added corpus, inspect only paired saved H=4 outputs. For speech, use the highest-energy window up to 4 s, testing starts every 16000 samples plus the final possible start (earliest on a tie); shorter utterances use the full common interval. For noise, use the full common interval: approximately 3 s for NoiseX-92/DEMAND and 5 s for ESC-50. Require valid metrics, standalone HA-MAI above −20 dB, a reduction of at least 10 dB, and complete-system NMSE no worse than standalone. Added candidates must also admit exact unclipped PCM16 residuals after the shared export gain. Rank by HA-MAI reduction, then saved filename, and take the upper median at `len(candidates)//2`.
+LibriSpeech uses the author-specified `1089__134691__1089-134691-0003_flac_target_speech.wav`, with the full 34795-sample aligned interval (2.1746875 s); it is not selected by the median rule below. Retain the previously published DEMAND clip. For each added corpus, inspect only paired saved H=4 outputs. For speech, use the highest-energy window up to 4 s, testing starts every 16000 samples plus the final possible start (earliest on a tie); shorter utterances use the full common interval. For noise, use the full common interval: approximately 3 s for NoiseX-92/DEMAND and 5 s for ESC-50. Require valid metrics, standalone HA-MAI above −20 dB, a reduction of at least 10 dB, and complete-system NMSE no worse than standalone. Added candidates must also admit exact unclipped PCM16 residuals after the shared export gain. Rank by HA-MAI reduction, then saved filename, and take the upper median at `len(candidates)//2`.
 
-Eligible added-corpus counts are 114 (TIMIT), 112 (AISHELL-1), 17 (NoiseX-92), and 70 (ESC-50). The previous LibriSpeech/DEMAND counts were 88/15. Selection favors examples of mirror suppression and does not establish typical performance. `scripts/additional_examples.json` fixes the new samples and credits. Reproduce the added-corpus selection with:
+Eligible added-corpus counts are 114 (TIMIT), 112 (AISHELL-1), 17 (NoiseX-92), and 70 (ESC-50). The DEMAND eligible count was 15. No candidate-rank count is assigned to the author-selected LibriSpeech clip. Selection favors examples of mirror suppression and does not establish typical performance. `scripts/additional_examples.json` fixes the new samples and credits. Reproduce the added-corpus selection with:
 
 ```sh
 python scripts/select_additional_examples.py \
@@ -114,7 +114,7 @@ Every figure uses a periodic Hann window of 512 samples, a hop of 128, and an FF
 
 ### Reproduce the media
 
-Each example now also includes a two-row **prediction-error** spectrogram and two error players, under panel (b) of Figures S1–S6. Error means **published target − published predicted signal**, including all prediction error, not just the fitted mirror component. Subtraction uses PCM16 sample integers promoted to int32 to avoid overflow, then exports an exact PCM16 difference. No extra gain, normalization, clipping, or inference is applied. These selected residuals fit PCM16; the exporter rejects overflow rather than silently clipping. The target/predicted-signal peak limit remains 0.95; error peaks are recorded separately (the speech baseline residual reaches approximately 0.952). The previously published LibriSpeech and DEMAND WAVs and numeric scores are preserved; figure labels now follow the manuscript.
+Each example now also includes a two-row **prediction-error** spectrogram and two error players, under panel (b) of Figures S1–S6. Error means **published target − published predicted signal**, including all prediction error, not just the fitted mirror component. Subtraction uses PCM16 sample integers promoted to int32 to avoid overflow, then exports an exact PCM16 difference. No extra gain, normalization, clipping, or inference is applied. These selected residuals fit PCM16; the exporter rejects overflow rather than silently clipping. The target/predicted-signal peak limit remains 0.95; error peaks are recorded separately. Replacing the LibriSpeech example regenerates all five of its WAVs, both spectra, and its clip metrics. The other five corpus examples are preserved; figure labels follow the manuscript.
 
 Error spectrograms use exactly the same STFT parameters, magnitude reference, and −80 to 0 dB color limits as the corresponding target/predicted-signal figure. Error energies match the error-energy values used in the displayed HA-MAI and NMSE. Metadata records the residual definition, parent WAV identifiers, gain of 1, hashes, peaks, energies, and plotting parameters.
 

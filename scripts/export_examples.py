@@ -28,9 +28,9 @@ LABELS = ('Target', 'Standalone S4-TD', 'Complete system')
 ROLES = ('target', 'baseline', 'suppressed')
 SPECS = (
     dict(id='speech', domain='Speech', dataset='LibriSpeech test-clean',
-         sample_id='7021-79759-0004', folder='librispeech_test_clean_audio',
-         filename='7021__79759__7021-79759-0004_flac_target_speech.wav',
-         start=176000, samples=64000, eligible_count=88,
+         sample_id='1089-134691-0003', folder='librispeech_test_clean_audio',
+         filename='1089__134691__1089-134691-0003_flac_target_speech.wav',
+         start=0, samples=34795, author_selected=True,
          source_url='https://www.openslr.org/12/',
          attribution='Vassil Panayotov, Guoguo Chen, Daniel Povey, and Sanjeev Khudanpur; LibriSpeech (2015), derived from LibriVox recordings.',
          license='CC BY 4.0', license_url='https://creativecommons.org/licenses/by/4.0/'),
@@ -235,10 +235,12 @@ def export(manifest, output_dir):
                 crop_start_sample=spec['start'], crop_end_sample_exclusive=spec['start'] + spec['samples'],
                 crop_origin='Common interval after alignment; zero-based',
                 comparison='Same target time interval, not a matched-prediction-length ablation'),
-            selection=dict(purpose='Selected qualitative illustration, not a population average',
+            selection=(dict(purpose='Author-selected qualitative illustration, not a population average',
+                sample_rule='Author-specified file', window_rule='Full common interval')
+                if spec.get('author_selected') else dict(purpose='Selected qualitative illustration, not a population average',
                 eligible_count=spec['eligible_count'], rank_rule='Upper median HA-MAI reduction among eligible candidates',
                 window_rule='Highest-energy window up to 4 s, 1 s start grid plus final start; earliest tie' if spec['domain'] == 'Speech' else 'Full common interval',
-                baseline_hamai_above_db=-20, minimum_reduction_db=10, require_nmse_improvement=True),
+                baseline_hamai_above_db=-20, minimum_reduction_db=10, require_nmse_improvement=True)),
             audio=dict(format='PCM16 WAV', shared_gain=gain, peak_limit=0.95,
                 quantization='round(gain*x*32768); decode as int16/32768; no dither',
                 changes='Time alignment, excerpt selection, one shared gain, PCM16 quantization; predictions are saved model outputs'),

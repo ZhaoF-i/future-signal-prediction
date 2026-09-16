@@ -4,7 +4,7 @@ These are selected qualitative examples for the HA-MAI supplement, not dataset-w
 
 ## Speech: LibriSpeech
 
-`speech-target.wav`, `speech-baseline.wav`, `speech-suppressed.wav`, and `speech-spectrogram.png` derive from LibriSpeech test-clean utterance **7021-79759-0004**.
+`speech-target.wav`, `speech-baseline.wav`, `speech-suppressed.wav`, and `speech-spectrogram.png` derive from LibriSpeech test-clean utterance **1089-134691-0003**.
 The derived `speech-baseline-error.wav`, `speech-suppressed-error.wav`, and `speech-error-spectrogram.png` retain the same attribution and license.
 
 Credit: Vassil Panayotov, Guoguo Chen, Daniel Povey, and Sanjeev Khudanpur, *LibriSpeech: An ASR corpus based on public domain audio books*, ICASSP 2015. The corpus derives from LibriVox recordings.
@@ -26,7 +26,7 @@ The prediction tracks are saved outputs of the Base and complete RandomInterval 
 
 The additional error tracks are exact differences of the published target and predicted WAVs, with no additional gain or clipping. They represent total prediction error, not an isolated mirror waveform. Error figures use the same magnitude reference as the corresponding target/predicted-signal figure.
 
-Speech uses 64000 samples starting at sample 176000 of the aligned interval. Noise uses the complete 47995-sample common interval. The Base target and prediction lose one initial sample for alignment; the complete system is untrimmed at its start. Base and full-system prediction advances are 4 and 5 samples, respectively.
+The author-selected LibriSpeech example uses the complete 34795-sample aligned interval (2.1746875 s), beginning at sample 0. Noise uses the complete 47995-sample common interval. The Base target and prediction lose one initial sample for alignment; the complete system is untrimmed at its start. Base and full-system prediction advances are 4 and 5 samples, respectively.
 
 [metadata.json](metadata.json) records exact crops, shared gains, processing parameters, model commit identifiers, source WAV hashes, published asset hashes, and metrics recomputed after PCM16 decoding. File identifiers refer to saved evaluation outputs; no private filesystem paths are distributed.
 
